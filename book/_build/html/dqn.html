@@ -1,0 +1,1091 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deep Q-Learning &#8212; The Reinforcement Learning Playground</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Double Deep Q-Learning" href="ddqn.html" />
+    <link rel="prev" title="The Reinforcement Learning Playground" href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">The Reinforcement Learning Playground</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   The Reinforcement Learning Playground
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Deep Reinforcement Learning
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Deep Q-Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ddqn.html">
+   Double Deep Q-Learning
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/dqn.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fdqn.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/dqn.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-replay-buffer">
+   The Replay Buffer
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-deep-q-network">
+   The Deep-Q Network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#putting-it-all-together-adding-the-target-network">
+   Putting it all together; adding the target network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-results">
+   The results
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Deep Q-Learning</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-replay-buffer">
+   The Replay Buffer
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-deep-q-network">
+   The Deep-Q Network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#putting-it-all-together-adding-the-target-network">
+   Putting it all together; adding the target network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-results">
+   The results
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="deep-q-learning">
+<h1>Deep Q-Learning<a class="headerlink" href="#deep-q-learning" title="Permalink to this headline">¶</a></h1>
+<p>January 4, 2022 by Lars Quaedvlieg</p>
+<div class="alert alert-block alert-danger">
+<b>TODO:</b><br>
+Cite when converting too Jupyter book<br>
+For self: What to talk about? DQN -> R2D2 -> NGU -> Agent57 (might take too much time?) -> AlphaGo -> AlphaZero -> MuZero (leave out implementation?)<br>
+Add images<br>
+Cool Deep RL chapter image<br>
+For DQN experiments, also track maximum action-values<br>
+Add t-SNE embedding?<br>
+Soft updates for policy to target net?<br>
+Loss clipping???
+</div>
+<p>In this first notebook, we will implement multiple algorithms having to do with Deep RL, and apply them to a cool environment. We will start with one of the algorithms which got Deep RL taking off, namely, Deep Q-Learning. Then we will address some of the issues that come with this algorithm and improve it even more. This will hopefully also highlight progression in the field.</p>
+<blockquote>
+<div><p>The original paper introducing Deep Q-Learning, was published by authors from Google DeepMind back in 2015. Its title: <strong>“Human-level control through deep reinforcement
+learning”</strong>. In this section, we explain how DQL was invented from tabular Q-Learning, show how one can implement the algorithm, and how to apply it to a problem.</p>
+</div></blockquote>
+<p>As was the case with tabular Q-Learning, a Markov Decision Process can be represented as a tuple <span class="math notranslate nohighlight">\(MDP = (S,A,P,R,\gamma)\)</span>. Q-Learning is an off-policy method, following a behavioral policy <span class="math notranslate nohighlight">\(\mu(.|S_t)\)</span>, but an alternative sucessor action <span class="math notranslate nohighlight">\(A' \sim \pi(.|S_t)\)</span> is also considered. <span class="math notranslate nohighlight">\(Q(S_t|A_t)\)</span> will then be updated towards the value of the alternative action: <span class="math notranslate nohighlight">\(Q_{k+1}(S_t, A_t) = Q_k(S_t, A_t) + \alpha(R_{t+1} + \gamma Q_k(S_{t+1}, A') - Q_k(S_t, A_t))\)</span>.</p>
+<p>Now, allow both policies to be able to improve: <span class="math notranslate nohighlight">\(\pi(S_{t+1}) = \arg\max_{a'}Q(S_{t+1}, a')\)</span>, and <span class="math notranslate nohighlight">\(\mu = \epsilon\)</span>-<span class="math notranslate nohighlight">\(greedy(Q)\)</span>. In this case, the Q-Learning target simplifies to <span class="math notranslate nohighlight">\(R_{t+1} + \gamma Q(S_{t+1}, A') = R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a')\)</span>.</p>
+<p>This gives rise to the Q-Learning update rule: <span class="math notranslate nohighlight">\(Q_{S_t, A_t} = Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \max_{A_{t+1}} Q(S_{t+1}, A_{t+1})]\)</span>. With proper hyperparameters, this algorithm is guaranteed to converge to the optimal policy <span class="math notranslate nohighlight">\(Q_i \rightarrow Q^*(s, a) = \max_\pi E_\pi\left[R_t|s_t=s, a_t=a\right]\)</span> as <span class="math notranslate nohighlight">\(i \rightarrow \infty\)</span>.</p>
+<p>However, this algorithm is totally impractical, since this update rule has to be performed for every possible tuple <span class="math notranslate nohighlight">\((s, a) \in S \times A\)</span>. In practical scenarios, the dimensionality of the state-space (or action-space, think about continuous action spaces) make it computationally impossible to run this algorithm for even one iteration. If we could generalize learning to more than this <em>one</em> tuple <span class="math notranslate nohighlight">\((S, A)\)</span> at once, we would be able to use this method much more easily.</p>
+<p>This is where <em>function approximators</em> come in! The idea is to parameterize the Q-value function with parameterization <span class="math notranslate nohighlight">\(\theta\)</span>: <span class="math notranslate nohighlight">\(Q(s, a; \theta) \approx Q^*(s, a)\)</span>. When this idea was introduced, linear approximators were mostly used. For example, think about a linear combination of features and weights to estimate the Q-values. Using one-hot-encodings as input for your state space to such an approximator, it can be shown that function approximation is a generalization of tabular Q-Learning.</p>
+<p>Sometimes non-linear estimators for the action-value function were used, such as a neural network. This neural networks with weights <span class="math notranslate nohighlight">\(\theta\)</span> is referred to as a Q-Network. A Q-Network can be trained by minimizing loss-functions <span class="math notranslate nohighlight">\(L_i(\theta_i))\)</span> which changes at every iteration <span class="math notranslate nohighlight">\(i\)</span> due to the expectation you will see.</p>
+<div class="math notranslate nohighlight">
+\[
+    L_i(\theta_i) = E_{s, a \sim\rho(.)}\left[(y_i - Q(s, a; \theta_i))^2\right]
+\]</div>
+<p>Here <span class="math notranslate nohighlight">\(y_i = E_{r, s' \sim P}\left[r + \gamma \max_{a'}Q(s', a'; \theta_{i-1})|s, a\right]\)</span> is a target at iteration <span class="math notranslate nohighlight">\(i\)</span>. It is our goal to minimize this loss function, which can be done with the use of gradient-based optimization. Differentiating the loss function w.r.t. the weight results in:</p>
+<div class="math notranslate nohighlight">
+\[
+    \nabla_{\theta_i} L_i(\theta_i) = E_{s, a \sim \rho(.);r, s' \sim P}\left[\left(r + \gamma \max_{a'}Q(s', a'; \theta_{i-1}) - Q(s, a; \theta_i)\right)\nabla_{\theta_i}Q(s, a; \theta_i)\right]
+\]</div>
+<p>Instead of computing the entire expectation in this gradient, it is often easier to minimize the loss function using stochastic gradient descent. These weights are then updated at each iteration, and the expectation is replaced by single samples from <span class="math notranslate nohighlight">\(\rho\)</span>. This is what happens in the original Q-Learning algorithm.</p>
+<p>The big problem is the fact that non-linear gradient-based Q-Learning does not necessarily convergence; this is actually the reason linear approximation was focused on within research: it has better convergence properties. All Deep Reinforcement Learning algorithms, Deep Q-Learning included, aim to “push” algorithms more towards convergence using clever (and often mathematically sound) tricks. We are now ready to get into the techniques introduced in the Deep Q-Learning paper.</p>
+<p>First, let’s import some of the libraries we will be using, and initialize a <strong><a class="reference external" href="https://pytorch.org/docs/stable/notes/cuda.html">Pytorch device</a></strong>. for computations (GPU when possible, else CPU).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import copy for creating deep copies, and time for measuring elapsed time during training </span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># Import OpenAI Gym for Reinforcement Learning environments, numpy for efficient computations</span>
+<span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Import Pytorch neural networks and optimizers</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+
+<span class="c1"># Import pandas and seaborn for saving/visualizing the results</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Check if we can use a GPU for computations (requires CUDA support)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;GPU available:&#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Using device:&#39;</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;cuda&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Device name:&#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">time</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># Import OpenAI Gym for Reinforcement Learning environments, numpy for efficient computations</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">gym</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># Import Pytorch neural networks and optimizers</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;gym&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-replay-buffer">
+<h2>The Replay Buffer<a class="headerlink" href="#the-replay-buffer" title="Permalink to this headline">¶</a></h2>
+<p>The technique utilized by the Deep Q-Learning in an attempt to stabilize training is referred to as “Experience Replay”. For this, the agent’s experience is saved in a buffer (<span class="math notranslate nohighlight">\(D\)</span>) while it is acting within an environment. Experience is defined as the transition to a new state after taking an action. Hence, the experience of an agent at time step <span class="math notranslate nohighlight">\(t\)</span> becomes the tuple <span class="math notranslate nohighlight">\((s_t, a_t, r_t, s_{t+1})\)</span>, so <span class="math notranslate nohighlight">\(D = (e_1, e_2, ... e_N)\)</span>.</p>
+<p>During the training phase of the agent, Q-Learning updates are performed on a minibatch <span class="math notranslate nohighlight">\(e \sim D\)</span>. In the paper, this minibatch has been sampled from the replay buffer at uniformly random. Several advantages of using this method have been mentioned in the original paper:</p>
+<blockquote>
+<div><p>First, each step of experience is potentially used in many weight updates, which allows for greater data efficiency.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Second, learning directly from consecutive samples is inefficient, due to the strong correlations between the samples; randomizing the samples breaks these correlations and therefore reduces the variance of the updates.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Third, when learning on-policy, the current parameters determine the next data sample that the parameters are trained on. For example, if the maximizing action is to move left
+then the training samples will be dominated by samples from the left-hand side; if the maximizing action then switches to the right then the training distribution will also switch. By using experience replay the behavior distribution is averaged over many of its previous states, smoothing out learning and avoiding oscillations or divergence in
+the parameters.</p>
+</div></blockquote>
+<p>We will now implement a replay buffer from scratch, which has been bounded by a maximum amount of memory. Once this memory has been filled, it will start overriding values that have been in the buffer the longest. The data will be stored in <strong><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html">Pytorch tensors</a></strong> corresponding to each cell in the tuple. Finally, it also saves a “terminal” to the tuple. This is an indicator variable, showing whether the current transition ends up in a terminal state. It is default that terminal states have a value of <span class="math notranslate nohighlight">\(0\)</span>, so this term will be used when computing the Q-target.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReplayBuffer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The replay buffer acts as a memory storage location of an agent, so it can be sampled</span>
+<span class="sd">    from as learned from again (like learning from previous experiences)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_mem</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            max_mem: The number of state transitions to be able to remember</span>
+<span class="sd">            input_shape: The dimensionality a state</span>
+<span class="sd">            n_actions: The amount of possible actions</span>
+<span class="sd">            device: CPU or GPU to put the data on (used for computations)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">mem_size</span> <span class="o">=</span> <span class="n">max_mem</span>
+        
+        <span class="c1"># Counts what memory address we are currently at </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mem_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="c1"># All things to remember: (s, a, r, s&#39;) and terminal for when a state is finished </span>
+        <span class="c1"># (since then it&#39;s value must equal 0, so we need to know when that occurs)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_mem</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">mem_size</span><span class="p">,</span> <span class="o">*</span><span class="n">input_shape</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_mem</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mem_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reward_mem</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mem_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_state_mem</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">mem_size</span><span class="p">,</span> <span class="o">*</span><span class="n">input_shape</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">terminal_mem</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mem_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">store_transition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">state_</span><span class="p">,</span> <span class="n">terminal</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stores a transition in the object</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            state: The state before taking the action</span>
+<span class="sd">            action: The action taken</span>
+<span class="sd">            reward: The reward received from the environment</span>
+<span class="sd">            state_: The state after taking the action</span>
+<span class="sd">            terminal: Whether the state is terminal</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Current memory address (starts back at the beginning once full)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mem_counter</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">mem_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mem_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_mem</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_mem</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reward_mem</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">reward</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_state_mem</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">state_</span>
+        <span class="c1"># If terminal -&gt; 0, else 1 (used as multiplicative factor, since terminal states have a value of 0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">terminal_mem</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">terminal</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">sample_transitions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Samples a batch_size amount of transitions uniformly random</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            batch_size: the number of samples to generate</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            batch_size amount of uniformly generated samples of (s, a, r, s&#39;, terminal) pairs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">max_mem</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mem_counter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mem_size</span><span class="p">)</span>
+        
+        <span class="c1"># Samples uniformly random batches of size batch_size (with replacement) </span>
+        <span class="n">batch_idxs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">high</span><span class="o">=</span><span class="n">max_mem</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,))</span>
+        
+        <span class="c1"># Extract the tensors with the transitions and put them onto the computation device</span>
+        <span class="n">states</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_mem</span><span class="p">[</span><span class="n">batch_idxs</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_mem</span><span class="p">[</span><span class="n">batch_idxs</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">rewards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reward_mem</span><span class="p">[</span><span class="n">batch_idxs</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">new_states</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_state_mem</span><span class="p">[</span><span class="n">batch_idxs</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">terminals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminal_mem</span><span class="p">[</span><span class="n">batch_idxs</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">new_states</span><span class="p">,</span> <span class="n">terminals</span>       
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that all the methods have been implemented (storing and sampling the information), we will test the functionality of the buffer very simply. You are encouraged to try out multiple things, maybe change the buffer, whatever you’d like! That may help in understanding what is happening.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Testing the replay buffer</span>
+
+<span class="n">buffer</span> <span class="o">=</span> <span class="n">ReplayBuffer</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">3</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+
+<span class="n">example_state</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">example_action</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">example_reward</span> <span class="o">=</span> <span class="mf">6.9</span>
+<span class="n">example_new_state</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">example_terminal</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">buffer</span><span class="o">.</span><span class="n">store_transition</span><span class="p">(</span><span class="n">example_state</span><span class="p">,</span> <span class="n">example_action</span><span class="p">,</span> <span class="n">example_reward</span><span class="p">,</span> <span class="n">example_new_state</span><span class="p">,</span> <span class="n">example_terminal</span><span class="p">)</span>
+
+<span class="n">minibatch_size</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s_</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="n">sample_transitions</span><span class="p">(</span><span class="n">minibatch_size</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sampled states:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sampled actions:&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sampled rewards:&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sampled new states:&#39;</span><span class="p">,</span> <span class="n">s_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sampled terminal values:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampled states: tensor([[[0., 0., 0.],
+         [0., 0., 0.]]], device=&#39;cuda:0&#39;)
+Sampled actions: tensor([1], device=&#39;cuda:0&#39;, dtype=torch.int32)
+Sampled rewards: tensor([6.9000], device=&#39;cuda:0&#39;)
+Sampled new states: tensor([[[1., 1., 1.],
+         [1., 1., 1.]]], device=&#39;cuda:0&#39;)
+Sampled terminal values: tensor([0.], device=&#39;cuda:0&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-deep-q-network">
+<h2>The Deep-Q Network<a class="headerlink" href="#the-deep-q-network" title="Permalink to this headline">¶</a></h2>
+<p>The Deep Q-Network functions as the non-linear approximator. The architecture used in this notebook is just an example, and you are again encouraged to try out different things yourself. However, by default, we create a 3-layer fully-connected neural network, which uses the <strong><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.functional.relu.html?highlight=relu">relu activation function</a></strong> for the first two layers. The final layer aims to output the Q-values of each action in a seperate neuron. The original paper explains more about this:</p>
+<blockquote>
+<div><p>There are several possible ways of parameterizing Q using a neural network. Since Q maps history-action pairs to scalar estimates of their Q-value, the history and the action have been used as inputs to the neural network by some previous approaches. The main drawback of this type of architecture is that a separate forward pass is required to compute the Q-value of each action, resulting in a cost that scales linearly with the number of actions. We instead use an architecture in which there is a separate output unit for each possible action, and only the state representation is an input to the neural network. The outputs correspond to the predicted Q-values of the individual action for the input state.</p>
+</div></blockquote>
+<p>This can be implemented quite simply in Pytorch, using a combination of successive <strong><a class="reference external" href="https://pytorch.org/docs/1.9.1/generated/torch.nn.Linear.html">linear layers</a></strong> and their activation functions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DeepQNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines the neural network used by the Deep Q-Learning agent</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">layer1_dims</span><span class="p">,</span> <span class="n">layer2_dims</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            input_shape: The dimensionality of the observations (corresponds to number of units in input layer)</span>
+<span class="sd">            layer1_dims: The number of units in the first layer</span>
+<span class="sd">            layer2_dims: The number of units in the second layer</span>
+<span class="sd">            n_actions: The number of actions (corresponds to number of units in the output layer)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DeepQNetwork</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="o">*</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">layer1_dims</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">layer1_dims</span><span class="p">,</span> <span class="n">layer2_dims</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">layer2_dims</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Represents evaluating the network for a certain state input (could be minibatch)</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            state: The input to the neural network</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Predicted Q-values, as computed in the output layer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">l1_out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_1</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
+        <span class="n">l2_out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_2</span><span class="p">(</span><span class="n">l1_out</span><span class="p">))</span>
+        <span class="n">q_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span><span class="p">(</span><span class="n">l2_out</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">q_values</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="putting-it-all-together-adding-the-target-network">
+<h2>Putting it all together; adding the target network<a class="headerlink" href="#putting-it-all-together-adding-the-target-network" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have explored and implemented experience replay, we can start putting everything together. For this, we will create an agent class. This class contains both the replay buffer and the neural network. It also has access to all parameters (batch size, learning rate, etc.). The agent will choose actions according to the policy we mentioned earlier (<span class="math notranslate nohighlight">\(\epsilon\)</span>-<span class="math notranslate nohighlight">\(greedy\)</span>).</p>
+<p>If you have done any gradient-based optimization in the past, you will know you need a loss function and optimizer to optimize your parameters. These are also stored in the agent. Earlier on, we saw original Q-Learning (not the algorithm we’re implementing!), aimed to minimize the following loss function:</p>
+<div class="math notranslate nohighlight">
+\[
+    L_i(\theta_i) = E_{s, a \sim\rho(.)}\left[(y_i - Q(s, a; \theta_i))^2\right]
+\]</div>
+<p>This used stochastic gradient descent on samples encountered at every step (no experience replay existed). Now, since we are using experience replay, and updating by sampling from the buffer, the loss function becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+    L_i(\theta_i) = E_{e \sim D}\left[(r + \gamma \max_{a'}Q(s', a'; \theta_{i}) - Q(s, a; \theta_i))^2\right]
+\]</div>
+<p>But now, there are two more techniques the paper utilizes to improve stability of the algorithm. The first one is referred to as the <strong>target network</strong>.</p>
+<blockquote>
+<div><p>To improve stability, we use a separate network for generating the targets <span class="math notranslate nohighlight">\(y_i\)</span> in the Q-learning update. More precisely, every <span class="math notranslate nohighlight">\(C\)</span> updates we clone the network <span class="math notranslate nohighlight">\(Q\)</span> to obtain a target network <span class="math notranslate nohighlight">\(\hat{Q}\)</span> and use <span class="math notranslate nohighlight">\(\hat{Q}\)</span> for generating the Q-learning targets <span class="math notranslate nohighlight">\(y_i\)</span> for the following <span class="math notranslate nohighlight">\(C\)</span> updates to <span class="math notranslate nohighlight">\(Q\)</span>. This modification makes the algorithm more stable compared to standard online Q-learning, where an update that increases <span class="math notranslate nohighlight">\(Q(s_t,a_t)\)</span> often also increases <span class="math notranslate nohighlight">\(Q(s_{t+1},a)\)</span> for all <span class="math notranslate nohighlight">\(a\)</span> and hence also increases the target <span class="math notranslate nohighlight">\(y_i\)</span>, possibly leading to oscillations or divergence of the policy. Generating the targets using an older set of parameters adds a delay between the time an update to <span class="math notranslate nohighlight">\(Q\)</span> is made and the time the update affects the targets <span class="math notranslate nohighlight">\(y_i\)</span>, making divergence or oscillations much more unlikely.</p>
+</div></blockquote>
+<p>Let the parameters of our policy network remain to be called <span class="math notranslate nohighlight">\(\theta\)</span>, while the parameters of our target network will be referred to as <span class="math notranslate nohighlight">\(\theta^-\)</span>. The loss function we deploy now becomes the following:</p>
+<div class="math notranslate nohighlight">
+\[
+    L_i(\theta_i) = E_{e \sim D}\left[(r + \gamma \max_{a'}Q(s', a'; \theta^-_{i}) - Q(s, a; \theta_i))^2\right]
+\]</div>
+<p>The last trick the paper uses has to do with the gradient <span class="math notranslate nohighlight">\(\nabla L_i(\theta_i)\)</span>. In order to once again improve stability of the algorithm, the values of the <span class="math notranslate nohighlight">\(\nabla L_i(\theta_i)\)</span> are <strong>clamped</strong> to be in the range of <span class="math notranslate nohighlight">\((-1, 1)\)</span>. According to the paper, this has the following advantages:</p>
+<blockquote>
+<div><p>Because the absolute value loss function <span class="math notranslate nohighlight">\(|x|\)</span> has a derivative of <span class="math notranslate nohighlight">\(-1\)</span> for all negative values of <span class="math notranslate nohighlight">\(x\)</span> and a derivative of <span class="math notranslate nohighlight">\(1\)</span> for all positive values of <span class="math notranslate nohighlight">\(x\)</span>, clipping the squared error to be between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span> corresponds to using an absolute value loss function for errors outside of the <span class="math notranslate nohighlight">\((-1, 1)\)</span> interval. This form of error clipping further improved the stability of the algorithm.</p>
+</div></blockquote>
+<blockquote>
+<div><p>I think the 2 alternatives have a subtle but important difference. When using a DQN, the weights w are updated by taking the gradient of the loss. So for Huber loss, the gradient would be either d(Q_s,a)/dw or -d(Q_s,a)/dw outside [-0.5,0.5]. This is because the gradient of |loss| = +1 or -1. Using a squared loss function and clipping the gradient means that this whole resulting gradient is limited to [-1,+1] and not only the first term of the gradient. Thus, to get similar results to the DQN paper, I think one should use Huber loss.</p>
+</div></blockquote>
+<p>For our example, we will use the previously explained <strong><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html">mean squared error loss</a></strong> on sampled minibatches from the replay buffer. This loss will then be minimized by updating the network parameters with the <strong><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.optim.Adam.html">Adam optimizer</a></strong>. In order to perform gradient clipping, we use the <strong><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.clamp.html">Tensor.clamp()</a></strong> method from the Pytorch library on the model parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DQNAgent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Agent class using the technique of Deep Q-Networks</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">target_copy_delay</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">epsilon_dec</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> 
+                 <span class="n">epsilon_min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">memory_size</span><span class="o">=</span><span class="mi">1_000_000</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;models/dqn_model.pt&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            device: CPU or GPU to put the data on (used for computations)</span>
+<span class="sd">            input_shape: The dimensionality of the observation space </span>
+<span class="sd">            n_actions: The number of possible actions</span>
+<span class="sd">            gamma: The discount factor</span>
+<span class="sd">            target_copy_delay: The number of iterations before synchronizing the policy- to the target network </span>
+<span class="sd">            learning_rate: The learning rate</span>
+<span class="sd">            batch_size: The number of samples to use in one iteration of mini-batch gradient descent</span>
+<span class="sd">            epsilon: Random action probability (epsilon-greedy policy)</span>
+<span class="sd">            epsilon_dec: The decrement in epsilon after one minibatch learning iteration</span>
+<span class="sd">            epsilon_min: The minimum random action probability</span>
+<span class="sd">            memory_size: The maximum number of transitions in the replay buffer</span>
+<span class="sd">            file_name: The file name for when saving the model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_actions</span><span class="p">)]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon_dec</span> <span class="o">=</span> <span class="n">epsilon_dec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon_min</span> <span class="o">=</span> <span class="n">epsilon_min</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">=</span> <span class="n">target_copy_delay</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iters_until_net_sync</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_file</span> <span class="o">=</span> <span class="n">file_name</span>
+        
+        <span class="c1"># Instantiate a replay buffer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replay_buffer</span> <span class="o">=</span> <span class="n">ReplayBuffer</span><span class="p">(</span><span class="n">memory_size</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+        
+        <span class="c1"># Build the Deep Q-Network (neural network)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">policy_net</span> <span class="o">=</span> <span class="n">DeepQNetwork</span><span class="p">(</span><span class="n">input_shape</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_net</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy_net</span><span class="p">)</span>
+       
+        <span class="c1"># Mean squared error loss between target and predicted Q-values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">SmoothL1Loss</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span> <span class="c1">#nn.MSELoss()</span>
+    
+        <span class="c1"># Optimizer used to update the network parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy_net</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">remember_transition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">state_</span><span class="p">,</span> <span class="n">terminal</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stores a transition in the replay buffer</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            state: The state before taking the action</span>
+<span class="sd">            action: The action taken</span>
+<span class="sd">            reward: The reward received from the environment</span>
+<span class="sd">            state_: The state after taking the action</span>
+<span class="sd">            terminal: Whether the state is terminal</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replay_buffer</span><span class="o">.</span><span class="n">store_transition</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">state_</span><span class="p">,</span> <span class="n">terminal</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">choose_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Chooses an action according to an epsilon-greedy policy</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            observation: measure information about state by the agent</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The action to perform</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="c1"># Converts numpy observation array to Pytorch tensor,</span>
+                <span class="c1"># adds extra dimension (e.g. (16,) shape would become (1, 16),</span>
+                <span class="c1"># and puts the Pytorch tensor onto the device for computation</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">observation</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+                <span class="n">q_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy_net</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+                <span class="c1"># Choose the action by taking the largest Q-value</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">q_pred</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">action</span>
+    
+    <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs one iteration of minibatch gradient descent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Return if the buffer does not yet contain enough samples</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">replay_buffer</span><span class="o">.</span><span class="n">mem_counter</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">:</span>
+            <span class="k">return</span>
+              
+        <span class="c1"># Sample from the replay buffer</span>
+        <span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">new_states</span><span class="p">,</span> <span class="n">terminals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replay_buffer</span><span class="o">.</span><span class="n">sample_transitions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
+        
+        <span class="c1"># Predict the Q-values in the current state, and in the new state (after taking the action)</span>
+        <span class="n">q_preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy_net</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+        <span class="n">q_targets</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># If C = 0, we would update the network at every iteration, which would be crazy inefficient</span>
+        <span class="c1"># It equals training without a target network</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">q_targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy_net</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">new_states</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">q_targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_net</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">new_states</span><span class="p">)</span>
+        
+        <span class="c1"># For every sampled transition, set the target for the action that was taken as </span>
+        <span class="c1"># defined earlier: r + gamma * max_a&#39; Q(s&#39;, a&#39;)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">rewards</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">terminals</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">q_targets</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="c1"># Get a list of indices [0, 1, ..., batch_size-1]</span>
+        <span class="n">batch_idxs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>              
+        
+        <span class="c1"># Perform one iteration of minibatch gradient descent: reset the gradients, compute the loss, clamp the gradients, and update</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">q_preds</span><span class="p">[</span><span class="n">batch_idxs</span><span class="p">,</span> <span class="n">actions</span><span class="o">.</span><span class="n">long</span><span class="p">()])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+                
+        <span class="c1"># Clamp the gradients in a range between -1 and 1</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_value_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy_net</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="mf">1.0</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        
+        <span class="c1"># Decrease the random action probability if its minimum has not yet been reached</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon_dec</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon_min</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon_min</span>
+        
+        <span class="c1"># Copy the policy network weights to the target network every C iterations</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_iters_until_net_sync</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">num_iters_until_net_sync</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">target_net</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy_net</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">num_iters_until_net_sync</span> <span class="o">-=</span> <span class="mi">1</span>
+        
+    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stores the Deep Q-Network state in a file</span>
+<span class="sd">                </span>
+<span class="sd">        Args:</span>
+<span class="sd">            file_path: Path and file name to store the model to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>  
+            <span class="n">file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_file</span>   
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy_net</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">file_path</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads the Deep Q-Network state from a file</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            file_path: Path to the file of the model to load</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>  
+            <span class="n">file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_file</span>   
+        <span class="bp">self</span><span class="o">.</span><span class="n">policy_net</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-results">
+<h2>The results<a class="headerlink" href="#the-results" title="Permalink to this headline">¶</a></h2>
+<p>Everything has now been implemented! We will use the <strong><a class="reference external" href="https://gym.openai.com/envs/LunarLander-v2/">Lunar Lander v2</a></strong> environment from OpenAI gym to train and test our agent. During training, we will collect some statistics about the performance of the agent, which we will later visualize. At the end, you can also render games to see how your agent performs! Can you find out about any strategies the agent might have?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the LunarLander environment (https://gym.openai.com/envs/LunarLander-v2/)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;LunarLander-v2&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print the size of the observation- and action space</span>
+<span class="n">input_dims</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">observation_space</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">n_actions</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">n</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Observation space dims:&#39;</span><span class="p">,</span> <span class="n">input_dims</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of actions:&#39;</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">)</span>
+
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.99</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">net_sync_delay</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">initial_epsilon</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">epsilon_decay</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="mf">1e-3</span>
+
+<span class="c1"># Construct the Deep Q-Network agent</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">DQNAgent</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">input_dims</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">net_sync_delay</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">initial_epsilon</span><span class="p">,</span> <span class="n">epsilon_dec</span><span class="o">=</span><span class="n">epsilon_decay</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;models/DQN_1.pt&#39;</span><span class="p">)</span>
+
+<span class="c1"># Measure the scores, history of random action probability, and time per episode for 500 episodes</span>
+<span class="n">n_games</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">avg_10_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">avg_100_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">epsilon_history</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">durations</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_games</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># Reset the environment</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    
+    <span class="n">terminal</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    
+    <span class="c1"># Play until the episode is done</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">terminal</span><span class="p">:</span>
+        <span class="c1"># Choose an action according to the epsilon-greedy policy of the DQN agent</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">choose_action</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+        <span class="c1"># Perform the action, and measure the new state, action, and whether the episode is done</span>
+        <span class="n">obs_</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminal</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="c1"># Accumulate the rewards</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="n">reward</span>
+        <span class="c1"># Remember the transition</span>
+        <span class="n">agent</span><span class="o">.</span><span class="n">remember_transition</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">obs</span><span class="p">),</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">obs_</span><span class="p">),</span> <span class="n">terminal</span><span class="p">)</span>
+        <span class="c1"># Update the state</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="n">obs_</span>
+        <span class="c1"># Perform a step of minibatch gradient descent</span>
+        <span class="n">agent</span><span class="o">.</span><span class="n">learn</span><span class="p">()</span>
+        
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+    <span class="n">durations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+        
+    <span class="n">epsilon_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+    <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    
+    <span class="c1"># Compute a 10- and 100-game average of the accumulated score, and print the results</span>
+    <span class="n">avg_10_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">:])</span>
+    <span class="n">avg_100_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:])</span>
+    
+    <span class="n">avg_10_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_10_score</span><span class="p">)</span>
+    <span class="n">avg_100_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_100_score</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">125</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">25</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;episode: </span><span class="si">{:3}</span><span class="s1">, duration (seconds): </span><span class="si">{:6.2f}</span><span class="s1">, score: </span><span class="si">{:7.2f}</span><span class="s1">, average_10_score: </span><span class="si">{:7.2f}</span><span class="s1">, average_100_score: </span><span class="si">{:7.2f}</span><span class="s1">, epsilon: </span><span class="si">{:4.3f}</span><span class="s1">&#39;</span>
+          <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">avg_10_score</span><span class="p">,</span> <span class="n">avg_100_score</span><span class="p">,</span> <span class="n">agent</span><span class="o">.</span><span class="n">epsilon</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Observation space dims: (8,)
+Number of actions: 4
+episode:   1, duration (seconds):   2.97, score: -198.37, average_10_score: -198.37, average_100_score: -198.37, epsilon: 0.963
+episode:   2, duration (seconds):   0.32, score: -112.16, average_10_score: -155.26, average_100_score: -155.26, epsilon: 0.917
+episode:   3, duration (seconds):   0.38, score: -273.27, average_10_score: -194.60, average_100_score: -194.60, epsilon: 0.862
+episode:   4, duration (seconds):   0.52, score: -156.51, average_10_score: -185.08, average_100_score: -185.08, epsilon: 0.792
+episode:   5, duration (seconds):   0.35, score:  -42.99, average_10_score: -156.66, average_100_score: -156.66, epsilon: 0.748
+episode:   6, duration (seconds):   0.46, score:  -76.96, average_10_score: -143.38, average_100_score: -143.38, epsilon: 0.684
+episode:   7, duration (seconds):   0.50, score: -127.74, average_10_score: -141.14, average_100_score: -141.14, epsilon: 0.617
+episode:   8, duration (seconds):   0.60, score:  -66.67, average_10_score: -131.83, average_100_score: -131.83, epsilon: 0.548
+episode:   9, duration (seconds):   0.57, score: -172.46, average_10_score: -136.35, average_100_score: -136.35, epsilon: 0.472
+episode:  10, duration (seconds):   1.00, score: -299.93, average_10_score: -152.71, average_100_score: -152.71, epsilon: 0.349
+episode:  11, duration (seconds):   1.56, score: -115.55, average_10_score: -144.43, average_100_score: -149.33, epsilon: 0.174
+episode:  12, duration (seconds):   4.92, score: -273.69, average_10_score: -160.58, average_100_score: -159.69, epsilon: 0.010
+episode:  13, duration (seconds):   1.44, score: -465.89, average_10_score: -179.84, average_100_score: -183.25, epsilon: 0.010
+episode:  14, duration (seconds):   0.73, score: -291.26, average_10_score: -193.32, average_100_score: -190.96, epsilon: 0.010
+episode:  15, duration (seconds):   0.41, score: -459.68, average_10_score: -234.98, average_100_score: -208.88, epsilon: 0.010
+episode:  16, duration (seconds):   0.95, score: -190.31, average_10_score: -246.32, average_100_score: -207.72, epsilon: 0.010
+episode:  17, duration (seconds):   0.78, score: -253.14, average_10_score: -258.86, average_100_score: -210.39, epsilon: 0.010
+episode:  18, duration (seconds):   1.90, score: -249.69, average_10_score: -277.16, average_100_score: -212.57, epsilon: 0.010
+episode:  19, duration (seconds):   0.80, score: -181.78, average_10_score: -278.09, average_100_score: -210.95, epsilon: 0.010
+episode:  20, duration (seconds):   1.17, score:  -34.20, average_10_score: -251.52, average_100_score: -202.11, epsilon: 0.010
+episode:  21, duration (seconds):   1.78, score:  -32.52, average_10_score: -243.21, average_100_score: -194.04, epsilon: 0.010
+episode:  22, duration (seconds):   1.69, score: -154.78, average_10_score: -231.32, average_100_score: -192.25, epsilon: 0.010
+episode:  23, duration (seconds):   1.01, score: -219.72, average_10_score: -206.71, average_100_score: -193.45, epsilon: 0.010
+episode:  24, duration (seconds):   3.92, score:  133.53, average_10_score: -164.23, average_100_score: -179.82, epsilon: 0.010
+episode:  25, duration (seconds):   1.50, score: -277.26, average_10_score: -145.99, average_100_score: -183.72, epsilon: 0.010
+episode:  26, duration (seconds):   1.31, score: -134.21, average_10_score: -140.38, average_100_score: -181.82, epsilon: 0.010
+episode:  27, duration (seconds):   1.50, score:  -98.60, average_10_score: -124.92, average_100_score: -178.73, epsilon: 0.010
+episode:  28, duration (seconds):   4.79, score: -218.37, average_10_score: -121.79, average_100_score: -180.15, epsilon: 0.010
+episode:  29, duration (seconds):   5.66, score: -156.87, average_10_score: -119.30, average_100_score: -179.35, epsilon: 0.010
+episode:  30, duration (seconds):   4.07, score: -106.23, average_10_score: -126.50, average_100_score: -176.91, epsilon: 0.010
+episode:  31, duration (seconds):   4.48, score:  -95.22, average_10_score: -132.77, average_100_score: -174.27, epsilon: 0.010
+episode:  32, duration (seconds):   5.77, score: -169.27, average_10_score: -134.22, average_100_score: -174.12, epsilon: 0.010
+episode:  33, duration (seconds):   4.81, score:  -90.16, average_10_score: -121.27, average_100_score: -171.57, epsilon: 0.010
+episode:  34, duration (seconds):   2.74, score:  -95.55, average_10_score: -144.17, average_100_score: -169.34, epsilon: 0.010
+episode:  35, duration (seconds):   5.29, score:  -50.25, average_10_score: -121.47, average_100_score: -165.93, epsilon: 0.010
+episode:  36, duration (seconds):   1.60, score:  -53.32, average_10_score: -113.38, average_100_score: -162.81, epsilon: 0.010
+episode:  37, duration (seconds):   4.54, score:  -52.71, average_10_score: -108.79, average_100_score: -159.83, epsilon: 0.010
+episode:  38, duration (seconds):   3.88, score:  126.43, average_10_score:  -74.31, average_100_score: -152.30, epsilon: 0.010
+episode:  39, duration (seconds):   4.76, score:  -89.16, average_10_score:  -67.54, average_100_score: -150.68, epsilon: 0.010
+episode:  40, duration (seconds):   5.37, score:  -35.94, average_10_score:  -60.51, average_100_score: -147.81, epsilon: 0.010
+episode:  41, duration (seconds):   4.19, score: -128.63, average_10_score:  -63.86, average_100_score: -147.34, epsilon: 0.010
+episode:  42, duration (seconds):   3.90, score: -141.01, average_10_score:  -61.03, average_100_score: -147.19, epsilon: 0.010
+episode:  43, duration (seconds):   5.25, score:  -58.16, average_10_score:  -57.83, average_100_score: -145.12, epsilon: 0.010
+episode:  44, duration (seconds):   5.02, score:  -73.87, average_10_score:  -55.66, average_100_score: -143.50, epsilon: 0.010
+episode:  45, duration (seconds):   4.91, score:  -70.06, average_10_score:  -57.64, average_100_score: -141.87, epsilon: 0.010
+episode:  46, duration (seconds):   4.60, score:  -31.69, average_10_score:  -55.48, average_100_score: -139.47, epsilon: 0.010
+episode:  47, duration (seconds):   5.30, score:  -68.16, average_10_score:  -57.03, average_100_score: -137.96, epsilon: 0.010
+episode:  48, duration (seconds):   0.44, score:  -28.09, average_10_score:  -72.48, average_100_score: -135.67, epsilon: 0.010
+episode:  49, duration (seconds):   4.96, score:  -84.18, average_10_score:  -71.98, average_100_score: -134.62, epsilon: 0.010
+episode:  50, duration (seconds):   2.02, score:  -35.52, average_10_score:  -71.94, average_100_score: -132.64, epsilon: 0.010
+episode:  51, duration (seconds):   0.30, score: -127.13, average_10_score:  -71.79, average_100_score: -132.53, epsilon: 0.010
+episode:  52, duration (seconds):   4.99, score:   -4.93, average_10_score:  -58.18, average_100_score: -130.07, epsilon: 0.010
+episode:  53, duration (seconds):   3.10, score:  126.99, average_10_score:  -39.66, average_100_score: -125.22, epsilon: 0.010
+episode:  54, duration (seconds):   1.77, score:  -11.57, average_10_score:  -33.43, average_100_score: -123.12, epsilon: 0.010
+episode:  55, duration (seconds):   4.37, score:  -53.20, average_10_score:  -31.75, average_100_score: -121.85, epsilon: 0.010
+episode:  56, duration (seconds):   2.76, score:  -35.05, average_10_score:  -32.08, average_100_score: -120.30, epsilon: 0.010
+episode:  57, duration (seconds):   0.30, score: -246.29, average_10_score:  -49.89, average_100_score: -122.51, epsilon: 0.010
+episode:  58, duration (seconds):   4.83, score:  -33.93, average_10_score:  -50.48, average_100_score: -120.98, epsilon: 0.010
+episode:  59, duration (seconds):   0.48, score:  -26.90, average_10_score:  -44.75, average_100_score: -119.39, epsilon: 0.010
+episode:  60, duration (seconds):   5.40, score:  -63.73, average_10_score:  -47.57, average_100_score: -118.46, epsilon: 0.010
+episode:  61, duration (seconds):   0.29, score: -494.70, average_10_score:  -84.33, average_100_score: -124.63, epsilon: 0.010
+episode:  62, duration (seconds):   1.40, score:  -50.34, average_10_score:  -88.87, average_100_score: -123.43, epsilon: 0.010
+episode:  63, duration (seconds):   0.66, score: -206.00, average_10_score: -122.17, average_100_score: -124.74, epsilon: 0.010
+episode:  64, duration (seconds):   0.38, score:   33.89, average_10_score: -117.62, average_100_score: -122.26, epsilon: 0.010
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>episode:  65, duration (seconds):   1.16, score:  234.39, average_10_score:  -88.86, average_100_score: -116.77, epsilon: 0.010
+episode:  66, duration (seconds):   3.66, score:  -83.42, average_10_score:  -93.70, average_100_score: -116.27, epsilon: 0.010
+episode:  67, duration (seconds):   0.31, score: -333.32, average_10_score: -102.41, average_100_score: -119.51, epsilon: 0.010
+episode:  68, duration (seconds):   2.09, score:  173.34, average_10_score:  -81.68, average_100_score: -115.20, epsilon: 0.010
+episode:  69, duration (seconds):   0.32, score: -728.05, average_10_score: -151.79, average_100_score: -124.08, epsilon: 0.010
+episode:  70, duration (seconds):   0.23, score: -190.34, average_10_score: -164.45, average_100_score: -125.03, epsilon: 0.010
+episode:  71, duration (seconds):   5.08, score: -172.57, average_10_score: -132.24, average_100_score: -125.70, epsilon: 0.010
+episode:  72, duration (seconds):   4.45, score:  -38.77, average_10_score: -131.08, average_100_score: -124.49, epsilon: 0.010
+episode:  73, duration (seconds):   5.12, score:  -49.48, average_10_score: -115.43, average_100_score: -123.46, epsilon: 0.010
+episode:  74, duration (seconds):   4.34, score:   -5.36, average_10_score: -119.36, average_100_score: -121.87, epsilon: 0.010
+episode:  75, duration (seconds):   2.25, score:  206.94, average_10_score: -122.10, average_100_score: -117.48, epsilon: 0.010
+episode:  76, duration (seconds):   3.69, score: -113.05, average_10_score: -125.07, average_100_score: -117.43, epsilon: 0.010
+episode:  77, duration (seconds):   1.16, score:  -52.73, average_10_score:  -97.01, average_100_score: -116.59, epsilon: 0.010
+episode:  78, duration (seconds):   1.23, score:  185.98, average_10_score:  -95.74, average_100_score: -112.71, epsilon: 0.010
+episode:  79, duration (seconds):   0.63, score:  -28.73, average_10_score:  -25.81, average_100_score: -111.64, epsilon: 0.010
+episode:  80, duration (seconds):   0.86, score:  223.38, average_10_score:   15.56, average_100_score: -107.46, epsilon: 0.010
+episode:  81, duration (seconds):   1.67, score:  -10.36, average_10_score:   31.78, average_100_score: -106.26, epsilon: 0.010
+episode:  82, duration (seconds):   1.54, score:  201.81, average_10_score:   55.84, average_100_score: -102.50, epsilon: 0.010
+episode:  83, duration (seconds):   0.87, score:  199.30, average_10_score:   80.72, average_100_score:  -98.86, epsilon: 0.010
+episode:  84, duration (seconds):   1.04, score:  208.50, average_10_score:  102.10, average_100_score:  -95.20, epsilon: 0.010
+episode:  85, duration (seconds):   1.41, score:  189.53, average_10_score:  100.36, average_100_score:  -91.85, epsilon: 0.010
+episode:  86, duration (seconds):   4.71, score:   36.89, average_10_score:  115.36, average_100_score:  -90.36, epsilon: 0.010
+episode:  87, duration (seconds):   1.35, score:  -73.63, average_10_score:  113.27, average_100_score:  -90.17, epsilon: 0.010
+episode:  88, duration (seconds):   1.35, score:  217.35, average_10_score:  116.40, average_100_score:  -86.67, epsilon: 0.010
+episode:  89, duration (seconds):   1.86, score:  175.50, average_10_score:  136.83, average_100_score:  -83.73, epsilon: 0.010
+episode:  90, duration (seconds):   0.58, score:   26.98, average_10_score:  117.19, average_100_score:  -82.50, epsilon: 0.010
+episode:  91, duration (seconds):   1.77, score:  201.94, average_10_score:  138.42, average_100_score:  -79.37, epsilon: 0.010
+episode:  92, duration (seconds):   3.06, score:  162.76, average_10_score:  134.51, average_100_score:  -76.74, epsilon: 0.010
+episode:  93, duration (seconds):   0.49, score:  -16.06, average_10_score:  112.98, average_100_score:  -76.09, epsilon: 0.010
+episode:  94, duration (seconds):   0.47, score:    1.16, average_10_score:   92.24, average_100_score:  -75.26, epsilon: 0.010
+episode:  95, duration (seconds):   0.40, score:   -7.89, average_10_score:   72.50, average_100_score:  -74.55, epsilon: 0.010
+episode:  96, duration (seconds):   1.46, score:  179.86, average_10_score:   86.80, average_100_score:  -71.90, epsilon: 0.010
+episode:  97, duration (seconds):   0.99, score:  213.40, average_10_score:  115.50, average_100_score:  -68.96, epsilon: 0.010
+episode:  98, duration (seconds):   0.38, score:  -19.36, average_10_score:   91.83, average_100_score:  -68.46, epsilon: 0.010
+episode:  99, duration (seconds):   0.32, score:  -21.13, average_10_score:   72.17, average_100_score:  -67.98, epsilon: 0.010
+episode: 100, duration (seconds):   0.66, score:   67.67, average_10_score:   76.23, average_100_score:  -66.62, epsilon: 0.010
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This saves the model to the specified directory</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s1">&#39;models/dqn_model_xxx_xx.pt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now we can visualize the training process</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;darkgrid&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create a dataframe </span>
+<span class="n">episodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_games</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;episode_no&#39;</span><span class="p">:</span> <span class="n">episodes</span><span class="p">,</span> <span class="s1">&#39;cumulative_reward&#39;</span><span class="p">:</span> <span class="n">scores</span><span class="p">,</span> <span class="s1">&#39;avg_10ep_cumulative_reward&#39;</span><span class="p">:</span> <span class="n">avg_10_scores</span><span class="p">,</span> 
+                  <span class="s1">&#39;avg_100ep_cumulative_reward&#39;</span><span class="p">:</span> <span class="n">avg_100_scores</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="n">durations</span><span class="p">})</span>
+
+<span class="c1"># Create plots for the (averaged) rewards and duration of each episode</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;episode_no&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;cumulative_reward&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;episode_no&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;avg_10ep_cumulative_reward&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;episode_no&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;avg_100ep_cumulative_reward&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;episode_no&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x2486090fe80&gt;
+</pre></div>
+</div>
+<img alt="_images/dqn_13_1.png" src="_images/dqn_13_1.png" />
+<img alt="_images/dqn_13_2.png" src="_images/dqn_13_2.png" />
+<img alt="_images/dqn_13_3.png" src="_images/dqn_13_3.png" />
+<img alt="_images/dqn_13_4.png" src="_images/dqn_13_4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saves the training data to a csv-file</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;results/Pytorch_DQN_1.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># When executed, this cell will run and render the game for you!</span>
+
+<span class="c1"># Number of times to play/render the game</span>
+<span class="n">n_instances</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_instances</span><span class="p">):</span>
+    <span class="c1"># Reset the environment</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="n">terminal</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># Play until the episode is done</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">terminal</span><span class="p">:</span>
+        <span class="c1"># Render the game</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+        <span class="c1"># Choose an action according to the epsilon-greedy policy of the DQN agent</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">choose_action</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+        <span class="c1"># Perform the action, and measure the new state, action, and whether the episode is done</span>
+        <span class="n">obs_</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminal</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="c1"># Accumulate the rewards</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="n">reward</span>
+        <span class="c1"># Update the state</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="n">obs_</span>
+
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Score: </span><span class="si">{:7.2f}</span><span class="s1">, duration (seconds): </span><span class="si">{:6.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">duration</span><span class="p">))</span>
+
+<span class="n">env</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Score:  -11.86, duration (seconds):   2.56
+Score:  -20.55, duration (seconds):   1.23
+Score:   -0.85, duration (seconds):   1.87
+Score:   -5.74, duration (seconds):   3.81
+Score:   -3.44, duration (seconds):   1.10
+Score:  -30.13, duration (seconds):   3.65
+Score:  -19.22, duration (seconds):   6.51
+Score:   -0.59, duration (seconds):   5.46
+Score:  220.75, duration (seconds):   5.45
+Score:  -59.17, duration (seconds):   4.69
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">The Reinforcement Learning Playground</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="ddqn.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Double Deep Q-Learning</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Lars Quaedvlieg<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
