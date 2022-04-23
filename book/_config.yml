@@ -1,36 +1,55 @@
 # Book settings
-# Learn more at https://jupyterbook.org/customize/config.html
-
 title: The Reinforcement Learning Playground
+logo: images/logo.png
 author: Lars Quaedvlieg
-logo: logo.png
+email: larsquaedvlieg@outlook.com
+copyright: "2022"
 
-# Force re-execution of notebooks on each build.
-# See https://jupyterbook.org/content/execute.html
+# Execution settings
 execute:
-  execute_notebooks: force
+  execute_notebooks: off  # Must be one of ("auto", "force", "cache", "off")
+  allow_errors: false
 
-# Define the name of the latex output file for PDF builds
+# Parse and render settings
+parse:
+  myst_enable_extensions:
+    - amsmath
+    - dollarmath
+  myst_dmath_double_inline: true
+
+# HTML-specific settings
+html:
+  favicon: images/favicon.ico
+  home_page_in_navbar: true
+  use_edit_page_button: false
+  use_repository_button: false
+  use_issues_button: false
+  extra_navbar: Powered by <a target="_blank" href="https://jupyterbook.org">Jupyter Book</a>
+  baseurl: "https://lars-quaedvlieg.github.io/RL-Playground/"
+
+# LaTeX-specific settings
 latex:
-  latex_documents:
-    targetname: book.tex
+  latex_engine: pdflatex
+  use_jupyterbook_latex: true
 
-# Add a bibtex file so that we can create citations
+# Launch button settings
+launch_buttons:
+  notebook_interface: "classic"
+  colab_url: "https://colab.research.google.com"
+  thebe: false
+
+repository:
+  url: https://github.com/lars-quaedvlieg/RL-Playground
+  path_to_book: docs
+  branch: master
+
+# References settings
 bibtex_bibfiles:
   - references.bib
 
-# Information about where the book exists on the web
-repository:
-  url: https://github.com/executablebooks/jupyter-book  # Online location of your book
-  path_to_book: docs  # Optional path to your book, relative to the repository root
-  branch: master  # Which branch of the repository should be used when creating links (optional)
-
-# Add GitHub buttons to your book
-# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
-html:
-  use_issues_button: true
-  use_repository_button: true
-
-#sphinx:
-#  config:
-#    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.j
+# Advanced settings
+sphinx:
+  extra_extensions:
+    - sphinx_proof
+  config:
+    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
