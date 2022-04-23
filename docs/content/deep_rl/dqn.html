@@ -1,64 +1,68 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Deep Q-Learning &#8212; The Reinforcement Learning Playground</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     
       
 
     
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
+    <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/deep_rl/dqn.html" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Double Deep Q-Learning" href="ddqn.html" />
-    <link rel="prev" title="The Reinforcement Learning Playground" href="intro.html" />
+    <link rel="prev" title="The Reinforcement Learning Playground" href="../welcome.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+    <meta name="docsearch:language" content="en">
     
 
     <!-- Google Analytics -->
@@ -76,26 +80,26 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
+    <a class="navbar-brand text-wrap" href="../../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
         
       
       
-      <img src="_static/logo.png" class="logo" alt="logo">
+      <img src="../../_static/logo.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">The Reinforcement Learning Playground</h1>
       
     </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="../welcome.html">
    The Reinforcement Learning Playground
   </a>
  </li>
@@ -122,7 +126,7 @@ const thebe_selector_output = ".output, .cell_output"
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+  Powered by <a target="_blank" href="https://jupyterbook.org">Jupyter Book</a>
 </div>
 
 </div>
@@ -157,9 +161,9 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/dqn.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+        <a class="dropdown-buttons" href="../../_sources/content/deep_rl/dqn.ipynb"><button type="button"
+                                                                                            class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                                                                                            data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -167,22 +171,6 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 
             <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fdqn.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
 
             <!-- Full screen (wrap in <a> to have style consistency -->
 
@@ -198,13 +186,18 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/dqn.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/lars-quaedvlieg/RL-Playground/master?urlpath=tree/docs/content/deep_rl/dqn.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
+                    src="../../_static/images/logo_binder.svg"
                     alt="Interact on binder">Binder</button></a>
         
         
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/lars-quaedvlieg/RL-Playground/blob/master/docs/content/deep_rl/dqn.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
         
         
     </div>
@@ -291,17 +284,9 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="deep-q-learning">
 <h1>Deep Q-Learning<a class="headerlink" href="#deep-q-learning" title="Permalink to this headline">¶</a></h1>
-<p>January 4, 2022 by Lars Quaedvlieg</p>
-<div class="alert alert-block alert-danger">
-<b>TODO:</b><br>
-Cite when converting too Jupyter book<br>
-For self: What to talk about? DQN -> R2D2 -> NGU -> Agent57 (might take too much time?) -> AlphaGo -> AlphaZero -> MuZero (leave out implementation?)<br>
-Add images<br>
-Cool Deep RL chapter image<br>
-For DQN experiments, also track maximum action-values<br>
-Add t-SNE embedding?<br>
-Soft updates for policy to target net?<br>
-Loss clipping???
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
 </div>
 <p>In this first notebook, we will implement multiple algorithms having to do with Deep RL, and apply them to a cool environment. We will start with one of the algorithms which got Deep RL taking off, namely, Deep Q-Learning. Then we will address some of the issues that come with this algorithm and improve it even more. This will hopefully also highlight progression in the field.</p>
 <blockquote>
@@ -316,17 +301,17 @@ learning”</strong>. In this section, we explain how DQL was invented from tabu
 <p>Sometimes non-linear estimators for the action-value function were used, such as a neural network. This neural networks with weights <span class="math notranslate nohighlight">\(\theta\)</span> is referred to as a Q-Network. A Q-Network can be trained by minimizing loss-functions <span class="math notranslate nohighlight">\(L_i(\theta_i))\)</span> which changes at every iteration <span class="math notranslate nohighlight">\(i\)</span> due to the expectation you will see.</p>
 <div class="math notranslate nohighlight">
 \[
-    L_i(\theta_i) = E_{s, a \sim\rho(.)}\left[(y_i - Q(s, a; \theta_i))^2\right]
+    L_i(\theta_i) = \mathbb{E}_{s, a \sim\rho(.)}\left[(y_i - Q(s, a; \theta_i))^2\right]
 \]</div>
-<p>Here <span class="math notranslate nohighlight">\(y_i = E_{r, s' \sim P}\left[r + \gamma \max_{a'}Q(s', a'; \theta_{i-1})|s, a\right]\)</span> is a target at iteration <span class="math notranslate nohighlight">\(i\)</span>. It is our goal to minimize this loss function, which can be done with the use of gradient-based optimization. Differentiating the loss function w.r.t. the weight results in:</p>
+<p>Here <span class="math notranslate nohighlight">\(y_i = \mathbb{E}_{r, s' \sim P}\left[r + \gamma \max_{a'}Q(s', a'; \theta_{i-1})|s, a\right]\)</span> is a target at iteration <span class="math notranslate nohighlight">\(i\)</span>. It is our goal to minimize this loss function, which can be done with the use of gradient-based optimization. Differentiating the loss function w.r.t. the weight results in:</p>
 <div class="math notranslate nohighlight">
 \[
-    \nabla_{\theta_i} L_i(\theta_i) = E_{s, a \sim \rho(.);r, s' \sim P}\left[\left(r + \gamma \max_{a'}Q(s', a'; \theta_{i-1}) - Q(s, a; \theta_i)\right)\nabla_{\theta_i}Q(s, a; \theta_i)\right]
+    \nabla_{\theta_i} L_i(\theta_i) = \mathbb{E}_{s, a \sim \rho(.);r, s' \sim P}\left[\left(r + \gamma \max_{a'}Q(s', a'; \theta_{i-1}) - Q(s, a; \theta_i)\right)\nabla_{\theta_i}Q(s, a; \theta_i)\right]
 \]</div>
 <p>Instead of computing the entire expectation in this gradient, it is often easier to minimize the loss function using stochastic gradient descent. These weights are then updated at each iteration, and the expectation is replaced by single samples from <span class="math notranslate nohighlight">\(\rho\)</span>. This is what happens in the original Q-Learning algorithm.</p>
 <p>The big problem is the fact that non-linear gradient-based Q-Learning does not necessarily convergence; this is actually the reason linear approximation was focused on within research: it has better convergence properties. All Deep Reinforcement Learning algorithms, Deep Q-Learning included, aim to “push” algorithms more towards convergence using clever (and often mathematically sound) tricks. We are now ready to get into the techniques introduced in the Deep Q-Learning paper.</p>
 <p>First, let’s import some of the libraries we will be using, and initialize a <strong><a class="reference external" href="https://pytorch.org/docs/stable/notes/cuda.html">Pytorch device</a></strong>. for computations (GPU when possible, else CPU).</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import copy for creating deep copies, and time for measuring elapsed time during training </span>
 <span class="kn">import</span> <span class="nn">copy</span>
@@ -357,16 +342,9 @@ learning”</strong>. In this section, we explain how DQL was invented from tabu
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">time</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># Import OpenAI Gym for Reinforcement Learning environments, numpy for efficient computations</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">gym</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># Import Pytorch neural networks and optimizers</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;gym&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GPU available: True
+Using device: cuda
+Device name: NVIDIA GeForce GTX 1060 with Max-Q Design
 </pre></div>
 </div>
 </div>
@@ -387,7 +365,8 @@ then the training samples will be dominated by samples from the left-hand side; 
 the parameters.</p>
 </div></blockquote>
 <p>We will now implement a replay buffer from scratch, which has been bounded by a maximum amount of memory. Once this memory has been filled, it will start overriding values that have been in the buffer the longest. The data will be stored in <strong><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html">Pytorch tensors</a></strong> corresponding to each cell in the tuple. Finally, it also saves a “terminal” to the tuple. This is an indicator variable, showing whether the current transition ends up in a terminal state. It is default that terminal states have a value of <span class="math notranslate nohighlight">\(0\)</span>, so this term will be used when computing the Q-target.</p>
-<div class="cell docutils container">
+<p>Test</p>
+<div class="cell docutils container" id="content-replay-buffer">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReplayBuffer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -467,7 +446,7 @@ the parameters.</p>
 </div>
 </div>
 <p>Now that all the methods have been implemented (storing and sampling the information), we will test the functionality of the buffer very simply. You are encouraged to try out multiple things, maybe change the buffer, whatever you’d like! That may help in understanding what is happening.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Testing the replay buffer</span>
 
@@ -558,12 +537,12 @@ Sampled terminal values: tensor([0.], device=&#39;cuda:0&#39;)
 <p>If you have done any gradient-based optimization in the past, you will know you need a loss function and optimizer to optimize your parameters. These are also stored in the agent. Earlier on, we saw original Q-Learning (not the algorithm we’re implementing!), aimed to minimize the following loss function:</p>
 <div class="math notranslate nohighlight">
 \[
-    L_i(\theta_i) = E_{s, a \sim\rho(.)}\left[(y_i - Q(s, a; \theta_i))^2\right]
+    L_i(\theta_i) = \mathbb{E}_{s, a \sim\rho(.)}\left[(y_i - Q(s, a; \theta_i))^2\right]
 \]</div>
 <p>This used stochastic gradient descent on samples encountered at every step (no experience replay existed). Now, since we are using experience replay, and updating by sampling from the buffer, the loss function becomes:</p>
 <div class="math notranslate nohighlight">
 \[
-    L_i(\theta_i) = E_{e \sim D}\left[(r + \gamma \max_{a'}Q(s', a'; \theta_{i}) - Q(s, a; \theta_i))^2\right]
+    L_i(\theta_i) = \mathbb{E}_{e \sim D}\left[(r + \gamma \max_{a'}Q(s', a'; \theta_{i}) - Q(s, a; \theta_i))^2\right]
 \]</div>
 <p>But now, there are two more techniques the paper utilizes to improve stability of the algorithm. The first one is referred to as the <strong>target network</strong>.</p>
 <blockquote>
@@ -572,14 +551,11 @@ Sampled terminal values: tensor([0.], device=&#39;cuda:0&#39;)
 <p>Let the parameters of our policy network remain to be called <span class="math notranslate nohighlight">\(\theta\)</span>, while the parameters of our target network will be referred to as <span class="math notranslate nohighlight">\(\theta^-\)</span>. The loss function we deploy now becomes the following:</p>
 <div class="math notranslate nohighlight">
 \[
-    L_i(\theta_i) = E_{e \sim D}\left[(r + \gamma \max_{a'}Q(s', a'; \theta^-_{i}) - Q(s, a; \theta_i))^2\right]
+    L_i(\theta_i) = \mathbb{E}_{e \sim D}\left[(r + \gamma \max_{a'}Q(s', a'; \theta^-_{i}) - Q(s, a; \theta_i))^2\right]
 \]</div>
 <p>The last trick the paper uses has to do with the gradient <span class="math notranslate nohighlight">\(\nabla L_i(\theta_i)\)</span>. In order to once again improve stability of the algorithm, the values of the <span class="math notranslate nohighlight">\(\nabla L_i(\theta_i)\)</span> are <strong>clamped</strong> to be in the range of <span class="math notranslate nohighlight">\((-1, 1)\)</span>. According to the paper, this has the following advantages:</p>
 <blockquote>
 <div><p>Because the absolute value loss function <span class="math notranslate nohighlight">\(|x|\)</span> has a derivative of <span class="math notranslate nohighlight">\(-1\)</span> for all negative values of <span class="math notranslate nohighlight">\(x\)</span> and a derivative of <span class="math notranslate nohighlight">\(1\)</span> for all positive values of <span class="math notranslate nohighlight">\(x\)</span>, clipping the squared error to be between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span> corresponds to using an absolute value loss function for errors outside of the <span class="math notranslate nohighlight">\((-1, 1)\)</span> interval. This form of error clipping further improved the stability of the algorithm.</p>
-</div></blockquote>
-<blockquote>
-<div><p>I think the 2 alternatives have a subtle but important difference. When using a DQN, the weights w are updated by taking the gradient of the loss. So for Huber loss, the gradient would be either d(Q_s,a)/dw or -d(Q_s,a)/dw outside [-0.5,0.5]. This is because the gradient of |loss| = +1 or -1. Using a squared loss function and clipping the gradient means that this whole resulting gradient is limited to [-1,+1] and not only the first term of the gradient. Thus, to get similar results to the DQN paper, I think one should use Huber loss.</p>
 </div></blockquote>
 <p>For our example, we will use the previously explained <strong><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.MSELoss.html">mean squared error loss</a></strong> on sampled minibatches from the replay buffer. This loss will then be minimized by updating the network parameters with the <strong><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.optim.Adam.html">Adam optimizer</a></strong>. In order to perform gradient clipping, we use the <strong><a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.Tensor.clamp.html">Tensor.clamp()</a></strong> method from the Pytorch library on the model parameters.</p>
 <div class="cell docutils container">
@@ -750,7 +726,7 @@ Sampled terminal values: tensor([0.], device=&#39;cuda:0&#39;)
 <div class="section" id="the-results">
 <h2>The results<a class="headerlink" href="#the-results" title="Permalink to this headline">¶</a></h2>
 <p>Everything has now been implemented! We will use the <strong><a class="reference external" href="https://gym.openai.com/envs/LunarLander-v2/">Lunar Lander v2</a></strong> environment from OpenAI gym to train and test our agent. During training, we will collect some statistics about the performance of the agent, which we will later visualize. At the end, you can also render games to see how your agent performs! Can you find out about any strategies the agent might have?</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the LunarLander environment (https://gym.openai.com/envs/LunarLander-v2/)</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;LunarLander-v2&#39;</span><span class="p">)</span>
@@ -772,7 +748,7 @@ Sampled terminal values: tensor([0.], device=&#39;cuda:0&#39;)
 <span class="n">agent</span> <span class="o">=</span> <span class="n">DQNAgent</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">input_dims</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">net_sync_delay</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">initial_epsilon</span><span class="p">,</span> <span class="n">epsilon_dec</span><span class="o">=</span><span class="n">epsilon_decay</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;models/DQN_1.pt&#39;</span><span class="p">)</span>
 
 <span class="c1"># Measure the scores, history of random action probability, and time per episode for 500 episodes</span>
-<span class="n">n_games</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">n_games</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">avg_10_scores</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">avg_100_scores</span> <span class="o">=</span> <span class="p">[]</span>
@@ -824,108 +800,26 @@ Sampled terminal values: tensor([0.], device=&#39;cuda:0&#39;)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Observation space dims: (8,)
 Number of actions: 4
-episode:   1, duration (seconds):   2.97, score: -198.37, average_10_score: -198.37, average_100_score: -198.37, epsilon: 0.963
-episode:   2, duration (seconds):   0.32, score: -112.16, average_10_score: -155.26, average_100_score: -155.26, epsilon: 0.917
-episode:   3, duration (seconds):   0.38, score: -273.27, average_10_score: -194.60, average_100_score: -194.60, epsilon: 0.862
-episode:   4, duration (seconds):   0.52, score: -156.51, average_10_score: -185.08, average_100_score: -185.08, epsilon: 0.792
-episode:   5, duration (seconds):   0.35, score:  -42.99, average_10_score: -156.66, average_100_score: -156.66, epsilon: 0.748
-episode:   6, duration (seconds):   0.46, score:  -76.96, average_10_score: -143.38, average_100_score: -143.38, epsilon: 0.684
-episode:   7, duration (seconds):   0.50, score: -127.74, average_10_score: -141.14, average_100_score: -141.14, epsilon: 0.617
-episode:   8, duration (seconds):   0.60, score:  -66.67, average_10_score: -131.83, average_100_score: -131.83, epsilon: 0.548
-episode:   9, duration (seconds):   0.57, score: -172.46, average_10_score: -136.35, average_100_score: -136.35, epsilon: 0.472
-episode:  10, duration (seconds):   1.00, score: -299.93, average_10_score: -152.71, average_100_score: -152.71, epsilon: 0.349
-episode:  11, duration (seconds):   1.56, score: -115.55, average_10_score: -144.43, average_100_score: -149.33, epsilon: 0.174
-episode:  12, duration (seconds):   4.92, score: -273.69, average_10_score: -160.58, average_100_score: -159.69, epsilon: 0.010
-episode:  13, duration (seconds):   1.44, score: -465.89, average_10_score: -179.84, average_100_score: -183.25, epsilon: 0.010
-episode:  14, duration (seconds):   0.73, score: -291.26, average_10_score: -193.32, average_100_score: -190.96, epsilon: 0.010
-episode:  15, duration (seconds):   0.41, score: -459.68, average_10_score: -234.98, average_100_score: -208.88, epsilon: 0.010
-episode:  16, duration (seconds):   0.95, score: -190.31, average_10_score: -246.32, average_100_score: -207.72, epsilon: 0.010
-episode:  17, duration (seconds):   0.78, score: -253.14, average_10_score: -258.86, average_100_score: -210.39, epsilon: 0.010
-episode:  18, duration (seconds):   1.90, score: -249.69, average_10_score: -277.16, average_100_score: -212.57, epsilon: 0.010
-episode:  19, duration (seconds):   0.80, score: -181.78, average_10_score: -278.09, average_100_score: -210.95, epsilon: 0.010
-episode:  20, duration (seconds):   1.17, score:  -34.20, average_10_score: -251.52, average_100_score: -202.11, epsilon: 0.010
-episode:  21, duration (seconds):   1.78, score:  -32.52, average_10_score: -243.21, average_100_score: -194.04, epsilon: 0.010
-episode:  22, duration (seconds):   1.69, score: -154.78, average_10_score: -231.32, average_100_score: -192.25, epsilon: 0.010
-episode:  23, duration (seconds):   1.01, score: -219.72, average_10_score: -206.71, average_100_score: -193.45, epsilon: 0.010
-episode:  24, duration (seconds):   3.92, score:  133.53, average_10_score: -164.23, average_100_score: -179.82, epsilon: 0.010
-episode:  25, duration (seconds):   1.50, score: -277.26, average_10_score: -145.99, average_100_score: -183.72, epsilon: 0.010
-episode:  26, duration (seconds):   1.31, score: -134.21, average_10_score: -140.38, average_100_score: -181.82, epsilon: 0.010
-episode:  27, duration (seconds):   1.50, score:  -98.60, average_10_score: -124.92, average_100_score: -178.73, epsilon: 0.010
-episode:  28, duration (seconds):   4.79, score: -218.37, average_10_score: -121.79, average_100_score: -180.15, epsilon: 0.010
-episode:  29, duration (seconds):   5.66, score: -156.87, average_10_score: -119.30, average_100_score: -179.35, epsilon: 0.010
-episode:  30, duration (seconds):   4.07, score: -106.23, average_10_score: -126.50, average_100_score: -176.91, epsilon: 0.010
-episode:  31, duration (seconds):   4.48, score:  -95.22, average_10_score: -132.77, average_100_score: -174.27, epsilon: 0.010
-episode:  32, duration (seconds):   5.77, score: -169.27, average_10_score: -134.22, average_100_score: -174.12, epsilon: 0.010
-episode:  33, duration (seconds):   4.81, score:  -90.16, average_10_score: -121.27, average_100_score: -171.57, epsilon: 0.010
-episode:  34, duration (seconds):   2.74, score:  -95.55, average_10_score: -144.17, average_100_score: -169.34, epsilon: 0.010
-episode:  35, duration (seconds):   5.29, score:  -50.25, average_10_score: -121.47, average_100_score: -165.93, epsilon: 0.010
-episode:  36, duration (seconds):   1.60, score:  -53.32, average_10_score: -113.38, average_100_score: -162.81, epsilon: 0.010
-episode:  37, duration (seconds):   4.54, score:  -52.71, average_10_score: -108.79, average_100_score: -159.83, epsilon: 0.010
-episode:  38, duration (seconds):   3.88, score:  126.43, average_10_score:  -74.31, average_100_score: -152.30, epsilon: 0.010
-episode:  39, duration (seconds):   4.76, score:  -89.16, average_10_score:  -67.54, average_100_score: -150.68, epsilon: 0.010
-episode:  40, duration (seconds):   5.37, score:  -35.94, average_10_score:  -60.51, average_100_score: -147.81, epsilon: 0.010
-episode:  41, duration (seconds):   4.19, score: -128.63, average_10_score:  -63.86, average_100_score: -147.34, epsilon: 0.010
-episode:  42, duration (seconds):   3.90, score: -141.01, average_10_score:  -61.03, average_100_score: -147.19, epsilon: 0.010
-episode:  43, duration (seconds):   5.25, score:  -58.16, average_10_score:  -57.83, average_100_score: -145.12, epsilon: 0.010
-episode:  44, duration (seconds):   5.02, score:  -73.87, average_10_score:  -55.66, average_100_score: -143.50, epsilon: 0.010
-episode:  45, duration (seconds):   4.91, score:  -70.06, average_10_score:  -57.64, average_100_score: -141.87, epsilon: 0.010
-episode:  46, duration (seconds):   4.60, score:  -31.69, average_10_score:  -55.48, average_100_score: -139.47, epsilon: 0.010
-episode:  47, duration (seconds):   5.30, score:  -68.16, average_10_score:  -57.03, average_100_score: -137.96, epsilon: 0.010
-episode:  48, duration (seconds):   0.44, score:  -28.09, average_10_score:  -72.48, average_100_score: -135.67, epsilon: 0.010
-episode:  49, duration (seconds):   4.96, score:  -84.18, average_10_score:  -71.98, average_100_score: -134.62, epsilon: 0.010
-episode:  50, duration (seconds):   2.02, score:  -35.52, average_10_score:  -71.94, average_100_score: -132.64, epsilon: 0.010
-episode:  51, duration (seconds):   0.30, score: -127.13, average_10_score:  -71.79, average_100_score: -132.53, epsilon: 0.010
-episode:  52, duration (seconds):   4.99, score:   -4.93, average_10_score:  -58.18, average_100_score: -130.07, epsilon: 0.010
-episode:  53, duration (seconds):   3.10, score:  126.99, average_10_score:  -39.66, average_100_score: -125.22, epsilon: 0.010
-episode:  54, duration (seconds):   1.77, score:  -11.57, average_10_score:  -33.43, average_100_score: -123.12, epsilon: 0.010
-episode:  55, duration (seconds):   4.37, score:  -53.20, average_10_score:  -31.75, average_100_score: -121.85, epsilon: 0.010
-episode:  56, duration (seconds):   2.76, score:  -35.05, average_10_score:  -32.08, average_100_score: -120.30, epsilon: 0.010
-episode:  57, duration (seconds):   0.30, score: -246.29, average_10_score:  -49.89, average_100_score: -122.51, epsilon: 0.010
-episode:  58, duration (seconds):   4.83, score:  -33.93, average_10_score:  -50.48, average_100_score: -120.98, epsilon: 0.010
-episode:  59, duration (seconds):   0.48, score:  -26.90, average_10_score:  -44.75, average_100_score: -119.39, epsilon: 0.010
-episode:  60, duration (seconds):   5.40, score:  -63.73, average_10_score:  -47.57, average_100_score: -118.46, epsilon: 0.010
-episode:  61, duration (seconds):   0.29, score: -494.70, average_10_score:  -84.33, average_100_score: -124.63, epsilon: 0.010
-episode:  62, duration (seconds):   1.40, score:  -50.34, average_10_score:  -88.87, average_100_score: -123.43, epsilon: 0.010
-episode:  63, duration (seconds):   0.66, score: -206.00, average_10_score: -122.17, average_100_score: -124.74, epsilon: 0.010
-episode:  64, duration (seconds):   0.38, score:   33.89, average_10_score: -117.62, average_100_score: -122.26, epsilon: 0.010
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>episode:  65, duration (seconds):   1.16, score:  234.39, average_10_score:  -88.86, average_100_score: -116.77, epsilon: 0.010
-episode:  66, duration (seconds):   3.66, score:  -83.42, average_10_score:  -93.70, average_100_score: -116.27, epsilon: 0.010
-episode:  67, duration (seconds):   0.31, score: -333.32, average_10_score: -102.41, average_100_score: -119.51, epsilon: 0.010
-episode:  68, duration (seconds):   2.09, score:  173.34, average_10_score:  -81.68, average_100_score: -115.20, epsilon: 0.010
-episode:  69, duration (seconds):   0.32, score: -728.05, average_10_score: -151.79, average_100_score: -124.08, epsilon: 0.010
-episode:  70, duration (seconds):   0.23, score: -190.34, average_10_score: -164.45, average_100_score: -125.03, epsilon: 0.010
-episode:  71, duration (seconds):   5.08, score: -172.57, average_10_score: -132.24, average_100_score: -125.70, epsilon: 0.010
-episode:  72, duration (seconds):   4.45, score:  -38.77, average_10_score: -131.08, average_100_score: -124.49, epsilon: 0.010
-episode:  73, duration (seconds):   5.12, score:  -49.48, average_10_score: -115.43, average_100_score: -123.46, epsilon: 0.010
-episode:  74, duration (seconds):   4.34, score:   -5.36, average_10_score: -119.36, average_100_score: -121.87, epsilon: 0.010
-episode:  75, duration (seconds):   2.25, score:  206.94, average_10_score: -122.10, average_100_score: -117.48, epsilon: 0.010
-episode:  76, duration (seconds):   3.69, score: -113.05, average_10_score: -125.07, average_100_score: -117.43, epsilon: 0.010
-episode:  77, duration (seconds):   1.16, score:  -52.73, average_10_score:  -97.01, average_100_score: -116.59, epsilon: 0.010
-episode:  78, duration (seconds):   1.23, score:  185.98, average_10_score:  -95.74, average_100_score: -112.71, epsilon: 0.010
-episode:  79, duration (seconds):   0.63, score:  -28.73, average_10_score:  -25.81, average_100_score: -111.64, epsilon: 0.010
-episode:  80, duration (seconds):   0.86, score:  223.38, average_10_score:   15.56, average_100_score: -107.46, epsilon: 0.010
-episode:  81, duration (seconds):   1.67, score:  -10.36, average_10_score:   31.78, average_100_score: -106.26, epsilon: 0.010
-episode:  82, duration (seconds):   1.54, score:  201.81, average_10_score:   55.84, average_100_score: -102.50, epsilon: 0.010
-episode:  83, duration (seconds):   0.87, score:  199.30, average_10_score:   80.72, average_100_score:  -98.86, epsilon: 0.010
-episode:  84, duration (seconds):   1.04, score:  208.50, average_10_score:  102.10, average_100_score:  -95.20, epsilon: 0.010
-episode:  85, duration (seconds):   1.41, score:  189.53, average_10_score:  100.36, average_100_score:  -91.85, epsilon: 0.010
-episode:  86, duration (seconds):   4.71, score:   36.89, average_10_score:  115.36, average_100_score:  -90.36, epsilon: 0.010
-episode:  87, duration (seconds):   1.35, score:  -73.63, average_10_score:  113.27, average_100_score:  -90.17, epsilon: 0.010
-episode:  88, duration (seconds):   1.35, score:  217.35, average_10_score:  116.40, average_100_score:  -86.67, epsilon: 0.010
-episode:  89, duration (seconds):   1.86, score:  175.50, average_10_score:  136.83, average_100_score:  -83.73, epsilon: 0.010
-episode:  90, duration (seconds):   0.58, score:   26.98, average_10_score:  117.19, average_100_score:  -82.50, epsilon: 0.010
-episode:  91, duration (seconds):   1.77, score:  201.94, average_10_score:  138.42, average_100_score:  -79.37, epsilon: 0.010
-episode:  92, duration (seconds):   3.06, score:  162.76, average_10_score:  134.51, average_100_score:  -76.74, epsilon: 0.010
-episode:  93, duration (seconds):   0.49, score:  -16.06, average_10_score:  112.98, average_100_score:  -76.09, epsilon: 0.010
-episode:  94, duration (seconds):   0.47, score:    1.16, average_10_score:   92.24, average_100_score:  -75.26, epsilon: 0.010
-episode:  95, duration (seconds):   0.40, score:   -7.89, average_10_score:   72.50, average_100_score:  -74.55, epsilon: 0.010
-episode:  96, duration (seconds):   1.46, score:  179.86, average_10_score:   86.80, average_100_score:  -71.90, epsilon: 0.010
-episode:  97, duration (seconds):   0.99, score:  213.40, average_10_score:  115.50, average_100_score:  -68.96, epsilon: 0.010
-episode:  98, duration (seconds):   0.38, score:  -19.36, average_10_score:   91.83, average_100_score:  -68.46, epsilon: 0.010
-episode:  99, duration (seconds):   0.32, score:  -21.13, average_10_score:   72.17, average_100_score:  -67.98, epsilon: 0.010
-episode: 100, duration (seconds):   0.66, score:   67.67, average_10_score:   76.23, average_100_score:  -66.62, epsilon: 0.010
+episode:   1, duration (seconds):   0.45, score: -139.40, average_10_score: -139.40, average_100_score: -139.40, epsilon: 0.966
+episode:   2, duration (seconds):   0.47, score:  -63.01, average_10_score: -101.20, average_100_score: -101.20, epsilon: 0.936
+episode:   3, duration (seconds):   1.00, score: -286.77, average_10_score: -163.06, average_100_score: -163.06, epsilon: 0.879
+episode:   4, duration (seconds):   0.91, score: -124.62, average_10_score: -153.45, average_100_score: -153.45, epsilon: 0.835
+episode:   5, duration (seconds):   0.71, score: -161.97, average_10_score: -155.15, average_100_score: -155.15, epsilon: 0.782
+episode:   6, duration (seconds):   1.11, score: -186.60, average_10_score: -160.39, average_100_score: -160.39, epsilon: 0.730
+episode:   7, duration (seconds):   1.35, score: -439.90, average_10_score: -200.32, average_100_score: -200.32, epsilon: 0.670
+episode:   8, duration (seconds):   0.76, score: -287.97, average_10_score: -211.28, average_100_score: -211.28, epsilon: 0.622
+episode:   9, duration (seconds):   0.53, score: -288.61, average_10_score: -219.87, average_100_score: -219.87, epsilon: 0.580
+episode:  10, duration (seconds):   0.81, score: -408.43, average_10_score: -238.73, average_100_score: -238.73, epsilon: 0.515
+episode:  11, duration (seconds):   1.21, score: -142.08, average_10_score: -239.00, average_100_score: -229.94, epsilon: 0.433
+episode:  12, duration (seconds):   8.60, score: -167.25, average_10_score: -249.42, average_100_score: -224.72, epsilon: 0.010
+episode:  13, duration (seconds):   5.26, score: -204.83, average_10_score: -241.23, average_100_score: -223.19, epsilon: 0.010
+episode:  14, duration (seconds):  11.67, score:  -59.04, average_10_score: -234.67, average_100_score: -211.46, epsilon: 0.010
+episode:  15, duration (seconds):  12.50, score:  -91.11, average_10_score: -227.58, average_100_score: -203.44, epsilon: 0.010
+episode:  16, duration (seconds):   6.05, score: -112.89, average_10_score: -220.21, average_100_score: -197.78, epsilon: 0.010
+episode:  17, duration (seconds):  12.32, score:   11.33, average_10_score: -175.09, average_100_score: -185.48, epsilon: 0.010
+episode:  18, duration (seconds):   9.14, score:  -91.76, average_10_score: -155.47, average_100_score: -180.27, epsilon: 0.010
+episode:  19, duration (seconds):   5.21, score: -225.64, average_10_score: -149.17, average_100_score: -182.66, epsilon: 0.010
+episode:  20, duration (seconds):  10.88, score:   -5.86, average_10_score: -108.91, average_100_score: -173.82, epsilon: 0.010
 </pre></div>
 </div>
 </div>
@@ -938,7 +832,7 @@ episode: 100, duration (seconds):   0.66, score:   67.67, average_10_score:   76
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now we can visualize the training process</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;darkgrid&#39;</span><span class="p">)</span>
@@ -957,13 +851,13 @@ episode: 100, duration (seconds):   0.66, score:   67.67, average_10_score:   76
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x2486090fe80&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x2d1e9716410&gt;
 </pre></div>
 </div>
-<img alt="_images/dqn_13_1.png" src="_images/dqn_13_1.png" />
-<img alt="_images/dqn_13_2.png" src="_images/dqn_13_2.png" />
-<img alt="_images/dqn_13_3.png" src="_images/dqn_13_3.png" />
-<img alt="_images/dqn_13_4.png" src="_images/dqn_13_4.png" />
+<img alt="../../_images/dqn_13_1.png" src="../../_images/dqn_13_1.png" />
+<img alt="../../_images/dqn_13_2.png" src="../../_images/dqn_13_2.png" />
+<img alt="../../_images/dqn_13_3.png" src="../../_images/dqn_13_3.png" />
+<img alt="../../_images/dqn_13_4.png" src="../../_images/dqn_13_4.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -974,7 +868,7 @@ episode: 100, duration (seconds):   0.66, score:   67.67, average_10_score:   76
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># When executed, this cell will run and render the game for you!</span>
 
@@ -1010,20 +904,6 @@ episode: 100, duration (seconds):   0.66, score:   67.67, average_10_score:   76
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Score:  -11.86, duration (seconds):   2.56
-Score:  -20.55, duration (seconds):   1.23
-Score:   -0.85, duration (seconds):   1.87
-Score:   -5.74, duration (seconds):   3.81
-Score:   -3.44, duration (seconds):   1.10
-Score:  -30.13, duration (seconds):   3.65
-Score:  -19.22, duration (seconds):   6.51
-Score:   -0.59, duration (seconds):   5.46
-Score:  220.75, duration (seconds):   5.45
-Score:  -59.17, duration (seconds):   4.69
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -1041,7 +921,7 @@ Score:  -59.17, duration (seconds):   4.69
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./."
+            path: "./content\deep_rl"
         },
         predefinedOutput: true
     }
@@ -1053,7 +933,7 @@ Score:  -59.17, duration (seconds):   4.69
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../welcome.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
@@ -1076,7 +956,7 @@ Score:  -59.17, duration (seconds):   4.69
     
       By Lars Quaedvlieg<br/>
     
-        &copy; Copyright 2021.<br/>
+        &copy; Copyright 2022.<br/>
   </p>
 </footer>
 </main>
@@ -1085,7 +965,7 @@ Score:  -59.17, duration (seconds):   4.69
       </div>
     </div>
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
   </body>
 </html>

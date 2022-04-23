@@ -15,7 +15,7 @@ The book is currently a **work in progress**, but eventually, the following topi
 * - Topic
   - Completed
 * - Fundamentals of Reinforcement Learning
-  - X
+  - [PDF only](https://github.com/lars-quaedvlieg/Reinforcement-Learning-Book) *(conversion in progress)*
 * - Deep Reinforcement Learning
   - *In progress*
 * - Policy Gradient Algorithms
@@ -29,5 +29,7 @@ The book is currently a **work in progress**, but eventually, the following topi
 * - Meta Reinforcement Learning
   - 
 * - Multiagent Reinforcement Learning
+  - 
+* - Inverse Reinforcement Learning
   - 
 ```

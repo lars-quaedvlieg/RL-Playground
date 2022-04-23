@@ -26,6 +26,8 @@ html:
   use_issues_button: false
   extra_navbar: Powered by <a target="_blank" href="https://jupyterbook.org">Jupyter Book</a>
   baseurl: "https://lars-quaedvlieg.github.io/RL-Playground/"
+  comments:
+    hypothesis: true
 
 # LaTeX-specific settings
 latex:
@@ -52,4 +54,5 @@ sphinx:
   extra_extensions:
     - sphinx_proof
   config:
+    language: en
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
