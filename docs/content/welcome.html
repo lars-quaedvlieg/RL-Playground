@@ -57,7 +57,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Deep Q-Learning" href="deep_rl/dqn.html" />
+    <link rel="next" title="The Reinforcement Learning Problem" href="intro-to-rl/the-rl-problem.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -103,17 +103,54 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
+  Fundamentals of Reinforcement Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro-to-rl/the-rl-problem.html">
+   The Reinforcement Learning Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro-to-rl/markov-decision-processes.html">
+   Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro-to-rl/planning-dynamic-programming.html">
+   Planning by Dynamic Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro-to-rl/model-free-prediction.html">
+   Model Free Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro-to-rl/model-free-control.html">
+   Model Free Control
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro-to-rl/exploration-vs-exploitation.html">
+   Exploration versus Exploitation
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
   Deep Reinforcement Learning
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="deep_rl/dqn.html">
+  <a class="reference internal" href="deep-rl/dqn.html">
    Deep Q-Learning
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="deep_rl/ddqn.html">
+  <a class="reference internal" href="deep-rl/ddqn.html">
    Double Deep Q-Learning
   </a>
  </li>
@@ -203,12 +240,35 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="the-reinforcement-learning-playground">
 <h1>The Reinforcement Learning Playground<a class="headerlink" href="#the-reinforcement-learning-playground" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to the Reinforcement Learning playground! We are happy to have you here.</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition-if-you-are-more-experienced admonition">
+<p class="admonition-title">If you are more experienced…</p>
+<p>You are encouraged to contribute to this project! If you are interested, reach out
+<a class="reference external" href="mailto:larsquaedvlieg&#37;&#52;&#48;outlook&#46;com">by e-mail</a> or help out by contributing to the
+<a class="reference external" href="https://github.com/lars-quaedvlieg/RL-Playground">GitHub repository</a>.</p>
+</div>
+</div>
+<p>Welcome to the <strong>Reinforcement Learning Playground</strong>! We are happy that you have decided to give our book a try.</p>
 <p>The RL-playground is an open-source and interactive book that has been created by
-<a class="reference external" href="https://larsquaedvlieg.com/">Lars Quaedvlieg</a> to learn more about the field of Reinforcement learning.</p>
-<p>The book will cover theory about multiple topics, and come with code implementations and examples whenever possible.</p>
+<a class="reference external" href="https://larsquaedvlieg.com/">Lars Quaedvlieg</a>, hoping to inspire people to get into the exciting field of Reinforcement
+Learning.</p>
+<p>The book will cover the mathematical theories of multiple topics from the field. However, whenever possible,
+these will be accompanied by code implementations and examples. This aims to make learning more interactive, practical
+and fun!</p>
+<p>The target audience of this book is anyone who would want to learn more about reinforcement learning. The content is
+expected to cover fundamental theories to state-of-the-art research.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>While you do not have to know anything about Reinforcement Learning prior to starting the book, one is expected to
+have some previous experience with <code class="docutils literal notranslate"><span class="pre">Calculus</span></code>, <code class="docutils literal notranslate"><span class="pre">Linear</span> <span class="pre">Algebra</span></code>, <code class="docutils literal notranslate"><span class="pre">Probability</span> <span class="pre">Theory</span></code>, and <code class="docutils literal notranslate"><span class="pre">Statistics</span></code>.</p>
+<p>Furthermore, for software implementations, <code class="docutils literal notranslate"><span class="pre">Python</span></code> will be used. Within Python, we make use of well-known packages to
+make our lives easier, such as <code class="docutils literal notranslate"><span class="pre">Pytorch</span></code>, <code class="docutils literal notranslate"><span class="pre">OpenAI</span> <span class="pre">Gym</span></code>, <code class="docutils literal notranslate"><span class="pre">Numpy</span></code>. If you are interested in the practical side
+of the book, please make sure you have a basic understanding of these software packages.</p>
+</div>
 <p>The book is currently a <strong>work in progress</strong>, but eventually, the following topics should be discussed:</p>
-<table class="table">
+<table class="table" id="id1">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Book content list (can change over time)</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -228,26 +288,31 @@ const thebe_selector_output = ".output, .cell_output"
 <tr class="row-even"><td><p>Policy Gradient Algorithms</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>Distributional Reinforcement Learning</p></td>
+<tr class="row-odd"><td><p>Model-based Reinforcement Learning</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>Evolutionary Reinforcement Learning</p></td>
+<tr class="row-even"><td><p>Distributional Reinforcement Learning</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>Unsupervised Reinforcement Learning</p></td>
+<tr class="row-odd"><td><p>Evolutionary Reinforcement Learning</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>Meta Reinforcement Learning</p></td>
+<tr class="row-even"><td><p>Unsupervised Reinforcement Learning</p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p>Multiagent Reinforcement Learning</p></td>
+<tr class="row-odd"><td><p>Meta Reinforcement Learning</p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p>Inverse Reinforcement Learning</p></td>
+<tr class="row-even"><td><p>Multiagent Reinforcement Learning</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Inverse Reinforcement Learning</p></td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<div class="toctree-wrapper compound">
+</div>
 <div class="toctree-wrapper compound">
 </div>
 </div>
@@ -277,10 +342,10 @@ const thebe_selector_output = ".output, .cell_output"
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="deep_rl/dqn.html" title="next page">
+    <a class='right-next' id="next-link" href="intro-to-rl/the-rl-problem.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Deep Q-Learning</p>
+        <p class="prev-next-title">The Reinforcement Learning Problem</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

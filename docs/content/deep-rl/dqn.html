@@ -55,12 +55,12 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/deep_rl/dqn.html" />
+    <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/deep-rl/dqn.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Double Deep Q-Learning" href="ddqn.html" />
-    <link rel="prev" title="The Reinforcement Learning Playground" href="../welcome.html" />
+    <link rel="prev" title="Exploration versus Exploitation" href="../intro-to-rl/exploration-vs-exploitation.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -101,6 +101,43 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../welcome.html">
    The Reinforcement Learning Playground
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Fundamentals of Reinforcement Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/the-rl-problem.html">
+   The Reinforcement Learning Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/markov-decision-processes.html">
+   Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/planning-dynamic-programming.html">
+   Planning by Dynamic Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/model-free-prediction.html">
+   Model Free Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/model-free-control.html">
+   Model Free Control
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/exploration-vs-exploitation.html">
+   Exploration versus Exploitation
   </a>
  </li>
 </ul>
@@ -161,7 +198,7 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/content/deep_rl/dqn.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/content/deep-rl/dqn.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -186,7 +223,7 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/lars-quaedvlieg/RL-Playground/master?urlpath=tree/docs/content/deep_rl/dqn.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/lars-quaedvlieg/RL-Playground/master?urlpath=tree/docs/content/deep-rl/dqn.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -194,7 +231,7 @@ const thebe_selector_output = ".output, .cell_output"
         
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/lars-quaedvlieg/RL-Playground/blob/master/docs/content/deep_rl/dqn.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+        <a class="colab-button" href="https://colab.research.google.com/github/lars-quaedvlieg/RL-Playground/blob/master/docs/content/deep-rl/dqn.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
                 title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
                     src="../../_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
@@ -921,7 +958,7 @@ episode:  20, duration (seconds):  10.88, score:   -5.86, average_10_score: -108
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./content\deep_rl"
+            path: "./content\deep-rl"
         },
         predefinedOutput: true
     }
@@ -933,11 +970,11 @@ episode:  20, duration (seconds):  10.88, score:   -5.86, average_10_score: -108
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../welcome.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../intro-to-rl/exploration-vs-exploitation.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">The Reinforcement Learning Playground</p>
+            <p class="prev-next-title">Exploration versus Exploitation</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="ddqn.html" title="next page">

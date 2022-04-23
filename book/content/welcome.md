@@ -1,15 +1,38 @@
 # The Reinforcement Learning Playground
 
-Welcome to the Reinforcement Learning playground! We are happy to have you here.
+````{margin}
+```{admonition} If you are more experienced...
+You are encouraged to contribute to this project! If you are interested, reach out 
+[by e-mail](mailto:larsquaedvlieg@outlook.com) or help out by contributing to the 
+[GitHub repository](https://github.com/lars-quaedvlieg/RL-Playground).
+```
+````
+
+Welcome to the **Reinforcement Learning Playground**! We are happy that you have decided to give our book a try. 
 
 The RL-playground is an open-source and interactive book that has been created by 
-[Lars Quaedvlieg](https://larsquaedvlieg.com/) to learn more about the field of Reinforcement learning.
+[Lars Quaedvlieg](https://larsquaedvlieg.com/), hoping to inspire people to get into the exciting field of Reinforcement
+Learning. 
 
-The book will cover theory about multiple topics, and come with code implementations and examples whenever possible.
+The book will cover the mathematical theories of multiple topics from the field. However, whenever possible, 
+these will be accompanied by code implementations and examples. This aims to make learning more interactive, practical 
+and fun! 
+
+The target audience of this book is anyone who would want to learn more about reinforcement learning. The content is 
+expected to cover fundamental theories to state-of-the-art research.
+
+```{tip}
+While you do not have to know anything about Reinforcement Learning prior to starting the book, one is expected to
+have some previous experience with `Calculus`, `Linear Algebra`, `Probability Theory`, and `Statistics`.
+
+Furthermore, for software implementations, `Python` will be used. Within Python, we make use of well-known packages to 
+make our lives easier, such as `Pytorch`, `OpenAI Gym`, `Numpy`. If you are interested in the practical side 
+of the book, please make sure you have a basic understanding of these software packages.
+```
 
 The book is currently a **work in progress**, but eventually, the following topics should be discussed:
 
-```{list-table}
+```{list-table} Book content list (can change over time)
 :header-rows: 1
 
 * - Topic
@@ -19,6 +42,8 @@ The book is currently a **work in progress**, but eventually, the following topi
 * - Deep Reinforcement Learning
   - *In progress*
 * - Policy Gradient Algorithms
+  - 
+* - Model-based Reinforcement Learning
   - 
 * - Distributional Reinforcement Learning
   - 

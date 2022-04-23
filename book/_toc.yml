@@ -5,7 +5,15 @@ format: jb-book
 root: content/welcome
 
 parts:
+  - caption: Fundamentals of Reinforcement Learning
+    chapters:
+      - file: content/intro-to-rl/the-rl-problem
+      - file: content/intro-to-rl/markov-decision-processes
+      - file: content/intro-to-rl/planning-dynamic-programming
+      - file: content/intro-to-rl/model-free-prediction
+      - file: content/intro-to-rl/model-free-control
+      - file: content/intro-to-rl/exploration-vs-exploitation
   - caption: Deep Reinforcement Learning
     chapters:
-    - file: content/deep_rl/dqn
-    - file: content/deep_rl/ddqn
+    - file: content/deep-rl/dqn
+    - file: content/deep-rl/ddqn
