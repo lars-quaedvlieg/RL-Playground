@@ -19,7 +19,8 @@ this book better!
   - Affiliation
   - Accomplishments  
 * - {badge}`Active maintainer,badge-danger` {badge}`Active contributor,badge-dark`\
-  [**Lars Quaedvlieg**](https://larsquaedvlieg.com/)\
+  **Lars Quaedvlieg**\
+  [<i class="fa-solid fa-link"></i>](https://larsquaedvlieg.com/)
   [<i class="fa-brands fa-linkedin"></i>](https://www.linkedin.com/in/lars-quaedvlieg/)
   [<i class="fa-brands fa-github"></i>](https://github.com/lars-quaedvlieg)
   [<i class="fa-solid fa-envelope"></i>](mailto:larsquaedvlieg@outlook.com)
