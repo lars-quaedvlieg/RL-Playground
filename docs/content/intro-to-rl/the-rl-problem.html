@@ -53,6 +53,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://kit.fontawesome.com/26eda3309b.js"></script>
     <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/intro-to-rl/the-rl-problem.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -204,9 +206,9 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/the-rl-problem.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/the-rl-problem.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -224,33 +226,29 @@ const thebe_selector_output = ".output, .cell_output"
 
             <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/lars-quaedvlieg/RL-Playground/master?urlpath=tree/docs/content/intro-to-rl/the-rl-problem.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/lars-quaedvlieg/RL-Playground/blob/master/docs/content/intro-to-rl/the-rl-problem.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   The Reinforcement Learning Problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#components-of-a-reinforcement-learning-agent">
+   Components of a Reinforcement Learning Agent
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -263,6 +261,24 @@ const thebe_selector_output = ".output, .cell_output"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   The Reinforcement Learning Problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#components-of-a-reinforcement-learning-agent">
+   Components of a Reinforcement Learning Agent
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -273,7 +289,175 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>The Reinforcement Learning Problem<a class="headerlink" href="#the-reinforcement-learning-problem" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
+<p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide
+incorrect information.</p>
+</div>
+<p>Reinforcement Learning (RL) is an area of Machine Learning concerned with deciding on a sequence of actions in an
+unknown environment in order to maximize cumulative reward.</p>
+<p>To give an idea of this, imagine you are somewhere in a 2d-maze. At each point, you can either move to the left, right, up or down. The goal is to find your way out of the maze.
+This corresponds to obtaining positive reward when completing the maze. Using Reinforcement Learning, you can figure out the optimal way to behave in this environment.</p>
+<div class="section" id="id1">
+<h2>The Reinforcement Learning Problem<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>What makes reinforcement learning different from other machine learning paradigms?</p>
+<ul class="simple">
+<li><p>There is no supervisor, only a <strong>reward</strong> signal</p></li>
+<li><p>Feedback is delayed, not instantaneous</p></li>
+<li><p>Time really matters (sequential, non i.i.d. data)</p></li>
+<li><p>Agent’s actions affect the subsequent data it receives</p></li>
+</ul>
+<div class="proof definition admonition" id="definiton:reward-hypothesis">
+<p class="admonition-title"><span class="caption-number">Definition 1 </span></p>
+<div class="definition-content section" id="proof-content">
+<p>The <em>Reward Hypothesis</em> states that all imaginable goals can be described by the maximization of an expected cumulative
+reward function.</p>
+</div>
+</div><p>Rewards function as scalar feedback signals. Reinforcement Learning is based on the <strong>Reward Hypothesis</strong>, which has
+been assumed to be true. Some problems can be difficult to solve, since actions can have long-term consequences and
+reward can be delayed.</p>
+<div class="proof example dropdown admonition" id="example:chess-reward-function">
+<p class="admonition-title"><span class="caption-number">Example 1 </span></p>
+<div class="example-content section" id="proof-content">
+<p>Imagine our goal is to train the best computer program at chess. What could a good reward function be defined as?</p>
+<details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+Reveal answer<div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<p class="card-text">There could be multiple correct answers (where some definitions of the reward function may lead to solving the problem
+more quickly than others). However, one example is giving a positive reward whenever the program wins a game. It will
+aim to maximize the cumulative reward, so over time it should get better at the game.</p>
+</div>
+</details></div>
+</div><div class="proof example dropdown admonition" id="example:non-trivial-reward-function">
+<p class="admonition-title"><span class="caption-number">Example 2 </span></p>
+<div class="example-content section" id="proof-content">
+<p>Imagine you have built an agent that controls the way electricity is shipped to houses from a provider. Your goal is to
+save as much money as you can, by modifying the shipment procedure. As an AI engineer, you decide to define the reward
+function as punishing shipped electricity, hoping the agent would make the procedure more efficient by not shipping
+unwanted electricity.</p>
+<ol class="simple">
+<li><p>Why may the design of this reward function not be the best idea?</p></li>
+</ol>
+<details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+Reveal answer<div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<p class="card-text">By punishing shipped electricity, there is a good chance that the agent will learn not to ship anything at all.
+This would maximize it’s cumulative reward.</p>
+</div>
+</details><ol class="simple">
+<li><p>How would you improve the reward function?</p></li>
+</ol>
+<details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+Reveal answer<div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<p class="card-text">There can be multiple correct answers, but one might define a reward function directly as the profit that has been
+earned by the procedure. This should then be maximize to the best of the agent’s abilities.</p>
+<p class="card-text">This was just a toy example, but the point here is that reward functions may have undesirable outcomes (that could, in
+some cases, have bad consequences). The definition of a good reward function may not be trivial in some situations.</p>
+</div>
+</details></div>
+</div><p>A state is <strong>Markov</strong>, if and only if it has the <strong>Markov Property</strong>, meaning <span class="math notranslate nohighlight">\(\mathbb{P}(S_t+1 | S_t) = 
+\mathbb{P}(S_t+1 | S_1, ..., S_t)\)</span>. This means the probability of future states solely depends on the current state, and
+not on any previous states. I.e. the history is a sufficient statistic of the future.</p>
+<p>Let <span class="math notranslate nohighlight">\(S_t^a\)</span> be the state of the agent at any time t and <span class="math notranslate nohighlight">\(S_t^e\)</span> be the state of the environment on any time t. If the
+environment is <strong>fully observable</strong>, then <span class="math notranslate nohighlight">\(S_t^a = S_t^e\)</span>. This means that the Markov property holds, so formally it is
+a Markov Decision Process.</p>
+<p>However, when the environment is <strong>partially observable</strong>, the agent indirectly observes the environment. Now,
+<span class="math notranslate nohighlight">\(S_t^a \neq S_t^e\)</span>. Formally, this is called a partially observable Markov decision process (POMDP). The agent must
+construct it’s own state representation <span class="math notranslate nohighlight">\(S_t^a\)</span>. For example:</p>
+<ul class="simple">
+<li><p>Complete history: <span class="math notranslate nohighlight">\(S_t^a = H_t\)</span></p></li>
+<li><p>Beliefs of environment state: <span class="math notranslate nohighlight">\(S_t^a = (\mathbb{P}[S_t^e = s^1], ...,\mathbb{P}[S_t^e = s^n])\)</span></p></li>
+<li><p>Recurrent Neural Network: <span class="math notranslate nohighlight">\(S_t^a = \sigma(S_{t-1}^a W_s + O_t W_o))\)</span></p></li>
+</ul>
+</div>
+<div class="section" id="components-of-a-reinforcement-learning-agent">
+<h2>Components of a Reinforcement Learning Agent<a class="headerlink" href="#components-of-a-reinforcement-learning-agent" title="Permalink to this headline">¶</a></h2>
+<p>An RL agent may include one or more of these components:</p>
+<ul class="simple">
+<li><p><strong>Policy</strong>: agent’s behaviour function</p></li>
+<li><p><strong>Value function</strong>: how good is each state and/or action</p></li>
+<li><p><strong>Model</strong>: agent’s representation of the environment</p></li>
+</ul>
+<p>A policy describes the agent’s behavior. It maps states to actions. You can have deterministic (<span class="math notranslate nohighlight">\(a = \pi(s)\)</span>) and
+stochastic policies (<span class="math notranslate nohighlight">\(\pi(a | s) = \mathbb{P}(A_t = a | S_t = s)\)</span>). Often, <span class="math notranslate nohighlight">\(\pi\)</span> is used to denote a policy.</p>
+<p>A <strong>value function</strong> is a prediction of future reward of a given state. You can use it to determine if a state is good
+or bad. This means you can use it to select actions. It can be computed by <span class="math notranslate nohighlight">\(v_\pi(s) = \mathbb{E}_\pi(G_t | S_t = s)\)</span>,
+where <span class="math notranslate nohighlight">\(G_t\)</span> is the <strong>return</strong> (or discounted cumulative reward). The return is defined as
+<span class="math notranslate nohighlight">\(G_t = R_1 + \gamma R_2 + \gamma^2 R_3 + ... = \sum_{i=t+1}^\infty\gamma^{i-t-1}R_i\)</span> for some <span class="math notranslate nohighlight">\(\gamma \in [0, 1]\)</span>.
+This gamma is the <strong>discount factor</strong>, and it influences how much the future impacts return. This is useful, since
+it is not known if the representation of the environment is perfect. If it is not, it is not good to let the future
+influence the return as much as more local states. So, it is discounted.</p>
+<p>Finally, a <strong>model</strong> predicts what the environment will do next. We let
+<span class="math notranslate nohighlight">\(P_{ss'}^a = \mathbb{P}(S_t+1 = s' | S_t = s, A_t = a)\)</span> and <span class="math notranslate nohighlight">\(R_{s}^a = \mathbb{P}(R_t+1 | S_t = s, A_t = a)\)</span>.
+<span class="math notranslate nohighlight">\(P\)</span> (<strong>Transition model</strong>) is the probability of transitioning to a next state given an action, while R is the
+reward when taking an action in some state.</p>
+<table class="table" id="table-rl-agent-categories">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Types of Reinforcement Learning agents</span><a class="headerlink" href="#table-rl-agent-categories" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Category</p></th>
+<th class="head"><p>Properties</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Value based</p></td>
+<td><p>No Policy (implicit), Value function</p></td>
+</tr>
+<tr class="row-odd"><td><p>Policy based</p></td>
+<td><p>Policy, No Value function</p></td>
+</tr>
+<tr class="row-even"><td><p>Actor Critic</p></td>
+<td><p>Policy, Value function</p></td>
+</tr>
+<tr class="row-odd"><td><p>Model Free</p></td>
+<td><p>No Model of the environment</p></td>
+</tr>
+<tr class="row-even"><td><p>Model based</p></td>
+<td><p>Model of the environment</p></td>
+</tr>
+</tbody>
+</table>
+<p>RL Agents can be categorized into the categories that are listed in <a class="reference internal" href="#table-rl-agent-categories"><span class="std std-numref">Table 2</span></a>. These can require
+different approaches that will be discussed throughout the book.</p>
+<p>There are two fundamental problems in <strong>sequential decision making</strong>.</p>
+<ul class="simple">
+<li><p>Reinforcement Learning</p>
+<ul>
+<li><p>The environment is initially unknown</p></li>
+<li><p>The agent interacts with the environment</p></li>
+<li><p>The agent improves its policy</p></li>
+</ul>
+</li>
+<li><p>Planning (e.g. deliberation, reasoning, introspection, pondering, thought, search)</p>
+<ul>
+<li><p>A model of the environment is known</p></li>
+<li><p>The agent performs computations with its model (without any external interaction)</p></li>
+<li><p>The agent improves its policy</p></li>
+</ul>
+</li>
+</ul>
+<p>It is important for an agent to make a trade-off between exploration and exploitation as well. Depending on the choice
+in this trade-off, agents will be more or less flexible and may or may not find better actions to perform.</p>
+<ul class="simple">
+<li><p><strong>Exploration</strong> finds more information about the environment</p></li>
+<li><p><strong>Exploitation</strong> exploits known information to maximize reward</p></li>
+</ul>
+<p>Finally, it is possible to differentiate between prediction and control. <strong>Prediction</strong> is about evaluating the future
+given a certain policy, while <strong>control</strong> is about finding the best policy to optimize the future.</p>
 </div>
 </div>
 
