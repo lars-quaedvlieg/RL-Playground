@@ -1,5 +1,8 @@
 # The Reinforcement Learning Playground
 
+% NOTE: Could do quizzes via https://github.com/jmshea/jupyterquiz
+% Also: https://jmshea.github.io/Foundations-of-Data-Science-with-Python/intro.html
+
 ````{margin}
 ```{admonition} If you are more experienced...
 You are encouraged to contribute to this project! If you are interested, reach out 
@@ -10,9 +13,9 @@ You are encouraged to contribute to this project! If you are interested, reach o
 
 Welcome to the **Reinforcement Learning Playground**! We are happy that you have decided to give our book a try. 
 
-The RL-playground is an open-source and interactive book that has been created by 
-[Lars Quaedvlieg](https://larsquaedvlieg.com/), hoping to inspire people to get into the exciting field of Reinforcement
-Learning. 
+The RL-playground is an open-source and interactive book project that has been initiated, hoping to inspire people to 
+get into the exciting field of Reinforcement Learning. The book itself has been created with the help of many 
+{doc}`maintainers and contributors <./credits>`.
 
 The book will cover the mathematical theories of multiple topics from the field. However, whenever possible, 
 these will be accompanied by code implementations and examples. This aims to make learning more interactive, practical 
@@ -30,9 +33,12 @@ make our lives easier, such as `Pytorch`, `OpenAI Gym`, `Numpy`. If you are inte
 of the book, please make sure you have a basic understanding of these software packages.
 ```
 
-The book is currently a **work in progress**, but eventually, the following topics should be discussed:
+## Book content
 
-```{list-table} Book content list (can change over time)
+The book is currently a **work in progress**, but eventually, the following topics should be discussed (may change 
+over time):
+
+```{list-table}
 :header-rows: 1
 
 * - Topic
@@ -57,4 +63,19 @@ The book is currently a **work in progress**, but eventually, the following topi
   - 
 * - Inverse Reinforcement Learning
   - 
+```
+
+## Citations
+
+Please cite this book as
+
+> Quaedvlieg, LCPM. *The Reinforcement Learning Playground*. 2022.
+
+```
+@book{quaedvliegRLP2022,
+  title={The Reinforcement Learning Playground},
+  author={Quaedvlieg, LCPM},
+  url={https://lars-quaedvlieg.github.io/RL-Playground},
+  year={2022}
+}
 ```

@@ -5,6 +5,8 @@ format: jb-book
 root: content/welcome
 
 parts:
+  - chapters:
+      - file: content/credits
   - caption: Fundamentals of Reinforcement Learning
     chapters:
       - file: content/intro-to-rl/the-rl-problem

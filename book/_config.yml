@@ -1,6 +1,6 @@
 # Book settings
 title: The Reinforcement Learning Playground
-logo: images/logo.png
+logo: images/logos/logo.png
 author: Lars Quaedvlieg
 email: larsquaedvlieg@outlook.com
 copyright: "2022"
@@ -19,7 +19,7 @@ parse:
 
 # HTML-specific settings
 html:
-  favicon: images/favicon.ico
+  favicon: images/logos/favicon.ico
   home_page_in_navbar: true
   use_edit_page_button: false
   use_repository_button: false
@@ -55,4 +55,7 @@ sphinx:
     - sphinx_proof
   config:
     language: en
+    panels_add_fontawesome_latex: true
+    html_js_files:
+      - https://kit.fontawesome.com/26eda3309b.js
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
