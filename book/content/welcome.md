@@ -25,7 +25,7 @@ The target audience of this book is anyone who would want to learn more about re
 expected to cover fundamental theories to state-of-the-art research.
 
 ```{tip}
-While you do not have to know anything about Reinforcement Learning prior to starting the book, one is expected to
+While you do not have to know anything about Reinforcement Learning prior to starting with the book, one is expected to
 have some previous experience with `Calculus`, `Linear Algebra`, `Probability Theory`, and `Statistics`.
 
 Furthermore, for software implementations, `Python` will be used. Within Python, we make use of well-known packages to 
@@ -67,14 +67,15 @@ over time):
 
 ## Citations
 
-Please cite this book as
+Please cite this book (APA) as
 
-> Quaedvlieg, LCPM. *The Reinforcement Learning Playground*. 2022.
+> Quaedvlieg, L. C. P. M. (2022). *The reinforcement learning playground*. 
+> https://lars-quaedvlieg.github.io/RL-Playground
 
 ```
 @book{quaedvliegRLP2022,
-  title={The Reinforcement Learning Playground},
-  author={Quaedvlieg, LCPM},
+  title={The reinforcement learning playground},
+  author={Quaedvlieg, L.C.P.M.},
   url={https://lars-quaedvlieg.github.io/RL-Playground},
   year={2022}
 }
