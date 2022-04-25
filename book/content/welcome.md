@@ -51,6 +51,8 @@ over time):
   - 
 * - Model-based Reinforcement Learning
   - 
+* - Hierarchical Reinforcement Learning
+  - 
 * - Distributional Reinforcement Learning
   - 
 * - Evolutionary Reinforcement Learning

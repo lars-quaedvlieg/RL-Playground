@@ -54,14 +54,14 @@ save as much money as you can, by modifying the shipment procedure. As an AI eng
 function as punishing shipped electricity, hoping the agent would make the procedure more efficient by not shipping
 unwanted electricity.
 
-1. Why may the design of this reward function not be the best idea?
+- Why may the design of this reward function not be the best idea?
 
 ```{dropdown} Reveal answer
 By punishing shipped electricity, there is a good chance that the agent will learn not to ship anything at all.
 This would maximize it's cumulative reward.
 ```
 
-2. How would you improve the reward function?
+- How would you improve the reward function?
 
 ```{dropdown} Reveal answer
 There can be multiple correct answers, but one might define a reward function directly as the profit that has been
@@ -72,21 +72,75 @@ some cases, have bad consequences). The definition of a good reward function may
 ```
 ````
 
-A state is **Markov**, if and only if it has the **Markov Property**, meaning $\mathbb{P}(S_t+1 | S_t) = 
-\mathbb{P}(S_t+1 | S_1, ..., S_t)$. This means the probability of future states solely depends on the current state, and
-not on any previous states. I.e. the history is a sufficient statistic of the future.
+```{prf:definition}
+:label: definiton:markov-property
 
-Let $S_t^a$ be the state of the agent at any time t and $S_t^e$ be the state of the environment on any time t. If the 
-environment is **fully observable**, then $S_t^a = S_t^e$. This means that the Markov property holds, so formally it is
-a Markov Decision Process.
+A stochastic process $\{X_t\}_{t \in T}$, with values $X_0, X_1, \dotsc, X_T$ from $t = 0$ until $t = T$ is said to have 
+the *Markov Property*, if and only if
 
-However, when the environment is **partially observable**, the agent indirectly observes the environment. Now, 
-$S_t^a \neq S_t^e$. Formally, this is called a partially observable Markov decision process (POMDP). The agent must 
-construct it's own state representation $S_t^a$. For example:
+$$
+\mathbb{P}(X_{t+1} | X_t) = \mathbb{P}(X_{t+1} | X_0, ..., X_t)
+$$
 
-- Complete history: $S_t^a = H_t$
-- Beliefs of environment state: $S_t^a = (\mathbb{P}[S_t^e = s^1], ...,\mathbb{P}[S_t^e = s^n])$
+```
+
+Let $S_t^a$ and $S_t^e$ be the state of the agent and the environment at any time $t$. If the environment is 
+**fully observable**, then $S_t^a = S_t^e$. Reinforcement learning environments can be seen as stochastic processes 
+$\{S_t\}_{t \in T}$.
+
+For an environment, having the Markov property means that, for all possible next states, the probability of obtaining 
+that future state ($S_{t+1}$) solely depends on the current state ($S_t$), and not on any previous states 
+($S_{t-1}, \dotsc, S_0$). This property describes that the current state is a sufficient statistic of the future, and 
+history does not matter.
+
+This will prove to be a key property in Reinforcement Learning, and it will be useful in many scenarios in the book.
+But what happens when the markov property does not hold?
+
+The class of **partially observable** environments do not have the Markov property. Here, the agent indirectly observes 
+the environment, meaning it may not have all information that is needed to know what happens next. Now, 
+$S_t^a \neq S_t^e$. Since history is now important to predict the future, the agent must construct its own state 
+representation $S_t^a$. For example:
+
+- Complete history: $S_t^a = H_t = (O_0, O_1, \dotsc, O_t)$
+- Beliefs of environment state: $S_t^a = (\mathbb{P}[S_t^e = s^{(1)}], \dotsc,\mathbb{P}[S_t^e = s^{(n)}])$
 - Recurrent Neural Network: $S_t^a = \sigma(S_{t-1}^a W_s + O_t W_o))$
+
+Here, $O_t$ is the observed state at time $t$. These problems are typically much more difficult to solve, since the 
+Markov property cannot be exploited.
+
+`````{prf:example}
+:class: dropdown
+:label: example:vase-non-markovian
+
+Imagine we have the following process. There exists a dark vase with three balls. One is red, one is green, and one is 
+blue. Every $t$, we take a ball out **without replacement**. Does this environment have the Markov property? Why or why 
+not? 
+
+````{dropdown} Reveal answer
+This is a non-Markovian stochastic process. Recall that the markov property comes down to 
+
+$$
+\mathbb{P}(X_{t+1} | X_t) = \mathbb{P}(X_{t+1} | X_0, ..., X_t)
+$$
+
+Here, $X_t$ is the colour of the ball at time $t$. Imagine we have the order $X_0 = $ red, $X_1 = $ green, and $X_2 = $ 
+blue.
+
+Let's first think about $\mathbb{P}(X_2 | X_1)$. If we only know that $X_1$ is green, what do we know about $X_{2}$? 
+We know the $X_2$ must be *either* blue or green.
+
+However, $\mathbb{P}(X_{t+1} | X_0, ..., X_t)$ means we know that both $X_0$ is red and $X_1$ is green. Hence, $X_2$
+*must* be blue.
+
+We now see that here $\mathbb{P}(X_{t+1} | X_t) \neq \mathbb{P}(X_{t+1} | X_0, ..., X_t)$. Hence, the Markov property
+does not hold for this stochastic process.
+
+```{note}
+This type of environment would actually be partially observable, since we agent cannot directly observe the underlying 
+state. Instead, we must maintain a probability distribution of different observations given the underlying state.
+```
+````
+`````
 
 ## Components of a Reinforcement Learning Agent
 
@@ -107,7 +161,7 @@ it is not known if the representation of the environment is perfect. If it is no
 influence the return as much as more local states. So, it is discounted.
 
 Finally, a **model** predicts what the environment will do next. We let 
-$P_{ss'}^a = \mathbb{P}(S_t+1 = s' | S_t = s, A_t = a)$ and $R_{s}^a = \mathbb{P}(R_t+1 | S_t = s, A_t = a)$. 
+$P_{ss'}^a = \mathbb{P}(S_{t+1} = s' | S_t = s, A_t = a)$ and $R_{s}^a = \mathbb{P}(R_{t+1} | S_t = s, A_t = a)$. 
 $P$ (**Transition model**) is the probability of transitioning to a next state given an action, while R is the 
 reward when taking an action in some state.
 
