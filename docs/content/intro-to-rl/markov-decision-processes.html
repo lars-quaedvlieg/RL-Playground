@@ -204,9 +204,9 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/markov-decision-processes.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/markov-decision-processes.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -224,33 +224,24 @@ const thebe_selector_output = ".output, .cell_output"
 
             <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/lars-quaedvlieg/RL-Playground/master?urlpath=tree/docs/content/intro-to-rl/markov-decision-processes.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/lars-quaedvlieg/RL-Playground/blob/master/docs/content/intro-to-rl/markov-decision-processes.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-markov-chains-to-markov-decision-processes">
+   From Markov Chains to Markov Decision Processes
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -263,6 +254,19 @@ const thebe_selector_output = ".output, .cell_output"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-markov-chains-to-markov-decision-processes">
+   From Markov Chains to Markov Decision Processes
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -274,6 +278,14 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
+</div>
+<p>As said in chapter 1, fully observable environments in Reinforcement Learning have the Markov property. This means the environment can be represented by a \textbf{Markov Decision Process} (MDP). This means that the current state completely characterizes the process. MDP’s are very important in RL, since they can represent almost every problem.\</p>
+<div class="section" id="from-markov-chains-to-markov-decision-processes">
+<h2>From Markov Chains to Markov Decision Processes<a class="headerlink" href="#from-markov-chains-to-markov-decision-processes" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="figure-markov-chain-example">
+<a class="reference internal image-reference" href="../../_images/markov-chain-example.png"><img alt="../../_images/markov-chain-example.png" src="../../_images/markov-chain-example.png" style="width: 14cm;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Example of a Markov Chain</span><a class="headerlink" href="#figure-markov-chain-example" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 </div>
 

@@ -72,6 +72,8 @@ some cases, have bad consequences). The definition of a good reward function may
 ```
 ````
 
+% Explain MDP briefly before markov property (how does it relate to RL)
+
 ```{prf:definition}
 :label: definiton:markov-property
 
@@ -85,7 +87,7 @@ $$
 ```
 
 Let $S_t^a$ and $S_t^e$ be the state of the agent and the environment at any time $t$. If the environment is 
-**fully observable**, then $S_t^a = S_t^e$. Reinforcement learning environments can be seen as stochastic processes 
+**fully-observable**, then $S_t^a = S_t^e$. Reinforcement learning environments can be seen as stochastic processes 
 $\{S_t\}_{t \in T}$.
 
 For an environment, having the Markov property means that, for all possible next states, the probability of obtaining 
@@ -96,7 +98,7 @@ history does not matter.
 This will prove to be a key property in Reinforcement Learning, and it will be useful in many scenarios in the book.
 But what happens when the markov property does not hold?
 
-The class of **partially observable** environments do not have the Markov property. Here, the agent indirectly observes 
+The class of **partially-observable** environments do not have the Markov property. Here, the agent indirectly observes 
 the environment, meaning it may not have all information that is needed to know what happens next. Now, 
 $S_t^a \neq S_t^e$. Since history is now important to predict the future, the agent must construct its own state 
 representation $S_t^a$. For example:
@@ -136,11 +138,27 @@ We now see that here $\mathbb{P}(X_{t+1} | X_t) \neq \mathbb{P}(X_{t+1} | X_0, .
 does not hold for this stochastic process.
 
 ```{note}
-This type of environment would actually be partially observable, since we agent cannot directly observe the underlying 
+This type of environment would actually be partially-observable, since we agent cannot directly observe the underlying 
 state. Instead, we must maintain a probability distribution of different observations given the underlying state.
 ```
 ````
 `````
+
+````{prf:example}
+:class: dropdown
+:label: example:poker-partially-observable
+
+Is the game of Poker a fully- or partially-observable environment?
+
+```{dropdown} Reveal answer
+Poker is partially-observable, since each player can only see their own cards. This means that we don't really know 
+which state of the game we are in. Full observability would require knowledge about every player's cards.
+
+A large part of the game is trying to estimate the quality of other players' cards. You can see partial observability
+makes the game a lot more difficult to play. A good agent would thus need to create good estimates of the environment
+states (for example by predicting other players' card qualities) to perform well.
+```
+````
 
 ## Components of a Reinforcement Learning Agent
 

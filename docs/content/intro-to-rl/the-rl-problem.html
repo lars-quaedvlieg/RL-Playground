@@ -337,9 +337,9 @@ aim to maximize the cumulative reward, so over time it should get better at the 
 save as much money as you can, by modifying the shipment procedure. As an AI engineer, you decide to define the reward
 function as punishing shipped electricity, hoping the agent would make the procedure more efficient by not shipping
 unwanted electricity.</p>
-<ol class="simple">
+<ul class="simple">
 <li><p>Why may the design of this reward function not be the best idea?</p></li>
-</ol>
+</ul>
 <details class="sphinx-bs dropdown card mb-3">
 <summary class="summary-title card-header">
 Reveal answer<div class="summary-down docutils">
@@ -350,9 +350,9 @@ Reveal answer<div class="summary-down docutils">
 <p class="card-text">By punishing shipped electricity, there is a good chance that the agent will learn not to ship anything at all.
 This would maximize it’s cumulative reward.</p>
 </div>
-</details><ol class="simple">
+</details><ul class="simple">
 <li><p>How would you improve the reward function?</p></li>
-</ol>
+</ul>
 <details class="sphinx-bs dropdown card mb-3">
 <summary class="summary-title card-header">
 Reveal answer<div class="summary-down docutils">
@@ -366,21 +366,88 @@ earned by the procedure. This should then be maximize to the best of the agent�
 some cases, have bad consequences). The definition of a good reward function may not be trivial in some situations.</p>
 </div>
 </details></div>
-</div><p>A state is <strong>Markov</strong>, if and only if it has the <strong>Markov Property</strong>, meaning <span class="math notranslate nohighlight">\(\mathbb{P}(S_t+1 | S_t) = 
-\mathbb{P}(S_t+1 | S_1, ..., S_t)\)</span>. This means the probability of future states solely depends on the current state, and
-not on any previous states. I.e. the history is a sufficient statistic of the future.</p>
-<p>Let <span class="math notranslate nohighlight">\(S_t^a\)</span> be the state of the agent at any time t and <span class="math notranslate nohighlight">\(S_t^e\)</span> be the state of the environment on any time t. If the
-environment is <strong>fully observable</strong>, then <span class="math notranslate nohighlight">\(S_t^a = S_t^e\)</span>. This means that the Markov property holds, so formally it is
-a Markov Decision Process.</p>
-<p>However, when the environment is <strong>partially observable</strong>, the agent indirectly observes the environment. Now,
-<span class="math notranslate nohighlight">\(S_t^a \neq S_t^e\)</span>. Formally, this is called a partially observable Markov decision process (POMDP). The agent must
-construct it’s own state representation <span class="math notranslate nohighlight">\(S_t^a\)</span>. For example:</p>
+</div><div class="proof definition admonition" id="definiton:markov-property">
+<p class="admonition-title"><span class="caption-number">Definition 2 </span></p>
+<div class="definition-content section" id="proof-content">
+<p>A stochastic process <span class="math notranslate nohighlight">\(\{X_t\}_{t \in T}\)</span>, with values <span class="math notranslate nohighlight">\(X_0, X_1, \dotsc, X_T\)</span> from <span class="math notranslate nohighlight">\(t = 0\)</span> until <span class="math notranslate nohighlight">\(t = T\)</span> is said to have
+the <em>Markov Property</em>, if and only if</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{P}(X_{t+1} | X_t) = \mathbb{P}(X_{t+1} | X_0, ..., X_t)
+\]</div>
+</div>
+</div><p>Let <span class="math notranslate nohighlight">\(S_t^a\)</span> and <span class="math notranslate nohighlight">\(S_t^e\)</span> be the state of the agent and the environment at any time <span class="math notranslate nohighlight">\(t\)</span>. If the environment is
+<strong>fully-observable</strong>, then <span class="math notranslate nohighlight">\(S_t^a = S_t^e\)</span>. Reinforcement learning environments can be seen as stochastic processes
+<span class="math notranslate nohighlight">\(\{S_t\}_{t \in T}\)</span>.</p>
+<p>For an environment, having the Markov property means that, for all possible next states, the probability of obtaining
+that future state (<span class="math notranslate nohighlight">\(S_{t+1}\)</span>) solely depends on the current state (<span class="math notranslate nohighlight">\(S_t\)</span>), and not on any previous states
+(<span class="math notranslate nohighlight">\(S_{t-1}, \dotsc, S_0\)</span>). This property describes that the current state is a sufficient statistic of the future, and
+history does not matter.</p>
+<p>This will prove to be a key property in Reinforcement Learning, and it will be useful in many scenarios in the book.
+But what happens when the markov property does not hold?</p>
+<p>The class of <strong>partially-observable</strong> environments do not have the Markov property. Here, the agent indirectly observes
+the environment, meaning it may not have all information that is needed to know what happens next. Now,
+<span class="math notranslate nohighlight">\(S_t^a \neq S_t^e\)</span>. Since history is now important to predict the future, the agent must construct its own state
+representation <span class="math notranslate nohighlight">\(S_t^a\)</span>. For example:</p>
 <ul class="simple">
-<li><p>Complete history: <span class="math notranslate nohighlight">\(S_t^a = H_t\)</span></p></li>
-<li><p>Beliefs of environment state: <span class="math notranslate nohighlight">\(S_t^a = (\mathbb{P}[S_t^e = s^1], ...,\mathbb{P}[S_t^e = s^n])\)</span></p></li>
+<li><p>Complete history: <span class="math notranslate nohighlight">\(S_t^a = H_t = (O_0, O_1, \dotsc, O_t)\)</span></p></li>
+<li><p>Beliefs of environment state: <span class="math notranslate nohighlight">\(S_t^a = (\mathbb{P}[S_t^e = s^{(1)}], \dotsc,\mathbb{P}[S_t^e = s^{(n)}])\)</span></p></li>
 <li><p>Recurrent Neural Network: <span class="math notranslate nohighlight">\(S_t^a = \sigma(S_{t-1}^a W_s + O_t W_o))\)</span></p></li>
 </ul>
+<p>Here, <span class="math notranslate nohighlight">\(O_t\)</span> is the observed state at time <span class="math notranslate nohighlight">\(t\)</span>. These problems are typically much more difficult to solve, since the
+Markov property cannot be exploited.</p>
+<div class="proof example dropdown admonition" id="example:vase-non-markovian">
+<p class="admonition-title"><span class="caption-number">Example 3 </span></p>
+<div class="example-content section" id="proof-content">
+<p>Imagine we have the following process. There exists a dark vase with three balls. One is red, one is green, and one is
+blue. Every <span class="math notranslate nohighlight">\(t\)</span>, we take a ball out <strong>without replacement</strong>. Does this environment have the Markov property? Why or why
+not?</p>
+<details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+Reveal answer<div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<p class="card-text">This is a non-Markovian stochastic process. Recall that the markov property comes down to</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{P}(X_{t+1} | X_t) = \mathbb{P}(X_{t+1} | X_0, ..., X_t)
+\]</div>
+<p class="card-text">Here, <span class="math notranslate nohighlight">\(X_t\)</span> is the colour of the ball at time <span class="math notranslate nohighlight">\(t\)</span>. Imagine we have the order <span class="math notranslate nohighlight">\(X_0 = \)</span> red, <span class="math notranslate nohighlight">\(X_1 = \)</span> green, and <span class="math notranslate nohighlight">\(X_2 = \)</span>
+blue.</p>
+<p class="card-text">Let’s first think about <span class="math notranslate nohighlight">\(\mathbb{P}(X_2 | X_1)\)</span>. If we only know that <span class="math notranslate nohighlight">\(X_1\)</span> is green, what do we know about <span class="math notranslate nohighlight">\(X_{2}\)</span>?
+We know the <span class="math notranslate nohighlight">\(X_2\)</span> must be <em>either</em> blue or green.</p>
+<p class="card-text">However, <span class="math notranslate nohighlight">\(\mathbb{P}(X_{t+1} | X_0, ..., X_t)\)</span> means we know that both <span class="math notranslate nohighlight">\(X_0\)</span> is red and <span class="math notranslate nohighlight">\(X_1\)</span> is green. Hence, <span class="math notranslate nohighlight">\(X_2\)</span>
+<em>must</em> be blue.</p>
+<p class="card-text">We now see that here <span class="math notranslate nohighlight">\(\mathbb{P}(X_{t+1} | X_t) \neq \mathbb{P}(X_{t+1} | X_0, ..., X_t)\)</span>. Hence, the Markov property
+does not hold for this stochastic process.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p class="card-text">This type of environment would actually be partially-observable, since we agent cannot directly observe the underlying
+state. Instead, we must maintain a probability distribution of different observations given the underlying state.</p>
 </div>
+</div>
+</details></div>
+</div><div class="proof example dropdown admonition" id="example:poker-partially-observable">
+<p class="admonition-title"><span class="caption-number">Example 4 </span></p>
+<div class="example-content section" id="proof-content">
+<p>Is the game of Poker a fully- or partially-observable environment?</p>
+<details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+Reveal answer<div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<p class="card-text">Poker is partially-observable, since each player can only see their own cards. This means that we don’t really know
+which state of the game we are in. Full observability would require knowledge about every player’s cards.</p>
+<p class="card-text">A large part of the game is trying to estimate the quality of other players’ cards. You can see partial observability
+makes the game a lot more difficult to play. A good agent would thus need to create good estimates of the environment
+states (for example by predicting other players’ card qualities) to perform well.</p>
+</div>
+</details></div>
+</div></div>
 <div class="section" id="components-of-a-reinforcement-learning-agent">
 <h2>Components of a Reinforcement Learning Agent<a class="headerlink" href="#components-of-a-reinforcement-learning-agent" title="Permalink to this headline">¶</a></h2>
 <p>An RL agent may include one or more of these components:</p>
@@ -399,7 +466,7 @@ This gamma is the <strong>discount factor</strong>, and it influences how much t
 it is not known if the representation of the environment is perfect. If it is not, it is not good to let the future
 influence the return as much as more local states. So, it is discounted.</p>
 <p>Finally, a <strong>model</strong> predicts what the environment will do next. We let
-<span class="math notranslate nohighlight">\(P_{ss'}^a = \mathbb{P}(S_t+1 = s' | S_t = s, A_t = a)\)</span> and <span class="math notranslate nohighlight">\(R_{s}^a = \mathbb{P}(R_t+1 | S_t = s, A_t = a)\)</span>.
+<span class="math notranslate nohighlight">\(P_{ss'}^a = \mathbb{P}(S_{t+1} = s' | S_t = s, A_t = a)\)</span> and <span class="math notranslate nohighlight">\(R_{s}^a = \mathbb{P}(R_{t+1} | S_t = s, A_t = a)\)</span>.
 <span class="math notranslate nohighlight">\(P\)</span> (<strong>Transition model</strong>) is the probability of transitioning to a next state given an action, while R is the
 reward when taking an action in some state.</p>
 <table class="table" id="table-rl-agent-categories">
