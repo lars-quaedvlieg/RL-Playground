@@ -53,6 +53,7 @@ bibtex_bibfiles:
 sphinx:
   extra_extensions:
     - sphinx_proof
+    - sphinxcontrib.pseudocode
   config:
     language: en
     panels_add_fontawesome_latex: true
