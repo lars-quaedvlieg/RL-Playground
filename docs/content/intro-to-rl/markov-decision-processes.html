@@ -31,6 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
     
   <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
 
@@ -47,12 +48,16 @@
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://kit.fontawesome.com/26eda3309b.js"></script>
     <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/intro-to-rl/markov-decision-processes.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -239,6 +244,28 @@ const thebe_selector_output = ".output, .cell_output"
    From Markov Chains to Markov Decision Processes
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Markov Decision Processes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extensions-to-mdps-advanced">
+   Extensions to MDPs (advanced)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#infinite-and-continuous-mdps">
+     Infinite and continuous MDPs
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#partially-observable-mdps">
+     Partially observable MDPs
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
             </nav>
@@ -264,6 +291,28 @@ const thebe_selector_output = ".output, .cell_output"
    From Markov Chains to Markov Decision Processes
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Markov Decision Processes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extensions-to-mdps-advanced">
+   Extensions to MDPs (advanced)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#infinite-and-continuous-mdps">
+     Infinite and continuous MDPs
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#partially-observable-mdps">
+     Partially observable MDPs
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
                         </nav>
@@ -279,12 +328,145 @@ const thebe_selector_output = ".output, .cell_output"
 <p class="admonition-title">Warning</p>
 <p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
 </div>
-<p>As said in chapter 1, fully observable environments in Reinforcement Learning have the Markov property. This means the environment can be represented by a \textbf{Markov Decision Process} (MDP). This means that the current state completely characterizes the process. MDP’s are very important in RL, since they can represent almost every problem.\</p>
+<p>As discussed in <a class="reference internal" href="the-rl-problem.html"><span class="doc">The Reinforcement Learning Problem</span></a>, fully observable environments in Reinforcement Learning have the Markov
+property. This means the environment can be represented by a <strong>Markov Decision Process</strong> (MDP). This means that the
+current state completely characterizes the process. MDPs are very important in RL, since they can represent almost every
+problem.</p>
 <div class="section" id="from-markov-chains-to-markov-decision-processes">
 <h2>From Markov Chains to Markov Decision Processes<a class="headerlink" href="#from-markov-chains-to-markov-decision-processes" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-default" id="figure-markov-chain-example">
 <a class="reference internal image-reference" href="../../_images/markov-chain-example.png"><img alt="../../_images/markov-chain-example.png" src="../../_images/markov-chain-example.png" style="width: 14cm;" /></a>
 <p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Example of a Markov Chain</span><a class="headerlink" href="#figure-markov-chain-example" title="Permalink to this image">¶</a></p>
+</div>
+<p>Here, <span class="math notranslate nohighlight">\(P\)</span> is the <strong>Transition Matrix</strong>. It contains all transition probabilities of the model. A <strong>Markov Chain</strong>
+(or Markov Process), is a tuple <span class="math notranslate nohighlight">\((S, P)\)</span>, where <span class="math notranslate nohighlight">\(S\)</span> is a set of states and <span class="math notranslate nohighlight">\(P\)</span> is the transition matrix. A sequence
+<span class="math notranslate nohighlight">\(S_0, ..., S_n\)</span> is called an <strong>episode</strong>.</p>
+<p>From this Markov Chain, we can create a <strong>Markov Reward Process</strong>. This is defined as an extension of the tuple, with
+the elements <span class="math notranslate nohighlight">\((S, P, R, \gamma)\)</span>. <span class="math notranslate nohighlight">\(S\)</span> and <span class="math notranslate nohighlight">\(P\)</span> mean the same thing as before. However, now we also have a reward function
+and a discount factor <span class="math notranslate nohighlight">\(\gamma \in [0, 1]\)</span>. One can create such a reward function by adding reward values to each state
+in the <a class="reference internal" href="#figure-markov-chain-example"><span class="std std-ref">markov chain</span></a>.</p>
+<p>Now let’s introduce the <strong>Bellman Equation</strong> for MRPs. It is possible to rewrite the formula of the value function in
+the following way.</p>
+<div class="math notranslate nohighlight" id="equation-equation-bellman-value-mrp">
+<span class="eqno">(1)<a class="headerlink" href="#equation-equation-bellman-value-mrp" title="Permalink to this equation">¶</a></span>\[\begin{split}    v(s) &amp;= \mathbb{E}[G_t | S_t = s]\\
+         &amp;= \mathbb{E}[R_{t} + \gamma R_{t+1} + \gamma^2 R_{t+2}, \dotsc) | S_t = s]\\
+         &amp;= \mathbb{E}[R_{t} + \gamma (R_{t+1} + \gamma (R_{t+2} + \gamma(\dotsc))) | S_t = s]\\
+         &amp;= \mathbb{E}[R_{t} + \gamma G_{t+1} | S_t = s]\\
+         &amp;= \mathbb{E}[R_{t} + \gamma v(S_{t+1}) | S_t = s]\\
+         &amp;= R_t + \gamma \sum_{s' \in S} P_{ss'}v(s')\end{split}\]</div>
+<p>Equation <a class="reference internal" href="#equation-equation-bellman-value-mrp">(1)</a> shows the bellman equation of the value function in a markov reward process.</p>
+<p>Now it is possible to see that the value of a state is dependent on the immediate reward, and the return of neighboring
+states. This can then be computed using the transition matrix (<span class="math notranslate nohighlight">\(P_{ss'} &gt; 0 \iff\)</span> you can go from <span class="math notranslate nohighlight">\(s\)</span> to <span class="math notranslate nohighlight">\(s'\)</span>). The
+bellman equation can then be written in matrix form, namely <span class="math notranslate nohighlight">\(v = R + \gamma Pv\)</span>. This can be rewritten as
+<span class="math notranslate nohighlight">\(v = (I - \gamma P)^{-1} R\)</span>. This equation can be solved in <span class="math notranslate nohighlight">\(O(n^3)\)</span>, since a matrix inverse is necessary. For large
+MRPs, there are several iterative methods to solve this equation. For example,</p>
+<ul class="simple">
+<li><p>Dynamic programming</p></li>
+<li><p>Monte-Carlo evaluation</p></li>
+<li><p>Temporal-Difference learning</p></li>
+</ul>
+<p>These methods will be explained in later chapters.</p>
+</div>
+<div class="section" id="id1">
+<h2>Markov Decision Processes<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Finally, let’s talk about the <strong>Markov Decision Process</strong>. This is an extension of the MRP, with properties
+<span class="math notranslate nohighlight">\((S, A, P, R, \gamma)\)</span>. It introduces a new set, defining the actions that can be taken. The transition matrix <span class="math notranslate nohighlight">\(P^a\)</span> and
+<span class="math notranslate nohighlight">\(R^a\)</span> now also conditionally depend on the action.</p>
+<div class="figure align-default" id="figure-markov-decision-process-example">
+<a class="reference internal image-reference" href="../../_images/mdp-example.png"><img alt="../../_images/mdp-example.png" src="../../_images/mdp-example.png" style="width: 14cm;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Example of a Markov Decision Process</span><a class="headerlink" href="#figure-markov-decision-process-example" title="Permalink to this image">¶</a></p>
+</div>
+<p><a class="reference internal" href="#figure-markov-decision-process-example"><span class="std std-numref">Fig. 2</span></a> is an example of a Markov Decision Process. In the image you see that
+the rewards are now dependent on the actions, as previously explained. Now it is possible to talk about the behavior of
+an agent. In chapter 1, policies were mentioned. These determine the behavior of agents (like which action to take in
+which state).</p>
+<p>Given an MDP and a policy <span class="math notranslate nohighlight">\(\pi\)</span>. The state sequence <span class="math notranslate nohighlight">\(S_0, S_1, ...\)</span> is a Markov Process <span class="math notranslate nohighlight">\((S, P^\pi)\)</span> and the state and
+reward sequence <span class="math notranslate nohighlight">\(S_0, R_1, S_1, R_2, ...\)</span> is a Markov Reward Process <span class="math notranslate nohighlight">\((S, P^\pi, R^\pi, \gamma)\)</span> where
+<span class="math notranslate nohighlight">\(P^\pi_{s, s'} = \sum_{a \in A} \pi(a | s)P^a_{s, s'}\)</span> and <span class="math notranslate nohighlight">\(R^\pi_s = \sum_{a \in A} \pi(a | s)R^a_s\)</span>
+(Law of Total Probability).</p>
+<p>Similarly to the state-value function <span class="math notranslate nohighlight">\(v_\pi(s)\)</span>, let’s now define the <strong>action-value</strong> function
+<span class="math notranslate nohighlight">\(q_\pi(s, a) = \mathbb{E}_\pi[G_t | S = s, A = a]\)</span>. This is the expected return starting from state <span class="math notranslate nohighlight">\(s\)</span>, taking action
+<span class="math notranslate nohighlight">\(a\)</span>, and then following policy <span class="math notranslate nohighlight">\(\pi\)</span>. In a RL problem, this is what we care about. The goal is to select the best action
+in a given state, in order to maximize the reward. If we have access to the <span class="math notranslate nohighlight">\(q\)</span>-values, it is the solution to the
+problem.</p>
+<p>After deriving the Bellman equations for the MDPs, we end up with the following formulas.</p>
+<div class="math notranslate nohighlight" id="equation-equation-bellman-state-value-mdp">
+<span class="eqno">(2)<a class="headerlink" href="#equation-equation-bellman-state-value-mdp" title="Permalink to this equation">¶</a></span>\[\begin{split}	v(s)&amp;= \mathbb{E}_\pi[G_t | S_t = s]\\
+		&amp;= \mathbb{E}_\pi[R_{t} + \gamma v(S_{t+1}) | S_t = s]\\
+		&amp;= \sum_{a \in A}\pi(a|s)q_\pi(s, a)\\
+		&amp;= \sum_{a \in A}\pi(a|s)\left(R^a_s + \gamma \sum_{s' \in S} P^a_{ss'}v_\pi(s')\right)\end{split}\]</div>
+<p>Equation <a class="reference internal" href="#equation-equation-bellman-state-value-mdp">(2)</a> shows the bellman equation of the state value function in a markov
+decision process. There is an equivalent definition, which expresses the bellman equation in terms of the state-action
+value pairs, instead of the state value function.</p>
+<div class="math notranslate nohighlight" id="equation-equation-bellman-state-action-value-mdp">
+<span class="eqno">(3)<a class="headerlink" href="#equation-equation-bellman-state-action-value-mdp" title="Permalink to this equation">¶</a></span>\[\begin{split}	q(s, a) &amp;= \mathbb{E}_\pi[G_t | S_t = s, A_t = a]\\
+			&amp;= \mathbb{E}_\pi[R_{t} + \gamma q(S_{t+1}, A_{t+1}) | S_t = s, A_t = a]\\
+			&amp;= R^a_s + \gamma \sum_{s' \in S} P^a_{ss'}v_\pi(s')\\	
+			&amp;= R^a_s + \gamma \sum_{s' \in S} P^a_{ss'}\sum_{a' \in A}\pi(a'|s')q_\pi(s', a')	\end{split}\]</div>
+<p>Equation <a class="reference internal" href="#equation-equation-bellman-state-action-value-mdp">(3)</a> shows the bellman equation of the state-action value function in
+a markov decision process.</p>
+<p>The second-last form of the equation can be intuitively thought of as the following. Imagine we are taking a certain
+action in a state. Then, the environment might bring us into different successor states even if we take the action.
+So, we have to sum over all these possible successor states and use the law of total probability again to compute the
+action-values.</p>
+<p>Now we can talk about optimality. The <strong>optimal state-value</strong> and <strong>optimal action-value</strong> functions are defined as
+<span class="math notranslate nohighlight">\(v_*(s) = \max_\pi v_\pi(s)\)</span> and <span class="math notranslate nohighlight">\(q_*(s, a) = \max_\pi q_\pi(s, a)\)</span>. We can say <span class="math notranslate nohighlight">\(\pi \geq \pi'\)</span> if
+<span class="math notranslate nohighlight">\(\forall s: v_\pi(s) \geq v_{\pi'}(s)\)</span>. The optimal value function specifies the best possible performance in the MDP.
+An MDP is “solved” when we know the optimal value. For any MDP, there always exist an optimal policy that is better or
+equal to all policies. This policy achieves both the optimal value function and the optimal action-value function.</p>
+<p>An <strong>optimal policy</strong> can be found by maximizing over <span class="math notranslate nohighlight">\(q_*(s, a)\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-equation-optimal-policy">
+<span class="eqno">(4)<a class="headerlink" href="#equation-equation-optimal-policy" title="Permalink to this equation">¶</a></span>\[\begin{split}	\pi_*(a | s) =
+	\begin{cases}
+		1, &amp; a = \arg\max_{a \in A} q_*(s, a)\\
+		0, &amp; \text{otherwise}
+	\end{cases}\end{split}\]</div>
+<p>Equation <a class="reference internal" href="#equation-equation-optimal-policy">(4)</a> shows the formulation of an optimal policy in a markov decision process.</p>
+<p>The optimal value functions are recursively related to the <strong>Bellman Optimality Equations</strong>. <span class="math notranslate nohighlight">\(v_*(s) = \max_a q_*(s, a)\)</span>
+and <span class="math notranslate nohighlight">\(q_*(s, a) = R^a_s + \gamma \sum_{s' \in S} P^a_{ss'}v_*(s')\)</span>. Solving for these equations is difficult, since the
+Bellman Optimality Equation is non-linear. Generally, there is no closed form solution. However, there exist iterative
+methods to approximate the solution. Example of this are</p>
+<ul class="simple">
+<li><p>Value Iteration</p></li>
+<li><p>Policy Iteration</p></li>
+<li><p>Q-learning</p></li>
+<li><p>SARSA</p></li>
+</ul>
+</div>
+<div class="section" id="extensions-to-mdps-advanced">
+<h2>Extensions to MDPs (advanced)<a class="headerlink" href="#extensions-to-mdps-advanced" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="infinite-and-continuous-mdps">
+<h3>Infinite and continuous MDPs<a class="headerlink" href="#infinite-and-continuous-mdps" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Countably infinite state and/or action spaces</p>
+<ul>
+<li><p>Straightforward</p></li>
+</ul>
+</li>
+<li><p>Continuous state and/or action spaces</p>
+<ul>
+<li><p>Closed form for linear quadratic model (LQR)</p></li>
+</ul>
+</li>
+<li><p>Continuous time</p>
+<ul>
+<li><p>Requires partial differential equations</p></li>
+<li><p>Hamilton-Jacobi-Bellman (HJB) equation</p></li>
+<li><p>Limiting case of Bellman equation as the time-step approaches 0</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="partially-observable-mdps">
+<h3>Partially observable MDPs<a class="headerlink" href="#partially-observable-mdps" title="Permalink to this headline">¶</a></h3>
+<p>A Partially Observable Markov Decision Process is an MDP with hidden states. It is a <strong>hidden Markov model</strong> with
+actions. A POMDP is a tuple <span class="math notranslate nohighlight">\((S, A, O, P, R, Z, \gamma)\)</span>. We now also have <span class="math notranslate nohighlight">\(O\)</span> representing a finite state of
+observations and <span class="math notranslate nohighlight">\(Z\)</span> being an observation function <span class="math notranslate nohighlight">\(Z^a_{s'o} = \mathbb{P}[O_{t+1} = o | S_{t+1} = s', A_t = a]\)</span>.</p>
+<p>Let’s define a <strong>history</strong> <span class="math notranslate nohighlight">\(H_t\)</span> being a sequence of actions, observations and rewards
+(<span class="math notranslate nohighlight">\(H_t = A_0, O_1, R_1, ..., A_{t-1}, O_t, R_t\)</span>). A <strong>belief state</strong> <span class="math notranslate nohighlight">\(b(h)\)</span> is a probability distribution over states
+conditioned on the history h. <span class="math notranslate nohighlight">\(b(h) = (\mathbb{P}[S_t = s^1 | H_t = h], ..., \mathbb{P}[S_t = s^n | H_t = h])\)</span>.The
+history and belief state both satisfy the Markov property. A POMDP can be reduced to an (infinite) history tree and an
+(infinite) belief state tree.</p>
 </div>
 </div>
 </div>

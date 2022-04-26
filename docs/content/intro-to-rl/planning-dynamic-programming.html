@@ -31,6 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
     
   <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
 
@@ -47,12 +48,17 @@
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/katex_autorenderer_planning-dynamic-programming.js"></script>
     <script src="https://kit.fontawesome.com/26eda3309b.js"></script>
     <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/intro-to-rl/planning-dynamic-programming.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
@@ -251,6 +257,29 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prediction">
+   Prediction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#control">
+   Control
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extensions-to-dynamic-programming">
+   Extensions to Dynamic Programming
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -263,6 +292,29 @@ const thebe_selector_output = ".output, .cell_output"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prediction">
+   Prediction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#control">
+   Control
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extensions-to-dynamic-programming">
+   Extensions to Dynamic Programming
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -273,7 +325,145 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>Planning by Dynamic Programming<a class="headerlink" href="#planning-by-dynamic-programming" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
+<p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or
+provide incorrect information.</p>
+</div>
+<p><strong>Dynamic Programming</strong> (DP) breaks one problem down into smaller sub-problems in order to solve them. Then,
+you can combine the solutions of the sub-problem to answer the problem.</p>
+<p>DP is used for planning within an MDP. This means the method assumes there is full knowledge of the MDP. It
+is technically not Reinforcement Learning yet, since we don’t discover an initially unknown environment. It
+can be used for both <em>prediction</em> (the input is the MDP and policy, returns value function) and <em>control</em>
+(input only the MDP, returns optimal policy and value function).</p>
+<div class="section" id="prediction">
+<h2>Prediction<a class="headerlink" href="#prediction" title="Permalink to this headline">¶</a></h2>
+<p><strong>Iterative policy evaluation</strong> can be used to perform prediction in an MDP (evaluate how good a policy is).
+On a high level, it works by backing up the Bellman expectation from the states in which rewards are observed.
+The pseudocode below shows how the algorithm works.</p>
+<div class="pseudocode" id="id1">
+<span id="algorithm-iterative-policy-evaluation"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="1" style="display:hidden;">
+            \begin{algorithm}
+    \caption{Iterative policy evaluation}
+    \begin{algorithmic}
+    	\REQUIRE the MDP $(S,A,R,P,\gamma)$, policy $\pi$
+    	\STATE $i \Leftarrow 0$, $v_0(s) \Leftarrow 0$ for each state $s$
+        \WHILE{not converged}
+        	\FOR{$s \in S$}
+        		\STATE $v_{i+1}(s) \Leftarrow
+        		\sum_{a \in A} \pi(a|s) \left(R^a_s + \gamma \sum_{s^\prime \in S} P^a_{ss^\prime} v_i(s^\prime) \right)$
+        	\ENDFOR
+        	\STATE $i \Leftarrow i + 1$
+        \ENDWHILE
+        \RETURN $v_i$
+    \end{algorithmic}
+\end{algorithm}
+        </pre></div></div><p>When <a class="reference internal" href="#algorithm-iterative-policy-evaluation"><span class="std std-numref">Algorithm 1</span></a> converges, we have obtained the value function <span class="math notranslate nohighlight">\(v_\pi\)</span>.</p>
+</div>
+<div class="section" id="control">
+<h2>Control<a class="headerlink" href="#control" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have a way to evaluate how good a certain policy is, we can start improving it. There are two main
+ways of performing control using DP. The first method that will be discusses is called <strong>Policy Iteration</strong>.</p>
+<p>At each iteration, this method consists of two components: <strong>policy evaluation</strong> and <strong>policy improvement</strong>.
+The whole algorithm works in the following way</p>
+<div class="pseudocode" id="id2">
+<span id="algorithm-iterative-policy-improvement"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="2" style="display:hidden;">
+            \begin{algorithm}
+	\caption{Iterative policy improvement}
+	\begin{algorithmic}
+		\REQUIRE the MDP $(S,A,R,P,\gamma)$, policy $\pi$
+		\WHILE{not converged}
+			\STATE $v^\pi \Leftarrow$ iterative policy evaluation with $\pi$
+			\STATE $\pi^\prime \Leftarrow greedy(v_\pi)$
+			\STATE $\pi = \pi^\prime$
+		\ENDWHILE
+		\RETURN $v_\pi$, $\pi$
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div><p><a class="reference internal" href="#figure-policy-iteration-diagram"><span class="std std-numref">Fig. 3</span></a> shows how this algorithm functions on a higher level.</p>
+<div class="figure align-default" id="figure-policy-iteration-diagram">
+<a class="reference internal image-reference" href="../../_images/policy-iteration.png"><img alt="../../_images/policy-iteration.png" src="../../_images/policy-iteration.png" style="width: 14cm;" /></a>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">The policy iteration algorithm</span><a class="headerlink" href="#figure-policy-iteration-diagram" title="Permalink to this image">¶</a></p>
+</div>
+<p>Why does acting greedily with respect to the obtained <span class="math notranslate nohighlight">\(v_\pi\)</span> improve the policy? There is a relatively simple proof for this.
+Say we choose a deterministic policy <span class="math notranslate nohighlight">\(\pi(s)\)</span>. Acting greedily would mean we create a new policy
+<span class="math notranslate nohighlight">\(\pi^\prime(s) = \arg \max_{a \in A} q_\pi(s, a)\)</span>. This means that
+<span class="math notranslate nohighlight">\(q_\pi(s, \pi^\prime(s)) = \max_{a \in A} q_\pi(s,a) \geq q_\pi(s, \pi(s)) = v_\pi(s)\)</span>. So we know
+<span class="math notranslate nohighlight">\(q_\pi(s, \pi^\prime(s)) \geq v_\pi(s)\)</span>. Therefore, <span class="math notranslate nohighlight">\(v_{\pi^\prime}(s) \geq v_\pi(s)\)</span>.</p>
+<p>This means if the improvement stops, we must have satisfied the Bellman optimality equation.</p>
+<p>Policy iteration can be generalized. Before we performed policy evaluation until we obtained <span class="math notranslate nohighlight">\(v_\pi\)</span>. However, this is not necessary.
+The next DP control algorithm, <strong>Value Iteration</strong>, is a special variant of policy iteration, updating the policy after every step
+(so not after it converges to <span class="math notranslate nohighlight">\(v_\pi\)</span>). You can basically use <strong>any</strong> policy evaluation and policy improvement algorithm to perform
+policy iteration.</p>
+<p>Lets now start talking about Value Iteration. This method works because of the <em>Principle of Optimality</em>, which states the following:
+An optimal policy can be subdivided into two components</p>
+<ul class="simple">
+<li><p>An optimal first action <span class="math notranslate nohighlight">\(A_*\)</span></p></li>
+<li><p>An optimal policy from successor state <span class="math notranslate nohighlight">\(S^\prime\)</span></p></li>
+</ul>
+<p>This means that if we know the solution to <span class="math notranslate nohighlight">\(v_*(s^\prime)\)</span>, we can find <span class="math notranslate nohighlight">\(v_*(s)\)</span> by performing the following one-step lookahead.
+This is possible due to the Bellman optimality equations.</p>
+<div class="math notranslate nohighlight">
+\[
+    v^*(s) = \max_{a \in A} \left( R^a_s + \gamma \sum_{s^\prime \in S} P^a_{ss^\prime} v_*(s^\prime)\right)
+\]</div>
+<p>The intuition is that you can start with the final rewards and work your way backwards.</p>
+<div class="pseudocode" id="id3">
+<span id="algorithm-value-iteration"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="3" style="display:hidden;">
+            \begin{algorithm}
+	\caption{Value iteration}
+	\begin{algorithmic}
+		\REQUIRE the MDP $(S,A,R,P,\gamma)$
+		\STATE $i \Leftarrow 0$, $v_0(s) \Leftarrow 0$ for each state $s$
+		\WHILE{not converged}
+			\FOR{**each** state $s$}
+				\STATE $v_{i+1}(s) \Leftarrow
+				\max_{a \in A} \left(R^a_s + \gamma \sum_{s^\prime \in S} P^a_{ss^\prime} v_i(s^\prime)\right)$
+			\ENDFOR
+			\STATE $i \Leftarrow i + 1$
+		\ENDWHILE
+		\STATE $v_* \Leftarrow v_i, \pi_*(s) \Leftarrow \arg\max_{a \in A} R^a_s + \gamma\sum_{s' \in S} P^a_{ss'}v_*(s')$
+		\RETURN $v_*, \pi_*$
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div><p>Observe that the policy is extracted by acting greedily with respect to the computed q-values for any state. For any intermediate value functions,
+this might not be true. These in-between value function might not correspond to any policy.</p>
+<p>The previously discusses algorithms all share a runtime complexity of <span class="math notranslate nohighlight">\(O(n^2m)\)</span> per iteration when computing <span class="math notranslate nohighlight">\(v\)</span>, <span class="math notranslate nohighlight">\(n\)</span> being the number of states
+and <span class="math notranslate nohighlight">\(m\)</span> the number of actions. However, the same process can be applied to compute the q-values. This would be <span class="math notranslate nohighlight">\(O(n^2m^2)\)</span> per iteration.</p>
+</div>
+<div class="section" id="extensions-to-dynamic-programming">
+<h2>Extensions to Dynamic Programming<a class="headerlink" href="#extensions-to-dynamic-programming" title="Permalink to this headline">¶</a></h2>
+<p>So far all described DP methods are <em>synchronous</em>. This means all states are updated in parallel. However, these algorithms can also be implemented
+in an <em>asynchronous</em> manner. Since it uses more updated information, it generally converges a lot faster than the synchronous variant. It is also
+guaranteed to converge as long as all states are continued to be visited. The following three ideas are simple ideas for asynchronous DP with
+Value Iteration.</p>
+<ul>
+<li><p><strong>In-place DP</strong></p>
+<p>Instead of using different value functions <span class="math notranslate nohighlight">\(v_i\)</span> at each iteration, we only use one value function. <span class="math notranslate nohighlight">\(v_{i+1}(s) = \max_{a \in A} \left(R^a_s + \gamma \sum_{s^\prime \in S} P^a_{ss^\prime} v_i(s^\prime)\right)\)</span> will then become <span class="math notranslate nohighlight">\(v(s) = \max_{a \in A} \left(R^a_s + \gamma \sum_{s^\prime \in S} P^a_{ss^\prime} v(s^\prime)\right)\)</span>.</p>
+</li>
+<li><p><strong>Prioritized sweeping</strong></p>
+<p>Instead of iterating over all states in one order, it is possible to use the magnitude of Bellman error to guide the selection of the next state
+to evaluate. This bellman error can be expressed as</p>
+<div class="math notranslate nohighlight">
+\[
+        \left|\max_{a \in A} \left(R^a_s + \gamma \sum_{s' \in S} P^a_{ss'}v(s')\right) - v(s)\right|
+    \]</div>
+<p>The idea is to back up the state with the largest remaining Bellman error and update the Bellman error of the affected states after. This requires
+knowledge of the reverse dynamics of the MDP, since we are working backwards. It can be very simply implemented using a priority queue.</p>
+</li>
+<li><p><strong>Real-time DP</strong></p>
+<p>The idea here is to only update states that are relevant to the agent. The agent’s experience can guide the state selection. So, after each time step,
+we observe <span class="math notranslate nohighlight">\(S_t, A_t\)</span> and <span class="math notranslate nohighlight">\(R_{t+1}\)</span>. We back the state <span class="math notranslate nohighlight">\(S_t\)</span> up by <span class="math notranslate nohighlight">\(v(S_t) = \max_{a \in A} \left(R^a_{S_t} + \gamma \sum_{s^\prime \in S} P^a_{S_{t}s^\prime} v(s^\prime)\right)\)</span>.</p>
+</li>
+</ul>
+<p>The DP approach that was discussed this chapter is already good. It is effective for problems containing millions of states.
+However, since it uses full-width backups, each successor state and action is considered. For large problems this causes DP
+to suffer from the curse of dimensionality; the number of states grow exponentially with the number of state variables.
+As proposed in further chapters, this problem is approached using sampled backups.</p>
 </div>
 </div>
 

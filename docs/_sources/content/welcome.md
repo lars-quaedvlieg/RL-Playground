@@ -2,6 +2,7 @@
 
 % NOTE: Could do quizzes via https://github.com/jmshea/jupyterquiz
 % Also: https://jmshea.github.io/Foundations-of-Data-Science-with-Python/intro.html
+% Idea: make different notebooks for theory and implementation to avoid cluttering (use sections)
 
 ````{margin}
 ```{admonition} If you are more experienced...
