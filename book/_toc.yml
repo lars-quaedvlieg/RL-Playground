@@ -15,7 +15,11 @@ parts:
       - file: content/intro-to-rl/model-free-prediction
       - file: content/intro-to-rl/model-free-control
       - file: content/intro-to-rl/exploration-vs-exploitation
-  - caption: Deep Reinforcement Learning
+  - caption: Value-Based Deep Reinforcement Learning
     chapters:
+    - file: content/deep-rl/value-function-approximation
     - file: content/deep-rl/dqn
     - file: content/deep-rl/ddqn
+  - caption: Policy Gradient Algorithms
+    chapters:
+      - file: content/pg-algorithms/pg-methods
