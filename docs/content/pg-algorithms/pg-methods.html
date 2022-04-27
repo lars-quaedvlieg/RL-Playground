@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Policy Gradient Methods &#8212; The Reinforcement Learning Playground</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/katex_autorenderer_pg-methods.js"></script>
+    <script src="https://kit.fontawesome.com/26eda3309b.js"></script>
+    <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/pg-algorithms/pg-methods.html" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Double Deep Q-Learning" href="../deep-rl/ddqn.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">The Reinforcement Learning Playground</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../welcome.html">
+   The Reinforcement Learning Playground
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../credits.html">
+   Credits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Fundamentals of Reinforcement Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/the-rl-problem.html">
+   The Reinforcement Learning Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/markov-decision-processes.html">
+   Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/planning-dynamic-programming.html">
+   Planning by Dynamic Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/model-free-prediction.html">
+   Model-Free Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/model-free-control.html">
+   Model-Free Control
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Value-Based Deep Reinforcement Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/value-function-approximation.html">
+   Value Function Approximation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/dqn.html">
+   Deep Q-Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/ddqn.html">
+   Double Deep Q-Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Policy Gradient Algorithms
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Policy Gradient Methods
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a target="_blank" href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/pg-algorithms/pg-methods.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finite-difference-policy-gradient">
+   Finite Difference Policy Gradient
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monte-carlo-policy-gradient">
+   Monte-Carlo Policy Gradient
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#actor-critic-policy-gradient">
+   Actor-Critic Policy Gradient
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Policy Gradient Methods</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finite-difference-policy-gradient">
+   Finite Difference Policy Gradient
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monte-carlo-policy-gradient">
+   Monte-Carlo Policy Gradient
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#actor-critic-policy-gradient">
+   Actor-Critic Policy Gradient
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="policy-gradient-methods">
+<h1>Policy Gradient Methods<a class="headerlink" href="#policy-gradient-methods" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
+</div>
+<p>The goal of this chapter is to discuss methods that optimize for policy directly, and not by acting greedily to a value
+function. The goal is to sample experience, and from that learn in which direction to move the policy to improve it.
+This will be done by considering the <em>gradient</em> of the policy.</p>
+<p>For this, the policy will be parametrised by <span class="math notranslate nohighlight">\(\theta\)</span>, so <span class="math notranslate nohighlight">\(\pi_\theta(s, a) = \mathbb{P}\left[a |s, \theta\right]\)</span>. This
+could be, for example, a neural network that predicts the probability of actions given a certain state.</p>
+<p>Now, it is possible to talk about more approaches to Reinforcement Learning.</p>
+<ul>
+<li><p>Value Based</p>
+<p>The value function is learned, and there is an explicit policy</p>
+</li>
+<li><p>Policy Based</p>
+<p>The policy is learned, but there is no value function</p>
+</li>
+<li><p>Actor-Critic</p>
+<p>Both the value function and the policy are learned</p>
+</li>
+</ul>
+<p>The <em>advantages</em> over Policy-Based RL are the following: Better convergence properties, effective in
+high-dimensional/continuous action spaces, and can learn stochastic policies. However, there are also
+<em>disadvantages</em>. Evaluating a policy is typically inefficient and has high variance. Also, it usually converges
+to a local rather than a global optimum.</p>
+<p>In POMDPs, a stochastic policy may be optimal in certain problems. But how to measure the quality of a policy? There are
+different options.</p>
+<ol>
+<li><p>Start value (Episodic environments, start state)</p>
+<p><span class="math notranslate nohighlight">\(J_1(\theta) = V^{\pi_\theta}(s_1) = \mathbb{E}_{\pi_\theta}\left[v_1\right]\)</span>. This means it is a measure of reward
+until the end of an episode with current parameters <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+</li>
+<li><p>Average value (Continuous environments)</p>
+<p><span class="math notranslate nohighlight">\(J_{avV}(\theta) = \sum_s d^{\pi_\theta}(s) V^{\pi_\theta}(s_1)\)</span> where <span class="math notranslate nohighlight">\(d^{\pi_\theta}(s)\)</span> is the stationary
+distribution (probability of being in a state) of the Markov chain for <span class="math notranslate nohighlight">\(\pi_\theta\)</span>. It is basically an averaged value over all states.</p>
+</li>
+<li><p>Average reward per time-step</p>
+<p><span class="math notranslate nohighlight">\(J_{avR}(\theta) = \sum_s d^{\pi_\theta}(s) \sum_a \pi_\theta(s, a) R^a_s\)</span>. This is a weighted average over the
+possible immediate rewards for each state and action pair.</p>
+</li>
+</ol>
+<p>However, the policy gradient of all of these are the same. Policy-based RL is an optimization problem to find the
+<span class="math notranslate nohighlight">\(\theta\)</span> that maximizes <span class="math notranslate nohighlight">\(J(\theta)\)</span>. Methods that do not use a gradient (e.g. Hill climbing) can be used. However, it is
+usually much more efficient to use gradients (e.g. Gradient Descent, Conjugate Gradient, Quasi-Newton).</p>
+<div class="section" id="finite-difference-policy-gradient">
+<h2>Finite Difference Policy Gradient<a class="headerlink" href="#finite-difference-policy-gradient" title="Permalink to this headline">¶</a></h2>
+<p>Policy gradient algorithms search for a local maximum in <span class="math notranslate nohighlight">\(J(\theta\)</span>) by ascending the gradient with respect to <span class="math notranslate nohighlight">\(\theta\)</span>.
+This can be represented by <span class="math notranslate nohighlight">\(\Delta \theta = \alpha \nabla_\theta J(\theta)\)</span>.</p>
+<p><strong>Computing gradients by finite differences</strong> means to numerically compute them. For each dimension
+<span class="math notranslate nohighlight">\(k \in \left[1, n\right]\)</span>, estimate the <span class="math notranslate nohighlight">\(k\)</span>-th partial derivative by numerical approximation.
+<span class="math notranslate nohighlight">\(\frac{\delta J(\theta)}{\delta \theta_k} \approx \frac{J(\theta + \epsilon u_k) - J(\theta)}{\epsilon}\)</span>, where <span class="math notranslate nohighlight">\(u_k\)</span> is
+a unit vector with a 1 in the <span class="math notranslate nohighlight">\(k\)</span>-th component.</p>
+<p>It is noisy and inefficient, but can sometimes be effective. An advantage is that it even works with non-differentiable
+policies.</p>
+</div>
+<div class="section" id="monte-carlo-policy-gradient">
+<h2>Monte-Carlo Policy Gradient<a class="headerlink" href="#monte-carlo-policy-gradient" title="Permalink to this headline">¶</a></h2>
+<p>The goal now is to compute the policy gradient <em>analytically</em>. Assume that <span class="math notranslate nohighlight">\(\pi_\theta\)</span> is differentiable when it
+is non-zero and gradient <span class="math notranslate nohighlight">\(\nabla_\theta \pi_\theta(s, a)\)</span> is known.</p>
+<p><strong>Likelihood Ratios</strong> exploit the identity</p>
+<div class="math notranslate nohighlight">
+\[
+	\nabla_\theta \pi_\theta(s, a) = \pi_\theta(s, a) \frac{\nabla_\theta \pi_\theta(s, a)}{\pi_\theta(s, a)} = \pi_\theta(s, a) \nabla_\theta \log \pi_\theta(s, a) 
+\]</div>
+<p>Here, the <strong>score function</strong> is defined by <span class="math notranslate nohighlight">\(\nabla_\theta \log \pi_\theta(s, a)\)</span>. This is useful, since it will
+make computing expectations much easier.</p>
+<p>An example is the <em>Softmax Policy</em> <span class="math notranslate nohighlight">\(\pi_\theta(s, a) \propto e^{x(s, a)^\intercal \theta}\)</span>. For this, the score
+function is <span class="math notranslate nohighlight">\(\nabla_\theta \log \pi_\theta(s, a) = x(s, a) - \mathbb{E}_{\pi_\theta} \left[x(s, .)\right]\)</span>.</p>
+<p>Another one is a <em>Gaussian Policy</em>. These are common in continuous action spaces. Here, the mean is a linear
+combination of state features <span class="math notranslate nohighlight">\(\mu(s) = x(s)^\intercal \theta\)</span>. The same can be done for the variance, with different
+parameters. Then, <span class="math notranslate nohighlight">\(a \sim N(\mu(s), \sigma^2)\)</span>. The score function is
+<span class="math notranslate nohighlight">\(\nabla_\theta \log \pi_\theta(s, a) = \frac{(a - \mu(s))x(s)}{\sigma^2}\)</span>.</p>
+<p>In terms of MDPs, the policy gradient can be derived in the following manner.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}		J(\theta) &amp; = \mathbb{E}_{\pi_\theta} \left[Q^{\pi_\theta}(s, a)\right]\\
+				  &amp; = \sum_{s \in S} d(s) \sum_{a \in A} \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\\
+		\nabla_\theta J(\theta) &amp; = \sum_{s \in S} d(s) \sum_{a \in A} \pi_\theta (s, a) \nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\\
+						 &amp; = \mathbb{E}_{\pi_\theta} \left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]\end{split}\]</div>
+<p>This is called the <strong>Policy Gradient Theorem</strong>. The theorem applies to all 3 of the previously discussed objective
+functions.</p>
+<p>The algorithm for <strong>Monte-Carlo Policy Gradient (REINFORCE)</strong> uses the return <span class="math notranslate nohighlight">\(G_t\)</span> as an unbiased sample of
+<span class="math notranslate nohighlight">\(Q^{\pi_\theta}(s_t, a_t)\)</span> and this theorem to update the parameters using stochastic gradient descent.</p>
+<div class="pseudocode" id="id1">
+<span id="algorithm-monte-carlo-policy-gradient"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="11" style="display:hidden;">
+            \begin{algorithm}
+	\caption{Monte-Carlo Policy Gradient (REINFORCE)}
+	\begin{algorithmic}
+		\REQUIRE $\theta$
+		\FORALL{episodes $\{s_1, a_1, r_2, ..., s_{T-1}, a_{T-1}, r_T\} \sim \pi_\theta$}
+			\FOR{$t \Leftarrow 1, ..., T-1$}
+				\STATE $\theta \Leftarrow \theta + \alpha \nabla_\theta \log \pi_\theta(s_t, a_t) G_t$
+			\ENDFOR
+		\ENDFOR
+		\RETURN $\theta$
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div></div>
+<div class="section" id="actor-critic-policy-gradient">
+<h2>Actor-Critic Policy Gradient<a class="headerlink" href="#actor-critic-policy-gradient" title="Permalink to this headline">¶</a></h2>
+<p>The algorithms presented before are sadly slow and have a high variance. The following ideas are to speed of these
+algorithms and use a similar idea as before. To reduce this variance (but introduce some bias), the idea of function
+approximation can be re-used on the estimate of <span class="math notranslate nohighlight">\(Q_w(s, a) \approx Q^{\pi_\theta}(s, a)\)</span>.</p>
+<p>The idea consists of two components</p>
+<ul class="simple">
+<li><p><strong>Actor</strong>: Update action-value function parameters <span class="math notranslate nohighlight">\(w\)</span></p></li>
+<li><p><strong>Critic</strong>: Update policy parameters <span class="math notranslate nohighlight">\(\theta\)</span>, in the direction of suggestion of the critic.</p></li>
+</ul>
+<p>These algorithms follow an <em>approximate</em> policy gradient
+<span class="math notranslate nohighlight">\(\nabla_\theta J(\theta) \approx \mathbb{E}_{\pi_\theta} \left[\nabla_\theta \log \pi_\theta(s, a) Q_w(s, a)\right]\)</span>.</p>
+<p>The critic is solving the problem of policy evaluation. So, previously discussed methods can be applied for solving it.
+An example algorithm below is an <em>Action-Value Actor-Critic</em> with the critic using TD(0) for policy evaluation,
+and the actor using policy gradient.</p>
+<div class="pseudocode" id="id2">
+<span id="algorithm-q-value-actor-critic"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="12" style="display:hidden;">
+            \begin{algorithm}
+	\caption{QAC}
+	\begin{algorithmic}
+		\REQUIRE $s$, $\theta$
+		\STATE $a \sim \pi_\theta$
+		\FORALL{steps}
+			\STATE $r \Leftarrow R^a_s, s' \sim P^a_s$
+			\STATE $a' \sim \pi_\theta(s', a')$
+			\STATE $\delta \Leftarrow r + \gamma Q_w(s', a') - Q_w(s, a)$
+			\STATE $\theta \Leftarrow \theta + \alpha \nabla_\theta \log \pi_\theta(s, a) Q_w(s, a)$
+			\STATE $w \Leftarrow w + \beta \delta x(s, a)$
+			\STATE $s \Leftarrow s', a \Leftarrow a'$
+		\ENDFOR
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div><p>Since there is bias, usually the algorithms will end up in a local optimum. However, if the approximation of the value
+function is chosen carefully, the policy gradient is exact. <strong>Compatible Function Approximation Theorem</strong> says
+that the policy gradient is <em>exact</em>
+(<span class="math notranslate nohighlight">\(\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[\nabla_\theta \log \pi_\theta(s, a) Q_w(s, a)\right])\)</span>, when two
+conditions are satisfied.</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(\nabla_w Q_w(s, a) = \nabla_\theta \log \pi_\theta(s, a)\)</span> (value function approximator is <em>compatible</em> to the
+policy)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon = \mathbb{E}_{\pi_\theta} \left[(Q^{\pi_\theta}(s, a) - Q_w(s, a)^2)\right]\)</span> (value function parameters minimize
+the MSE)</p></li>
+</ol>
+<p>To reduce the variance on the method, it is possible to subtract a <strong>baseline function</strong> <span class="math notranslate nohighlight">\(B(s)\)</span> from the policy
+gradient. This can reduce variance without affecting the expectation. The proof is as follows</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}		\mathbb{E}_{\pi_\theta} \left[\nabla_\theta \log \pi_\theta(s, a)B(s)\right] &amp; = \sum_{s \in S} d^{\pi_\theta}(s) \sum_a \nabla_\theta \pi_\theta(s, a)B(s)\\
+		&amp; = \sum_{s \in S} d^{\pi_\theta}(s) B(s) \nabla_\theta \sum_a \pi_\theta(s, a)\\
+		&amp; = \sum_{s \in S} d^{\pi_\theta}(s) B(s) \nabla_\theta 1\\
+		&amp; = 0\end{split}\]</div>
+<p>So, as long as the baseline does not include the action, it will not modify the expectation. An example of a good
+baseline function is <span class="math notranslate nohighlight">\(B(s) = V^{\pi_\theta}(s)\)</span>. The policy gradient can then be rewritten as the
+<strong>advantage function</strong> <span class="math notranslate nohighlight">\(A^{\pi_\theta}(s, a) = Q^{\pi_\theta}(s, a) - V^{\pi_\theta}(s)\)</span>. <span class="math notranslate nohighlight">\(\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[\nabla_\theta \log \pi_\theta(s, a)A^{\pi_\theta}(s, a)\right]\)</span>.
+This can significantly reduce variance, since the advantage function is now the distance from the mean value of a state.</p>
+<p>The critic is in charge of estimating both of these value functions. There are multiple ways to do this.</p>
+<ul>
+<li><p>Using two separate parameter vectors:</p>
+<p><span class="math notranslate nohighlight">\(V_v(s) \approx V^{\pi_\theta}(s)\)</span> and <span class="math notranslate nohighlight">\(Q_w(s) \approx Q^{\pi_\theta}(s, a)\)</span>. Then, <span class="math notranslate nohighlight">\(A(s, a) = Q_w(s, a) - V_v(s)\)</span>.</p>
+</li>
+<li><p>Using the TD error</p>
+<p>The TD error for <span class="math notranslate nohighlight">\(V^{\pi_\theta}(s)\)</span> equals <span class="math notranslate nohighlight">\(\delta^{\pi_\theta} = r + \gamma V^{\pi_\theta}(s') - V^{\pi_\theta}(s)\)</span>.
+Then,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}        \mathbb{E}_{\pi_\theta} \left[\delta^{\pi_\theta} |s, a\right] &amp; = \mathbb{E}_{\pi_\theta} \left[r + \gamma V^{\pi_\theta}(s') |s, a\right] - V^{\pi_\theta}(s)\\
+        &amp; = Q^{\pi_\theta}(s, a) - V^{\pi_\theta}(s)\\
+        &amp; = A^{\pi_\theta}(s, a)\end{split}\]</div>
+<p>So, the TD error can be used to compute the policy gradient.
+<span class="math notranslate nohighlight">\(\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[\nabla_\theta \log \pi_\theta(s, a)\delta^{\pi_\theta}\right]\)</span>.
+In practice, <span class="math notranslate nohighlight">\(\delta_v = r + \gamma V_v(s') - V_v(s)\)</span> is used instead. This approach only requires one set of critic
+parameters <span class="math notranslate nohighlight">\(v\)</span>.</p>
+</li>
+</ul>
+<p>The value function for the critic can be estimated at different time-scales, as seen in previous lectures. Ideas like MC
+, TD(0), and TD(<span class="math notranslate nohighlight">\(\lambda\)</span>) still work. The same thing holds for actors. Monte-Carlo policy gradient can be applied, as
+well as one-step TD for Actor-critic. In summary, this means the actor and critic’s choices of algorithms do not
+influence each other.</p>
+<p>It is also possible to apply policy gradient with eligibility traces for TD(<span class="math notranslate nohighlight">\(\lambda\)</span>).
+<span class="math notranslate nohighlight">\(\Delta \theta = \alpha (v_t^\lambda - V_v(s_t)) \nabla_\theta \log \pi_\theta(s_t, a_t)\)</span>, where
+<span class="math notranslate nohighlight">\(v_t^\lambda - V_v(s_t)\)</span> is a biased estimate of the <em>advantage function</em>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}		\delta &amp; = r_{t+1} + \gamma V_v(s_{t+1}) - V_v(s_t)\\
+		e_{t+1} &amp; = \lambda e_t + \nabla_\theta \log \pi_\theta(s, a)\\
+		\Delta \theta &amp; = \alpha \delta e_t\end{split}\]</div>
+<p>Similar to prediction using TD(<span class="math notranslate nohighlight">\(\lambda\)</span>) with a value function approximation, the eligibility traces are defined for
+each parameter and updated using the scores it encounters. The gradient with respect to the parameters becomes
+<span class="math notranslate nohighlight">\(\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[\nabla_\theta \log \pi_\theta(s, a) \delta e\right]\)</span>.</p>
+<p>Gradient ascent algorithms can follow any ascent direction. Following a good ascent direction can massively speed up
+convergence. Another problem is that a policy can often be re-parametrised without changing action probabilities. The
+vanilla gradient is sensitive to these re-parametrisation.</p>
+<p>The benefit of the <strong>Natural Policy Gradient</strong> is that it is parametrisation independent. It finds the ascent
+direction that is closest to the vanilla gradient when changing the policy by a small fixed amount.</p>
+<div class="math notranslate nohighlight">
+\[
+	\nabla^{nat}_\theta \pi_\theta(s, a) = G^{-1}_\theta \nabla_\theta \pi_\theta(s, a)
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(G_\theta\)</span> is the <em>Fisher information matrix</em>.
+<span class="math notranslate nohighlight">\(G_\theta = \mathbb{E}_{\pi_\theta} \left[\nabla_\theta \log \pi_\theta(s, a) \nabla_\theta \log \pi_\theta(s, a)^\intercal\right]\)</span>.
+Using compatible function approximation, <span class="math notranslate nohighlight">\(\nabla_\theta^{nat} J(\theta) = w\)</span>. The actor parameters are updated in the
+direction of the critic parameters.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\pg-algorithms"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../deep-rl/ddqn.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Double Deep Q-Learning</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Lars Quaedvlieg<br/>
+    
+        &copy; Copyright 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

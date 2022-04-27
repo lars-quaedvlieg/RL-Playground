@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Model Free Control &#8212; The Reinforcement Learning Playground</title>
+    <title>Model-Free Control &#8212; The Reinforcement Learning Playground</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -56,13 +56,16 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/katex_autorenderer_model-free-control.js"></script>
     <script src="https://kit.fontawesome.com/26eda3309b.js"></script>
     <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/intro-to-rl/model-free-control.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Exploration versus Exploitation" href="exploration-vs-exploitation.html" />
-    <link rel="prev" title="Model Free Prediction" href="model-free-prediction.html" />
+    <link rel="next" title="&lt;no title&gt;" href="exploration-vs-exploitation.html" />
+    <link rel="prev" title="Model-Free Prediction" href="model-free-prediction.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -136,26 +139,26 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="model-free-prediction.html">
-   Model Free Prediction
+   Model-Free Prediction
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Model Free Control
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="exploration-vs-exploitation.html">
-   Exploration versus Exploitation
+   Model-Free Control
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Deep Reinforcement Learning
+  Value-Based Deep Reinforcement Learning
  </span>
 </p>
 <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/value-function-approximation.html">
+   Value Function Approximation
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../deep-rl/dqn.html">
    Deep Q-Learning
@@ -164,6 +167,18 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../deep-rl/ddqn.html">
    Double Deep Q-Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Policy Gradient Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../pg-algorithms/pg-methods.html">
+   Policy Gradient Methods
   </a>
  </li>
 </ul>
@@ -207,9 +222,9 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/model-free-control.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/model-free-control.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -227,33 +242,53 @@ const thebe_selector_output = ".output, .cell_output"
 
             <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/lars-quaedvlieg/RL-Playground/master?urlpath=tree/docs/content/intro-to-rl/model-free-control.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/lars-quaedvlieg/RL-Playground/blob/master/docs/content/intro-to-rl/model-free-control.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#on-policy-methods">
+   On-Policy methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#monte-carlo-control">
+     Monte-Carlo Control
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#td-control-sarsa">
+     TD-Control (SARSA)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#off-policy-methods">
+   Off-Policy methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#importance-sampling-for-off-policy-mc-td">
+     Importance Sampling for Off-Policy MC / TD
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#q-learning">
+     Q-Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -261,11 +296,53 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Model Free Control</h1>
+                <h1>Model-Free Control</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#on-policy-methods">
+   On-Policy methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#monte-carlo-control">
+     Monte-Carlo Control
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#td-control-sarsa">
+     TD-Control (SARSA)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#off-policy-methods">
+   Off-Policy methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#importance-sampling-for-off-policy-mc-td">
+     Importance Sampling for Off-Policy MC / TD
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#q-learning">
+     Q-Learning
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -273,10 +350,235 @@ const thebe_selector_output = ".output, .cell_output"
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="model-free-control">
-<h1>Model Free Control<a class="headerlink" href="#model-free-control" title="Permalink to this headline">¶</a></h1>
+<h1>Model-Free Control<a class="headerlink" href="#model-free-control" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
+</div>
+<p>This chapter several methods for Model-Free control will be discussed. Algorithms like Monte-Carlo and
+Temporal-Difference learning are often used for prediction, but how can these concepts be used for control? There are
+two different ways of learning when sampling, these are</p>
+<ul>
+<li><p><strong>On-policy</strong> learning</p>
+<p>The goal is to learn about policy <span class="math notranslate nohighlight">\(\pi\)</span> from experience that is being sampled by <span class="math notranslate nohighlight">\(\pi\)</span></p>
+</li>
+<li><p><strong>Off-policy</strong> learning</p>
+<p>The goal is to learn about policy <span class="math notranslate nohighlight">\(\pi\)</span> from experience that is being sampled by a policy <span class="math notranslate nohighlight">\(\mu\)</span>, <span class="math notranslate nohighlight">\(\mu \neq \pi\)</span>.</p>
+</li>
+</ul>
+<p>From generalized policy iteration, any valid <em>policy evaluation</em> algorithm can be followed by any valid
+<em>policy improvement</em> algorithm and iterated in order to find the optimal policy. The first question that should
+come up in your mind is “Can we just use the algorithms from the previous chapter for the policy evaluation step?”.
+Initially, there are two problems with this.</p>
+<ol>
+<li><p>Greedy policy improvement over <span class="math notranslate nohighlight">\(V(s)\)</span> requires a model of the MDP, since
+<span class="math notranslate nohighlight">\(\pi'(s) = \arg\max_{a \in A} R^a_s + P^a_{ss'} V(s')\)</span>. We do not have access to the rewards and the transition
+probabilities.</p>
+<p>We know this is equal to <span class="math notranslate nohighlight">\(\pi'(s) = \arg\max_{a \in A} Q(s,a)\)</span>. So learning the q-value function instead of the
+value function will be <em>model-free</em>.</p>
+</li>
+<li><p>Being greedy using sampling methods does not ensure we cover the entire state space.</p>
+<p>Exploration vs. exploitation is a whole problem on its own in Reinforcement Learning, that will be discussed in a
+later chapter. For now we can consider the easiest way to ensure continual exploration. Instead of being greedy,
+lets be <strong><span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy</strong>. The policy becomes the following</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+        \pi(a | s) = \begin{cases}
+            \epsilon/m + 1 - \epsilon, &amp; a^* = \arg\max_{a \in A} Q(s, a)\\
+            \epsilon/m, &amp; \text{otherwise}.
+        \end{cases}
+    \end{split}\]</div>
+<p>This means that there is a <span class="math notranslate nohighlight">\(1 - \epsilon\)</span> probability to choose the greedy action and an <span class="math notranslate nohighlight">\(\epsilon\)</span> probability to
+choose any other random action, with <span class="math notranslate nohighlight">\(m\)</span> being the number of actions.</p>
+<p>Now, all that is left to be done is prove any <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policy <span class="math notranslate nohighlight">\(\pi'\)</span> with respect to <span class="math notranslate nohighlight">\(q_\pi\)</span> actually is an
+improvement to <span class="math notranslate nohighlight">\(\pi\)</span>. The proof is rather simple:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}   q_\pi(s, \pi'(s)) &amp; = \sum_{a \in A} \pi'(a | s) q_\pi(s, a)\\
+   &amp; = \epsilon/m \sum_{a \in A} q_\pi(s, a) + (1 - \epsilon) \max_{a \in A} q_\pi(s, a)\\
+   &amp; \geq \epsilon/m \sum_{a \in A} q_\pi(s, a) + (1 - \epsilon) \sum_{a \in A} \frac{\pi(a|s) - \epsilon/m}{1 - \epsilon} q_\pi(s, a)\\
+   &amp; = \sum_{a \in A} \pi(a|s) q_\pi(s, a) = v_\pi(s)\end{split}\]</div>
+<p>Then, from policy improvement theorem, <span class="math notranslate nohighlight">\(v_{\pi'}(s) \geq v_\pi(s)\)</span>.</p>
+</li>
+</ol>
+<p>We have now tackled the problems that prevented us to use the idea of generalized policy iteration. The methods we have
+previously seen can now be applied to solve the problem.</p>
+<div class="section" id="on-policy-methods">
+<h2>On-Policy methods<a class="headerlink" href="#on-policy-methods" title="Permalink to this headline">¶</a></h2>
+<p>Last chapter Monte-Carlo and TD-Learning were discussed for policy evaluation. This section will show how to apply these
+algorithms for control tasks.</p>
+<div class="section" id="monte-carlo-control">
+<h3>Monte-Carlo Control<a class="headerlink" href="#monte-carlo-control" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-default" id="figure-monte-carlo-control">
+<a class="reference internal image-reference" href="../../_images/MC-Control.png"><img alt="../../_images/MC-Control.png" src="../../_images/MC-Control.png" style="width: 14cm;" /></a>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Monte-Carlo Control algorithm</span><a class="headerlink" href="#figure-monte-carlo-control" title="Permalink to this image">¶</a></p>
+</div>
+<p>The idea of <a class="reference internal" href="#figure-monte-carlo-control"><span class="std std-numref">Fig. 5</span></a> is similar to policy iteration. In order to speed up convergence, it is
+not necessary to evaluate the policy until <span class="math notranslate nohighlight">\(q_\pi\)</span> is obtained. A better approach is to perform
+<a class="reference internal" href="model-free-prediction.html#algorithm-monte-carlo-evaluation"><span class="std std-ref">Monte-Carlo policy evaluation</span></a> until the end of the episode, and then perform
+an <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policy improvement step with respect to the computed q-values.</p>
+<p>There is a theorem called <em>Greedy in the Limit with Infinite Exploration</em> (GLIE), which ensures you converge to
+the optimal policy (which is always greedy). The following two rules must apply</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(\lim_{k \Rightarrow \infty} N_k(s, a) = \infty\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\lim_{k \Rightarrow \infty} \pi_k(a|s) = \mathbb{1}(a = \arg\max_{a' \in A} Q_k(s, a'))\)</span></p></li>
+</ol>
+<p>Here, the <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policy would reduce to greedy when there is infinite experience. For example,
+<span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy is GLIE if <span class="math notranslate nohighlight">\(\epsilon\)</span> reduces to zero at the rate <span class="math notranslate nohighlight">\(\epsilon_k = \frac{1}{k}\)</span>. Let’s construct an
+algorithm based on this knowledge.</p>
+<div class="pseudocode" id="id1">
+<span id="algorithm-glie-monte-carlo-control"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="6" style="display:hidden;">
+            \begin{algorithm}
+	\caption{One iteration of GLIE Monte-Carlo Control}
+	\begin{algorithmic}
+		\FOR{$t \Leftarrow 0, ..., T$}
+			\STATE $A_t, R_{t+1}, S_{t+1} \sim \pi$
+			\STATE $N(S_t, A_t) \Leftarrow N(S_t, A_t) + 1$
+			\STATE $Q(S_t, A_t) \Leftarrow Q(S_t, A_t) + \frac{1}{N(S_t, A_t)} (G_t - Q(S_t, A_t))$
+		\ENDFOR
+		\STATE $\epsilon \Leftarrow 1/k, \pi \Leftarrow \epsilon$-greedy($Q$)
+		\RETURN $Q, \pi$
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div></div>
+<div class="section" id="td-control-sarsa">
+<h3>TD-Control (SARSA)<a class="headerlink" href="#td-control-sarsa" title="Permalink to this headline">¶</a></h3>
+<p>TD-Learning has several advantages over MC such as a lower variance, online updating, and being able to learn from
+incomplete sequences. It would be a natural idea to use TD instead of MC in the control loop that was previously
+presented. This method is referred to as <strong>SARSA</strong>. This yields the following algorithm</p>
+<div class="pseudocode" id="id2">
+<span id="algorithm-sarsa-control"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="7" style="display:hidden;">
+            \begin{algorithm}
+	\caption{One iteration of SARSA}
+	\begin{algorithmic}
+		\REQUIRE $\pi \Leftarrow \epsilon$-greedy($Q$)
+		\FOR{$t \Leftarrow 0, ..., T$}
+		\STATE $A_t, R_{t+1}, S_{t+1}, A_{t+1} \sim \pi$
+		\STATE $Q(S_t, A_t) \Leftarrow Q(S_t, A_t) + \alpha \left[R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t) \right]$
+		\ENDFOR
+		\STATE $\epsilon \Leftarrow 1/k, \pi \Leftarrow \epsilon$-greedy($Q$)
+		\RETURN $Q, \pi$
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div><p>SARSA converges to the optimal action-value function under the following conditions:</p>
+<ol class="simple">
+<li><p>GLIE sequence of policies <span class="math notranslate nohighlight">\(\pi_t(a|s)\)</span></p></li>
+<li><p><strong>Robbins-Monro</strong> sequence of step-sizes <span class="math notranslate nohighlight">\(\alpha_t\)</span> (<span class="math notranslate nohighlight">\(\sum_{t = 1}^\infty \alpha_t = \infty\)</span> and <span class="math notranslate nohighlight">\(\sum_{t = 1}^\infty \alpha_t^2 &lt; \infty\)</span>)</p></li>
+</ol>
+<p>In practice however, this is only very rarely taken into account (like with a constraint learning rate <span class="math notranslate nohighlight">\(\alpha\)</span>). It
+does not seem to pose that much of a threat.</p>
+<p>Just like <span class="math notranslate nohighlight">\(n\)</span>-step TD and TD(<span class="math notranslate nohighlight">\(\lambda\)</span>), there exists <strong>n-step SARSA</strong> and <strong>SARSA(<span class="math notranslate nohighlight">\(\lambda\)</span>)</strong>.
+SARSA(<span class="math notranslate nohighlight">\(\lambda\)</span>) also has the same forward- and backward-view algorithms. These are the exact same concepts. The only
+difference is SARSA is for action-values. For this reason, I will just give you the formulas for it. The intuition is
+the same as in the previous chapter.</p>
+<ol>
+<li><p><span class="math notranslate nohighlight">\(n\)</span>-step SARSA</p>
+<p><span class="math notranslate nohighlight">\(Q(S_t, A_t) = Q(S_t, A_t) + \alpha \left[q_t^{(n)} - Q(S_t, A_t) \right]\)</span></p>
+<p><span class="math notranslate nohighlight">\(q_t^{(n)} = R_{t+1} + \gamma R_{t+2} + ... + \gamma^{n-1} R_{t+n} + \gamma^n Q(S_{t+n}, A_{t+n})\)</span></p>
+</li>
+<li><p>(Forward View) SARSA(<span class="math notranslate nohighlight">\(\lambda\)</span>)</p>
+<p><span class="math notranslate nohighlight">\(Q(S_t, A_t) = Q(S_t, A_t) + \alpha \left[q_t^\lambda - Q(S_t, A_t) \right]\)</span></p>
+<p><span class="math notranslate nohighlight">\(q_t^\lambda = (1-\lambda) \sum_{n = 1}^\infty \lambda^{n-1} q_t^{(n)}\)</span></p>
+</li>
+</ol>
+<div class="pseudocode" id="id3">
+<span id="algorithm-backward-view-sarsa-lambda"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="8" style="display:hidden;">
+            \begin{algorithm}
+	\caption{Iteration of (backward view) SARSA($\lambda$)}
+	\begin{algorithmic}
+		\REQUIRE $\pi \Leftarrow \epsilon$-greedy($Q$), $Q$
+		\STATE $E(s, a) = 0$
+		\STATE Initialize $S_0, A_0$
+		\FOR{$t \Leftarrow 0, ..., T$}
+		\STATE $R_{t+1}, S_{t+1}, A_{t+1} \sim \pi$
+		\STATE $\delta_t \Leftarrow R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)$
+		\STATE $E(S_t, A_t) \Leftarrow E(S_t, A_t) + 1$
+		\FOR{all unique previously occurred $(s, a)$ pairs}
+		\STATE $Q(s, a) \Leftarrow Q(s, a) + \alpha \delta_t E(s, a)$
+		\STATE $E(s, a) \Leftarrow \gamma \lambda E(s, a)$
+		\ENDFOR
+		\ENDFOR
+		\RETURN $V$
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div><p>The eligibility traces for the backward view algorithm are, just like the value function, now taken into account for all
+state-action pairs.</p>
+<div class="figure align-default" id="figure-lambda-sarsa-role">
+<a class="reference internal image-reference" href="../../_images/lambda-role-sarsa.png"><img alt="../../_images/lambda-role-sarsa.png" src="../../_images/lambda-role-sarsa.png" style="width: 14cm;" /></a>
+<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">The role of <span class="math notranslate nohighlight">\(\lambda\)</span> in SARSA(<span class="math notranslate nohighlight">\(\lambda\)</span>)</span><a class="headerlink" href="#figure-lambda-sarsa-role" title="Permalink to this image">¶</a></p>
+</div>
+<p>In <a class="reference internal" href="#figure-lambda-sarsa-role"><span class="std std-numref">Fig. 6</span></a>, you can see the role of the lambda parameter. When receiving reward (in the image only
+at the end), the combination of the recency and visitation heuristic made into the eligibility trace makes sure there is
+a decay in propagating the reward backwards. This is all one iteration of the algorithm.</p>
+</div>
+</div>
+<div class="section" id="off-policy-methods">
+<h2>Off-Policy methods<a class="headerlink" href="#off-policy-methods" title="Permalink to this headline">¶</a></h2>
+<p>The goal of off-policy learning is to evaluate the target policy <span class="math notranslate nohighlight">\(\pi(a|s)\)</span> to compute <span class="math notranslate nohighlight">\(v_\pi(s)\)</span> or <span class="math notranslate nohighlight">\(q_\pi(s, a)\)</span>. All
+of this happens while following a different policy <span class="math notranslate nohighlight">\(\mu(a|s)\)</span>. This is referred to as the <em>behaviour policy</em>. The
+most well-known use of this is learning about the optimal policy while following a <em>exploratory</em> policy.</p>
+<p><strong>Importance Sampling</strong> is a way of estimating the expectation of a different distribution. The underlying idea is
+the following</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}	\mathbb{E}_{X \sim P} \left[f(X)\right] &amp; = \sum f(X) P(x)\\
+									&amp; = \sum f(X)\frac{P(X)}{Q(X)} Q(X)\\
+									&amp; = \mathbb{E}_{X \sim Q} \left[f(X) \frac{P(X)}{Q(X)}\right]\end{split}\]</div>
+<p>From this derivation, notice that it is possible to estimate the expectation of sampling distribution <span class="math notranslate nohighlight">\(P\)</span> while sampling
+from <span class="math notranslate nohighlight">\(Q\)</span>, using a simple division <span class="math notranslate nohighlight">\(\frac{P(X)}{Q(X)}\)</span>.</p>
+<div class="section" id="importance-sampling-for-off-policy-mc-td">
+<h3>Importance Sampling for Off-Policy MC / TD<a class="headerlink" href="#importance-sampling-for-off-policy-mc-td" title="Permalink to this headline">¶</a></h3>
+<p>The idea of this simple division can be used in the Monte-Carlo return and TD target. This means we could follow policy
+<span class="math notranslate nohighlight">\(\mu\)</span>, while learning policy <span class="math notranslate nohighlight">\(\pi\)</span> by just dividing <span class="math notranslate nohighlight">\(\pi\)</span> by <span class="math notranslate nohighlight">\(\mu\)</span> for every time-step (as seen in the proof).</p>
+<div class="math notranslate nohighlight">
+\[
+	G_t^{\pi/\mu} = \frac{\pi(A_t|S_t)}{\mu(A_t|S_t)} \frac{\pi(A_t+1|S_t+1)}{\mu(A_t+1|S_t+1)} ... \frac{\pi(A_T|S_T)}{\mu(A_T|S_T)} G_t
+\]</div>
+<p>The value will then be updated towards the corrected return:
+<span class="math notranslate nohighlight">\(V_{k+1}(S_t) = V_k(S_t) + \alpha \left(G_t^{\pi/\mu} - V_k(S_t)\right)\)</span>. There are several downsides to using this
+method. The first one is that it can not be used if <span class="math notranslate nohighlight">\(\mu = 0, \pi \neq 0\)</span>. More importantly, it can dramatically
+increase variance. This is of course something to avoid when possible.</p>
+<p>For TD, the update rule becomes</p>
+<div class="math notranslate nohighlight">
+\[
+	V_{k+1}(S_t) = V_k(S_t) + \alpha \left(\frac{\pi(A_t|S_t)}{\mu(A_t|S_t)} (R_{t+1} + \gamma V_k(S_{t+1})) - V_k(S_t)\right)
+\]</div>
+<p>The benefit to this is that it will have a much lower variance than the MC approach. It means the policies only need to
+be similar over a single step instead of the whole episode chain.</p>
+</div>
+<div class="section" id="q-learning">
+<h3>Q-Learning<a class="headerlink" href="#q-learning" title="Permalink to this headline">¶</a></h3>
+<p>Now let’s consider off-policy learning for action-values <span class="math notranslate nohighlight">\(Q(s, a)\)</span>. The idea of <strong>Q-Learning</strong> is to choose the
+next action using a behaviour policy <span class="math notranslate nohighlight">\(A_{t+1} \sim \mu(.|S_t)\)</span>, but an alternative successor action <span class="math notranslate nohighlight">\(A' \sim \pi(.|S_t)\)</span>
+is also considered. <span class="math notranslate nohighlight">\(Q(S_t, A_t)\)</span> will then be updated towards the value of the alternative action.
+<span class="math notranslate nohighlight">\(Q_{k+1}(S_t, A_t) = Q_k(S_t, A_t) + \alpha \left(R_{t+1} + \gamma Q_k(S_{t+1}, A') - Q_k(S_t, A_t)\right)\)</span>.</p>
+<p>Now allow both policies to be able to improve. <span class="math notranslate nohighlight">\(\pi(S_{t+1}) = \arg\max_{a'} Q(S_{t+1}, a')\)</span> and
+<span class="math notranslate nohighlight">\(\mu = \epsilon\)</span>-greedy(<span class="math notranslate nohighlight">\(Q\)</span>). In this case, the Q-learning target simplifies to the following</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}		  &amp; R_{t+1} + \gamma Q(S_{t+1}, A')\\
+		= &amp; R_{t+1} + \gamma Q(S_{t+1}, \arg\max_{a'} Q(S_t, a'))\\
+		= &amp; R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a')\end{split}\]</div>
+<p>The algorithm of Q-Learning is then</p>
+<div class="pseudocode" id="id4">
+<span id="algorithm-q-learning"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="9" style="display:hidden;">
+            \begin{algorithm}
+	\caption{One iteration of Q-Learning}
+	\begin{algorithmic}
+		\REQUIRE $\pi \Leftarrow \epsilon$-greedy($Q$)$, Q$
+		\FOR{$t \Leftarrow 0, ..., T$}
+		\STATE $A_t, R_{t+1}, S_{t+1}, A_{t+1} \sim \pi$
+		\STATE $Q(S_t, A_t) \Leftarrow Q(S_t, A_t) + \alpha \left[R_{t+1} + \gamma \max_{A_{t+1}} Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t) \right]$
+		\ENDFOR
+		\RETURN $Q, \pi$
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div></div>
 </div>
 </div>
 
@@ -309,13 +611,13 @@ const thebe_selector_output = ".output, .cell_output"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Model Free Prediction</p>
+            <p class="prev-next-title">Model-Free Prediction</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="exploration-vs-exploitation.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Exploration versus Exploitation</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

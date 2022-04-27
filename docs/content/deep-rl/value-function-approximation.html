@@ -1,0 +1,723 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Value Function Approximation &#8212; The Reinforcement Learning Playground</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/katex_autorenderer_value-function-approximation.js"></script>
+    <script src="https://kit.fontawesome.com/26eda3309b.js"></script>
+    <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/deep-rl/value-function-approximation.html" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Deep Q-Learning" href="dqn.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="../intro-to-rl/exploration-vs-exploitation.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">The Reinforcement Learning Playground</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../welcome.html">
+   The Reinforcement Learning Playground
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../credits.html">
+   Credits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Fundamentals of Reinforcement Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/the-rl-problem.html">
+   The Reinforcement Learning Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/markov-decision-processes.html">
+   Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/planning-dynamic-programming.html">
+   Planning by Dynamic Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/model-free-prediction.html">
+   Model-Free Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/model-free-control.html">
+   Model-Free Control
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Value-Based Deep Reinforcement Learning
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Value Function Approximation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dqn.html">
+   Deep Q-Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ddqn.html">
+   Double Deep Q-Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Policy Gradient Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../pg-algorithms/pg-methods.html">
+   Policy Gradient Methods
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a target="_blank" href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/deep-rl/value-function-approximation.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#incremental-methods">
+   Incremental Methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prediction-algorithms">
+     Prediction algorithms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#control-algorithms">
+     Control algorithms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm-convergence">
+     Algorithm convergence
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#batch-methods">
+   Batch Methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#least-squares-prediction">
+     Least-Squares Prediction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-least-squares-prediction">
+     Linear Least-Squares Prediction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#least-squares-control">
+     Least-Squares Control
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Value Function Approximation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#incremental-methods">
+   Incremental Methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prediction-algorithms">
+     Prediction algorithms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#control-algorithms">
+     Control algorithms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#algorithm-convergence">
+     Algorithm convergence
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#batch-methods">
+   Batch Methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#least-squares-prediction">
+     Least-Squares Prediction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-least-squares-prediction">
+     Linear Least-Squares Prediction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#least-squares-control">
+     Least-Squares Control
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="value-function-approximation">
+<h1>Value Function Approximation<a class="headerlink" href="#value-function-approximation" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
+</div>
+<p>Before this lecture, the value function was always defined per state. But what if the problems are really big? The game
+of Go for example has <span class="math notranslate nohighlight">\(10^{170}\)</span> states. Some problems even have a <em>continuous</em> state space. How is it possible
+to scale up the previously discussed model-free methods for prediction and control to handle these situations?</p>
+<p>The whole time, (action-)value functions were represented using a <em>lookup table</em>, where each state had a
+corresponding value. The problem with large MDP’s is that it is too slow to learn the value for each state individually,
+or even impossible to store all states or actions in memory.</p>
+<p>The solution that will be proposed is to estimate the value function using <strong>function approximation</strong>. This means
+we use parameters <span class="math notranslate nohighlight">\(w\)</span> estimate the value functions
+<span class="math notranslate nohighlight">\(\hat{v}(s, w) \approx v_\pi(s)\)</span> or <span class="math notranslate nohighlight">\(\hat{q}(s, a, w) \approx q_\pi(s, a)\)</span>. There is a really nice benefit to this.
+After learning <span class="math notranslate nohighlight">\(w\)</span> (using for example MC or TD learning), it will also be able to <em>generalize</em> to unseen states.</p>
+<p>This chapter will focus on <em>differentiable</em> function approximators, since they can be updated using
+gradient-based optimization. Furthermore, the method must be able to handle <em>non-stationary</em> and
+<em>non-iid</em> data.</p>
+<p>Two different methods of learning will be discussed, incremental methods and batch methods.</p>
+<div class="section" id="incremental-methods">
+<h2>Incremental Methods<a class="headerlink" href="#incremental-methods" title="Permalink to this headline">¶</a></h2>
+<p>This book assumes you are already familiar with the concept of <strong>Gradient Descent</strong>. If you are not, here is a
+quick explanation. If <span class="math notranslate nohighlight">\(J(w)\)</span> is a differentiable function of parameter vector <span class="math notranslate nohighlight">\(w\)</span>. The idea is to update the parameters
+in the direction of the gradient. We obtain <span class="math notranslate nohighlight">\(w = w - \alpha \nabla_w J(w)\)</span> where <span class="math notranslate nohighlight">\(\alpha\)</span> is a step-size parameter.</p>
+<p>The goal of <em>Value-function approximation</em> using Stochastic Gradient Descent (SGD), is to find the parameter
+vector <span class="math notranslate nohighlight">\(w\)</span> in order to minimize the mean-squared error between the approximate value <span class="math notranslate nohighlight">\(\hat{v}(s, w)\)</span> and <span class="math notranslate nohighlight">\(v_\pi(s)\)</span>.
+The cost function to minimize is then <span class="math notranslate nohighlight">\(J(w) = \mathbb{E}_\pi \left[(v_\pi(S) - \hat{v}(S, w))^2\right]\)</span>.</p>
+<p>Gradient descent converges to a <em>local</em> minimum. SGD will do this by sampling the gradient based on one single
+sample. The expected update is then equal to the full gradient update.</p>
+<div class="section" id="prediction-algorithms">
+<h3>Prediction algorithms<a class="headerlink" href="#prediction-algorithms" title="Permalink to this headline">¶</a></h3>
+<p>The state of the problem can be represented by a <strong>feature vector</strong> <span class="math notranslate nohighlight">\(x(S)\)</span>, where each element is a feature that
+described the state (preferably independently). The value function is equal to <span class="math notranslate nohighlight">\(\hat{v}(S, w) = x(S)^\intercal w\)</span>.</p>
+<p>Table-lookup is actually a special case of linear function approximation. If a state is a one-hot-encoding of all states
+, then the dot product with parameter vector <span class="math notranslate nohighlight">\(w\)</span> is just <span class="math notranslate nohighlight">\(v(S_i) = w_i\)</span>.</p>
+<p>Since it is impossible to use the true value function <span class="math notranslate nohighlight">\(v_\pi\)</span> in the cost function, lets substitute in the targets
+instead. These are <span class="math notranslate nohighlight">\(G_t\)</span> for MC and <span class="math notranslate nohighlight">\(G^\lambda_t\)</span> for TD(<span class="math notranslate nohighlight">\(\lambda\)</span>). The following are more detailed descriptions for
+these methods</p>
+<ul>
+<li><p><strong>MC</strong></p>
+<p>Return <span class="math notranslate nohighlight">\(G_t\)</span> is an unbiased, noisy sample of <span class="math notranslate nohighlight">\(v_\pi(S_t)\)</span>. For that reason, it is possible to apply supervised
+learning to the data <span class="math notranslate nohighlight">\((S_1, G_1), (S_2, G_2), ..., (S_T, G_T)\)</span>.
+<span class="math notranslate nohighlight">\(\Delta w = \alpha (G_t - \hat{v}(S_t, w)) \nabla_w \hat{v}(S_t, w) = \alpha (G_t - \hat{v}(S_t, w)) x(S_t)\)</span>.
+Monte-carlo evaluation converges to a local optimum, even when using non-linear function approximation.</p>
+</li>
+<li><p><strong>TD(0)</strong></p>
+<p>Return <span class="math notranslate nohighlight">\(R_{t+1} + \gamma \hat{v}(S_{t+1}, w)\)</span> is a biased sample of <span class="math notranslate nohighlight">\(v_\pi(S_t)\)</span>. It is possible to apply supervised
+learning to the data <span class="math notranslate nohighlight">\((S_1, R_2 + \gamma \hat{v}(S_2, w)), (S_2, R_3 + \gamma \hat{v}(S_3, w)), ..., (S_{T-1}, R_T)\)</span>
+. <span class="math notranslate nohighlight">\(\Delta w = \alpha (R_{t+1} + \gamma \hat{v}(S_{t+1}, w) - \hat{v}(S_t, w)) x(S_t)\)</span>. Linear TD(0) converges close
+to the global optimum.</p>
+</li>
+<li><p><strong>TD(<span class="math notranslate nohighlight">\(\lambda\)</span>)</strong></p>
+<p>Return <span class="math notranslate nohighlight">\(G^\lambda_t\)</span> is also a biased sample of <span class="math notranslate nohighlight">\(v_\pi(S_t)\)</span>. It is again possible to apply supervised learning to
+the data <span class="math notranslate nohighlight">\((S_1, G^\lambda_1), (S_2, G^\lambda_2), ..., (S_{T-1}, G^\lambda_{T-1})\)</span>.</p>
+<ul>
+<li><p>Forward view linear TD(<span class="math notranslate nohighlight">\(\lambda\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[
+            \Delta w = \alpha (G^\lambda_t - \hat{v}(S_t, w)) x(S_t)
+        \]</div>
+</li>
+<li><p>Backward view linear TD(<span class="math notranslate nohighlight">\(\lambda\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}        \delta_t &amp; = R_{t+1} + \gamma \hat{v}(S_{t+1}, w) - \hat{v}(S_t, w)\\
+        E_t 	 &amp; = \gamma \lambda E_{t-1} + \hat{v}(S_t, w)\\
+        \Delta w &amp; = \alpha \delta_t E_t\end{split}\]</div>
+<p>Here, the eligibility traces are defined for every parameter in the function approximator.</p>
+</li>
+</ul>
+<p>The forward and backward view of linear TD(<span class="math notranslate nohighlight">\(\lambda\)</span>) are again equivalent.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="control-algorithms">
+<h3>Control algorithms<a class="headerlink" href="#control-algorithms" title="Permalink to this headline">¶</a></h3>
+<p>Control, just like prediction, preserves the same intuition from its tabular case. First, <em>approximate</em> policy
+evaluation (<span class="math notranslate nohighlight">\(\hat{q}(., ., w) \approx q_\pi\)</span>) will be performed, followed by an <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policy improvement.
+The goal becomes to minimize the following cost function:
+<span class="math notranslate nohighlight">\(J(w) = \mathbb{E}_\pi \left[(q_\pi(S_t, A_t) - \hat{q}(S_t, A_t, w))^2\right]\)</span>. Then,
+<span class="math notranslate nohighlight">\(\Delta w = \alpha (q_\pi(S_t, A_t) - \hat{q}(S_t, A_t, w)) \nabla_w \hat{q}(S_t, A_t, w)\)</span>.</p>
+<p>Now, the state and action are represented by a feature vector <span class="math notranslate nohighlight">\(x(S_t, A_t)\)</span>. The action-value approximation becomes
+<span class="math notranslate nohighlight">\(\hat{q}(S_t, A_t, w) = x(S, A)^\intercal w\)</span>. In this case, <span class="math notranslate nohighlight">\(\nabla_w \hat{q}(S_t, A_t, w) = x(S_t, A_t)\)</span>.</p>
+<p>All algorithms work the exact same way as in the previous section about prediction. All that is different is the swap of
+<span class="math notranslate nohighlight">\(v\)</span> with <span class="math notranslate nohighlight">\(q\)</span>. The eligibility traces of backwards TD(<span class="math notranslate nohighlight">\(\lambda\)</span>) are still defined for all parameters.</p>
+</div>
+<div class="section" id="algorithm-convergence">
+<h3>Algorithm convergence<a class="headerlink" href="#algorithm-convergence" title="Permalink to this headline">¶</a></h3>
+<p>By using function approximators, the algorithms might not always converge. In some cases they diverge, but in other
+cases they also chatter around the near-optimal value function. In the case of control, this is because you are not sure
+if each step is actually improving the policy anymore. The following tables describe the convergence properties of
+prediction and control algorithms.</p>
+<table class="table" id="id1">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Guarantee of convergence properties of Prediction algorithms</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>On/Off-Policy</p></th>
+<th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Table Lookup</p></th>
+<th class="head"><p>Linear</p></th>
+<th class="head"><p>Non-Linear</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>On-Policy</p></td>
+<td><p>MC</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>On-Policy</p></td>
+<td><p>TD</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p>On-Policy</p></td>
+<td><p>Gradient TD</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>Off-Policy</p></td>
+<td><p>MC</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p>Off-Policy</p></td>
+<td><p>MC</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>Off-Policy</p></td>
+<td><p>Gradient TD</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+</tr>
+</tbody>
+</table>
+<p>As seen before, TD does not follow the gradient of any objective function. For this reason, TD might diverge when
+off-policy or using non-linear function approximation. <strong>Gradient TD</strong> is an algorithm that exists, which follows
+the true gradient of the projected Bellman error.</p>
+<table class="table" id="id2">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">Guarantee of convergence properties of Control algorithms</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Table Lookup</p></th>
+<th class="head"><p>Linear</p></th>
+<th class="head"><p>Non-Linear</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MC Control</p></td>
+<td><p>Yes</p></td>
+<td><p>Chatter</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>SARSA</p></td>
+<td><p>Yes</p></td>
+<td><p>Chatter</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p>Q-Learning</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gradient Q-Learning</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+</tr>
+</tbody>
+</table>
+<p>Control algorithms are even worse than prediction algorithms. The next section in this chapter will discuss how to
+address these issues when using Neural Networks.</p>
+</div>
+</div>
+<div class="section" id="batch-methods">
+<h2>Batch Methods<a class="headerlink" href="#batch-methods" title="Permalink to this headline">¶</a></h2>
+<p>The problem using gradient descent is that it is not sample efficient. It just experiences something once, and then
+removes it and moves on the next experience. This means you don’t make maximum use of the data to update the model.
+<strong>Batch methods</strong> seek to find the best fitting value function given the agent’s experience.</p>
+<div class="section" id="least-squares-prediction">
+<h3>Least-Squares Prediction<a class="headerlink" href="#least-squares-prediction" title="Permalink to this headline">¶</a></h3>
+<p>Given <span class="math notranslate nohighlight">\(\hat{v}(s, w) \approx v_\pi(s)\)</span> and experience <span class="math notranslate nohighlight">\(D = \{(s_1, v_1^\pi), (s_2, v_2^\pi), ..., (s_T, v_T^\pi)\}\)</span>,
+the aim is to find which parameters <span class="math notranslate nohighlight">\(w\)</span> give the best fitting value <span class="math notranslate nohighlight">\(\hat{v}(s, w)\)</span>. <strong>Least-Squares</strong> algorithms
+aim to find parameter vector <span class="math notranslate nohighlight">\(w\)</span> that minimizes the squared error between <span class="math notranslate nohighlight">\(\hat{v}(s, w)\)</span> and <span class="math notranslate nohighlight">\(v_t^\pi\)</span>.
+<span class="math notranslate nohighlight">\(LS(w) = \sum^T_{t = 1} (v_t^\pi - \hat{v}(s_t, w))^2 = \mathbb{E}_D \left[(v^\pi - \hat{v}(s_t, w))^2\right]\)</span>.</p>
+<p>This can be done by using <strong>Experience Replay</strong>. This method saves dataset <span class="math notranslate nohighlight">\(D\)</span> of experience, and repeatedly
+samples <span class="math notranslate nohighlight">\((s, v^\pi) \sim D\)</span>. Then, it applies SGD to the network
+(<span class="math notranslate nohighlight">\(\Delta w = \alpha (v^\pi - \hat{v}(s, w)) \nabla_w \hat{v}(s, w))\)</span>. Applying this algorithm will find
+<span class="math notranslate nohighlight">\(w^\pi = \arg\min_w LS(w)\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>TO SELF, REMOVE OR MOVE THIS?</p>
+</div>
+<p><strong>Deep Q-Networks</strong> use experience replay together with <strong>fixed Q-targets</strong>. The algorithm consists of the
+following steps</p>
+<ul>
+<li><p>Take an action <span class="math notranslate nohighlight">\(a_t\)</span> according to some <span class="math notranslate nohighlight">\(\epsilon\)</span>-greedy policy</p></li>
+<li><p>Store transition <span class="math notranslate nohighlight">\((s_t, a_t, r_{t+1}, s_{t+1})\)</span> in replay memory <span class="math notranslate nohighlight">\(D\)</span></p></li>
+<li><p>Sample a random mini-batch of size <span class="math notranslate nohighlight">\(n\)</span> of transitions <span class="math notranslate nohighlight">\((s, a, r, s') \sim D\)</span></p></li>
+<li><p>Compute Q-learning targets with respect to old, fixed parameters <span class="math notranslate nohighlight">\(w^-\)</span> (these are the fixed Q-targets)</p></li>
+<li><p>optimize MSE between Q-network and Q-learning targets using some variant of SGD</p>
+<div class="math notranslate nohighlight">
+\[
+		LS_i(w_i) = \mathbb{E}_{s, a, r, s' \sim D_i} \left[\left(r + \gamma \max_{a'} Q(s', a'; w_i^-) - Q(s, a; w_i)\right)^2\right]
+	\]</div>
+</li>
+</ul>
+<p><em>Experience replay</em> de-correlates the sequence in actions by randomly sampling actions at every step, leading to
+a better convergence. The <em>fixed Q-targets</em> are calculated from <span class="math notranslate nohighlight">\(w_i^-\)</span>, which are some old parameters of the
+network (they are frozen for a defined number of steps before being updated). This is used, because that way we don’t
+bootstrap using our current network. If you do that, it could end up being unstable.</p>
+</div>
+<div class="section" id="linear-least-squares-prediction">
+<h3>Linear Least-Squares Prediction<a class="headerlink" href="#linear-least-squares-prediction" title="Permalink to this headline">¶</a></h3>
+<p>When using a linear value function approximation, it is possible to solve the cost function directly. This might be
+more efficient, since experience replay might take many iterations to find the optimal parameters. It is fairly simple.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}		\mathbb{E}_D \left[\Delta w\right] &amp; = 0\\
+		\alpha \sum_{t = 1}^T x(S_t)(v_t^\pi - x(S_t)^\intercal w) &amp; = 0\\
+		\sum_{t = 1}^T x(S_t)v_t^\pi &amp; = \sum_{t = 1}^T x(S_t)x(S_t)^\intercal w\\
+		w &amp; = \left(\sum_{t = 1}^T x(S_t)x(S_t)^\intercal\right)^{-1} \sum_{t = 1}^T x(S_t)v_t^\pi\end{split}\]</div>
+<p>For <span class="math notranslate nohighlight">\(n\)</span> features, the time complexity of solving this equation is <span class="math notranslate nohighlight">\(O(n^3)\)</span>. Since we do not know <span class="math notranslate nohighlight">\(v^\pi_t\)</span>, we can again
+use the estimates <span class="math notranslate nohighlight">\(G_t\)</span>, <span class="math notranslate nohighlight">\(R_{t+1} + \gamma \hat{v}(S_{t+1}, w)\)</span>, or <span class="math notranslate nohighlight">\(G_t^\lambda\)</span>. Respectively, these algorithms are
+called <strong>LSMC</strong>, <strong>LSTD</strong> and <strong>LSTD(<span class="math notranslate nohighlight">\(\lambda\)</span>)</strong>. For <em>off-policy</em> LSTD with a linear function,
+it will now also converge to the optimal value function, whereas standard TD does not guarantee this.</p>
+</div>
+<div class="section" id="least-squares-control">
+<h3>Least-Squares Control<a class="headerlink" href="#least-squares-control" title="Permalink to this headline">¶</a></h3>
+<p>An idea for control would be to do policy evaluation using <em>least-squares Q-Learning</em>, and then follow that with
+a greedy policy improvement. Approximate <span class="math notranslate nohighlight">\(q_\pi(s, a) \approx \hat{q}(s, a, w) = x(s, a)^\intercal w\)</span>. We want to
+minimize the squared error between those from experience generated by <span class="math notranslate nohighlight">\(\pi\)</span>. The data would consist of
+<span class="math notranslate nohighlight">\(D = \{(s_1, a_1, q_1^\pi), (s_2, a_2, q_2^\pi), ..., (s_T, a_T, q_T^\pi)\}\)</span>.</p>
+<p>For control the policy aims to be improved. However, the experience has been generated by many different policies. So,
+to evaluate <span class="math notranslate nohighlight">\(q_\pi(s, a)\)</span>, learning must happen off-policy. The same idea as Q-learning can be used. First, use
+experience generated by the old policy <span class="math notranslate nohighlight">\(S_t, A_t, R_{t+1}, S_{t+1} \sim \pi_{old}\)</span>. Then, consider a successor action
+<span class="math notranslate nohighlight">\(A' = \pi_{new}(S_{t+1})\)</span>. <span class="math notranslate nohighlight">\(\hat{q}(S_t, A_t, w)\)</span> should then be updated towards the alternative action
+<span class="math notranslate nohighlight">\(R_{t+1} + \gamma \hat{q}(S_t, A', w)\)</span>.</p>
+<p>The <strong>LSTDQ</strong> algorithm does this. The calculation of the parameters can be derived in a similar way as linear
+least-squares prediction (Using linear Q-target <span class="math notranslate nohighlight">\(R_{t+1} + \gamma \hat{q}(S_{t+1}, \pi(S_{t+1}), w))\)</span>. After doing this
+derivation, the result becomes</p>
+<div class="math notranslate nohighlight">
+\[
+	w = \left(\sum^T_{t = 1} x(S_t, A_t)(x(S_t, A_t) - \gamma x(S_{t+1}, \pi(S_{t+1})))^\intercal\right)^{-1} \sum^T_{t = 1} x(S_t, A_t)R_{t+1}
+\]</div>
+<p>Now, it is possible to use LSTDQ for evaluation in Least-Squares Policy Iteration (<strong>LSPI-TD</strong>).</p>
+<p>(algorithm:least-squared-policy-iteration-TD)</p>
+<div class="pseudocode" id="id3">
+<div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="10" style="display:hidden;">
+            \begin{algorithm}
+	\caption{LSPI-TD}
+	\begin{algorithmic}
+		\REQUIRE $D$, $\pi_0$
+		\STATE $\pi' \Leftarrow \pi_0$
+		\WHILE{$ \pi' \not\approx \pi$}
+			\STATE $\pi \Leftarrow \pi'$
+			\STATE $Q \Leftarrow LSTDQ(\pi, D)$
+			\FORALL{$s \in S$}
+				\STATE $\pi' \Leftarrow \arg\max_{a \in A} Q(s, a)$
+			\ENDFOR
+		\ENDWHILE
+		\RETURN $\pi$
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div><p>The algorithm uses LSTDQ for policy evaluation. Then, it repeatedly re-evaluates experience <span class="math notranslate nohighlight">\(D\)</span> with different policies.
+The LSPI algorithm always converges when doing table lookup, and chatters around the near-optimal value function when
+using linear approximation. Non-linear approximation is not possible, since LSTDQ uses a linear target.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\deep-rl"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../intro-to-rl/exploration-vs-exploitation.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">&lt;no title&gt;</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="dqn.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Deep Q-Learning</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Lars Quaedvlieg<br/>
+    
+        &copy; Copyright 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

@@ -64,7 +64,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Model Free Prediction" href="model-free-prediction.html" />
+    <link rel="next" title="Model-Free Prediction" href="model-free-prediction.html" />
     <link rel="prev" title="Markov Decision Processes" href="markov-decision-processes.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
@@ -139,26 +139,26 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="model-free-prediction.html">
-   Model Free Prediction
+   Model-Free Prediction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="model-free-control.html">
-   Model Free Control
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="exploration-vs-exploitation.html">
-   Exploration versus Exploitation
+   Model-Free Control
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Deep Reinforcement Learning
+  Value-Based Deep Reinforcement Learning
  </span>
 </p>
 <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/value-function-approximation.html">
+   Value Function Approximation
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../deep-rl/dqn.html">
    Deep Q-Learning
@@ -167,6 +167,18 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../deep-rl/ddqn.html">
    Double Deep Q-Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Policy Gradient Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../pg-algorithms/pg-methods.html">
+   Policy Gradient Methods
   </a>
  </li>
 </ul>
@@ -210,9 +222,9 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/planning-dynamic-programming.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/planning-dynamic-programming.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -229,28 +241,6 @@ const thebe_selector_output = ".output, .cell_output"
             class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/lars-quaedvlieg/RL-Playground/master?urlpath=tree/docs/content/intro-to-rl/planning-dynamic-programming.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/lars-quaedvlieg/RL-Playground/blob/master/docs/content/intro-to-rl/planning-dynamic-programming.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
 
         </div>
 
@@ -502,7 +492,7 @@ As proposed in further chapters, this problem is approached using sampled backup
     <a class='right-next' id="next-link" href="model-free-prediction.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Model Free Prediction</p>
+        <p class="prev-next-title">Model-Free Prediction</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

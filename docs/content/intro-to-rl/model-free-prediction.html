@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Model Free Prediction &#8212; The Reinforcement Learning Playground</title>
+    <title>Model-Free Prediction &#8212; The Reinforcement Learning Playground</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -56,12 +56,15 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/katex_autorenderer_model-free-prediction.js"></script>
     <script src="https://kit.fontawesome.com/26eda3309b.js"></script>
     <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/intro-to-rl/model-free-prediction.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Model Free Control" href="model-free-control.html" />
+    <link rel="next" title="Model-Free Control" href="model-free-control.html" />
     <link rel="prev" title="Planning by Dynamic Programming" href="planning-dynamic-programming.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
@@ -136,26 +139,26 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Model Free Prediction
+   Model-Free Prediction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="model-free-control.html">
-   Model Free Control
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="exploration-vs-exploitation.html">
-   Exploration versus Exploitation
+   Model-Free Control
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Deep Reinforcement Learning
+  Value-Based Deep Reinforcement Learning
  </span>
 </p>
 <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/value-function-approximation.html">
+   Value Function Approximation
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../deep-rl/dqn.html">
    Deep Q-Learning
@@ -164,6 +167,18 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../deep-rl/ddqn.html">
    Double Deep Q-Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Policy Gradient Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../pg-algorithms/pg-methods.html">
+   Policy Gradient Methods
   </a>
  </li>
 </ul>
@@ -207,9 +222,9 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/model-free-prediction.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/model-free-prediction.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -227,33 +242,43 @@ const thebe_selector_output = ".output, .cell_output"
 
             <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/lars-quaedvlieg/RL-Playground/master?urlpath=tree/docs/content/intro-to-rl/model-free-prediction.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/lars-quaedvlieg/RL-Playground/blob/master/docs/content/intro-to-rl/model-free-prediction.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monte-carlo-reinforcement-learning">
+   Monte-Carlo Reinforcement Learning
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#temporal-difference-reinforcement-learning">
+   Temporal-Difference Reinforcement Learning
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#comparison-of-methods">
+   Comparison of methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#td-lambda">
+   TD(
+   <span class="math notranslate nohighlight">
+    \(\lambda\)
+   </span>
+   )
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -261,11 +286,43 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Model Free Prediction</h1>
+                <h1>Model-Free Prediction</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monte-carlo-reinforcement-learning">
+   Monte-Carlo Reinforcement Learning
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#temporal-difference-reinforcement-learning">
+   Temporal-Difference Reinforcement Learning
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#comparison-of-methods">
+   Comparison of methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#td-lambda">
+   TD(
+   <span class="math notranslate nohighlight">
+    \(\lambda\)
+   </span>
+   )
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -273,11 +330,170 @@ const thebe_selector_output = ".output, .cell_output"
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="model-free-prediction">
-<h1>Model Free Prediction<a class="headerlink" href="#model-free-prediction" title="Permalink to this headline">¶</a></h1>
+<h1>Model-Free Prediction<a class="headerlink" href="#model-free-prediction" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
 </div>
+<p>The last chapter was about planning by dynamic programming. This was an approach to solving a known MDP. In many cases,
+however, we do not have access to the full MDP. In this case, we are talking about unknown MDPs. In this chapter,
+estimating the value function of an unknown MDP will be discussed.</p>
+<div class="section" id="monte-carlo-reinforcement-learning">
+<h2>Monte-Carlo Reinforcement Learning<a class="headerlink" href="#monte-carlo-reinforcement-learning" title="Permalink to this headline">¶</a></h2>
+<p>Sampling methods like Monte-Carlo methods are about learning from episodes of experience. This means they don’t need to
+have any knowledge of the dynamics of the MDP (transitions and rewards). This makes them model-free methods. The point
+of MC methods is to run until the end of each episode. This means it can only work if episodes always terminate. It
+backtracks the experience that was generated during the episode to estimate the value function. They are based on one
+simple idea: <strong>value = mean return</strong>.</p>
+<p>Walking through episodes of a problem using policy <span class="math notranslate nohighlight">\(\pi\)</span> yields the information <span class="math notranslate nohighlight">\(S_1, A_1, R_1, ..., S_k \sim \pi\)</span>. The
+return is the total discounted reward, computed by <span class="math notranslate nohighlight">\(G_t = R_{t+1} + \gamma R_{t+2} + ... + \gamma^{T-1}R_T\)</span>. Then,
+<span class="math notranslate nohighlight">\(v_\pi(s) = \mathbb{E}_\pi \left[G_t | S_t = s\right]\)</span>. Instead of this <em>expected</em> return, MC policy evaluation uses an
+<em>empirical mean</em> return.</p>
+<div class="pseudocode" id="id1">
+<span id="algorithm-monte-carlo-evaluation"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="4" style="display:hidden;">
+            \begin{algorithm}
+	\caption{Iteration in Monte-Carlo methods}
+	\begin{algorithmic}
+		\REQUIRE policy $\pi$
+		\STATE $\forall s: V(s) \Leftarrow 0, N(s) \Leftarrow 0, S(s) \Leftarrow 0$
+		\FOR{$t \Leftarrow 0, ..., T$}
+			\STATE $A_t, R_{t+1}, S_{t+1} \sim \pi$
+			\STATE $N(S_t) \Leftarrow N(S_t) + 1$
+			\STATE $S(S_t) \Leftarrow S(S_t) + G_t$
+			\STATE $V(S_t) \Leftarrow \frac{S(S_t)}{N(S_t)}$
+		\ENDFOR
+		\RETURN $V$
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div><p>Then, by the law of large numbers,</p>
+<div class="math notranslate nohighlight">
+\[
+	\lim_{N(s) \Rightarrow \infty} V(s) = v_\pi(s)
+\]</div>
+<p>This algorithm uses an <em>every-visit</em> approach, meaning it will execute an iteration every time <span class="math notranslate nohighlight">\(S_t\)</span> has been
+encountered in an episode. There is a second approach called <em>first-visit</em>. This works by only doing the
+iteration for state <span class="math notranslate nohighlight">\(S_t\)</span> at most once per episode, when it is encountered for the first time.</p>
+<p>Imagine that at time <span class="math notranslate nohighlight">\(t\)</span> you observe <span class="math notranslate nohighlight">\(S_t\)</span>, but the same state is observed at time <span class="math notranslate nohighlight">\(t+2\)</span>. Then, <span class="math notranslate nohighlight">\(S_t = S_{t+2}\)</span>. The
+first-visit approach will not do the iteration at <span class="math notranslate nohighlight">\(t+2\)</span>, but the every visit will.</p>
+<p>There is also a way of computing the mean incrementally.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}	V_t(S) &amp; = \frac{S_t(S)}{N_t(S)}\\
+		 &amp; = \frac{1}{N_t(S)} (G_t + S_{t-1}(S))\\
+		 &amp; = \frac{1}{N_t(S)} (G_t + (N_t(S)-1)V_{t-1}(S))\\
+		 &amp; = V_{t-1}(S) + \frac{1}{N_t(S)} (G_t - V_{t-1}(S))\\
+	V(S_t) &amp; = V(S_t) + \frac{1}{N(S_t)} (G_t - V(S_t)) \end{split}\]</div>
+<p>This way you can see how it works intuitively. The current perception of the value is updated using a difference in the
+observed return and current perception of the value, weighted by the number of times a state is visited.</p>
+<p>However, this means that we will never completely forget old experience, since we are using this moving average. In
+non-stationary problems, it may be useful to track the running mean to forget old episodes. This can be achieved by for
+example replacing <span class="math notranslate nohighlight">\(\frac{1}{N(S_t)}\)</span> by a constant <span class="math notranslate nohighlight">\(\alpha\)</span>. The new equation will become
+<span class="math notranslate nohighlight">\(V(S_t) = V(S_t) + \alpha (G_t - V(S_t))\)</span>.</p>
+</div>
+<div class="section" id="temporal-difference-reinforcement-learning">
+<h2>Temporal-Difference Reinforcement Learning<a class="headerlink" href="#temporal-difference-reinforcement-learning" title="Permalink to this headline">¶</a></h2>
+<p>One problem with Monte-Carlo methods is that we need episodes to terminate. TD-Learning on the other hand, does not need
+this. Like MC, they learn directly from episodes of experience. They are also model-free. The key difference is that
+TD-Learning uses a concept called <strong>bootstrapping</strong> to learn from incomplete episodes. They basically update towards a
+guess of <span class="math notranslate nohighlight">\(G_t\)</span>.</p>
+<p>The simplest TD-algorithm is called TD(0). It attempts to update the value towards the estimated return
+<span class="math notranslate nohighlight">\(R_{t+1} + \gamma V(S_{t+1})\)</span>, which it uses as a guess for the expected return <span class="math notranslate nohighlight">\(G_t\)</span>. This value is often referred to
+as the TD target. Updating the value function will then become
+<span class="math notranslate nohighlight">\(V(S_t) = V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t)) = V(S_t) + \alpha \delta_t\)</span> where <span class="math notranslate nohighlight">\(\delta_t\)</span> is
+referred to  as the TD error.</p>
+</div>
+<div class="section" id="comparison-of-methods">
+<h2>Comparison of methods<a class="headerlink" href="#comparison-of-methods" title="Permalink to this headline">¶</a></h2>
+<p>One big difference between TD and MC is that TD can learn <em>online</em> after every step and without the final
+outcome. MC must wait until the episode is over, not being able to learn from incomplete/non-terminating sequences.</p>
+<p>We know that the return <span class="math notranslate nohighlight">\(G_t = R_{t+1} + \gamma V_\pi(S_{t+1})\)</span> is an <em>unbiased</em> estimate of <span class="math notranslate nohighlight">\(v_\pi(S_t)\)</span>. TD
+uses a <em>biased</em> estimate of the value function, since it uses <span class="math notranslate nohighlight">\(R_{t+1} + \gamma V(S_{t+1})\)</span> to bootstrap. The
+positive thing about this is that the TD target has a much lower variance than the return. This is because the return
+depends on many random actions/transitions/rewards, while the TD target only depends on one random action/transition/
+reward.</p>
+<p>Both MC and TD converge to the true value function for a policy as we get infinite experience. However, for finite
+batches of experience that are repeatedly sampled, they will not produce the same results.</p>
+<p>Monte-Carlo methods converge to the solution to the best fit of the observed return. It has the objective function</p>
+<div class="math notranslate nohighlight">
+\[
+	\min \sum_{k = 1}^K \sum_{t = 1}^{T_k} (G_t^k - V(s_t^k))^2
+\]</div>
+<p>Temporal-Difference methods on the other hand converge to the solution of the <em>maximum likelihood Markov model</em>.
+It constructs and solves (given <span class="math notranslate nohighlight">\(\pi\)</span>) the MDP <span class="math notranslate nohighlight">\((S, A, \hat{P}, \hat{R}, \gamma)\)</span> that best fits the data.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}		&amp; \hat{P^a_{ss'}} = \frac{1}{N(s,a)} \sum_{k = 1}^K \sum_{t = 1}^{T_k} 1(s^k_t, a^k_t, s^k_{t+1} = s, a, s')\\
+		&amp; \hat{R^a_{s}} = \frac{1}{N(s,a)} \sum_{k = 1}^K \sum_{t = 1}^{T_k} 1(s^k_t, a^k_t = s, a)r^k_t\end{split}\]</div>
+<p>From this you can see TD exploits the Markov property. Standard MC does not do this. For this reason, TD is usually more
+effective in Markov environments and MC in non-Markov environments.</p>
+</div>
+<div class="section" id="td-lambda">
+<h2>TD(<span class="math notranslate nohighlight">\(\lambda\)</span>)<a class="headerlink" href="#td-lambda" title="Permalink to this headline">¶</a></h2>
+<p>As we saw before, TD(0) looks one step into the future, by calculating <span class="math notranslate nohighlight">\(R_{t+1} + \gamma V(S_{t+1})\)</span>. Can we look more
+steps into the future? The answer is yes. For example, a 2-step TD target can be calculated as
+<span class="math notranslate nohighlight">\(R_{t+1} + \gamma R_{t+2} + \gamma^2 V(S_{t+2})\)</span>. It is interesting to notice that when we look <span class="math notranslate nohighlight">\(\infty\)</span> steps into the
+future, we converge to the Monte-Carlo method!</p>
+<p>In general, the <span class="math notranslate nohighlight">\(n\)</span>-step return
+<span class="math notranslate nohighlight">\(G^{(n)}_t = R_{t+1} + \gamma R_{t+2} + ... + \gamma^{n-1} R_{t+n} + \gamma^n V(S_{t+n})\)</span>. To perform <span class="math notranslate nohighlight">\(n\)</span>-step TD, you
+just use <span class="math notranslate nohighlight">\(G^{(n)}_t\)</span> as your estimation of <span class="math notranslate nohighlight">\(G_t\)</span>.</p>
+<p>We can even average different <span class="math notranslate nohighlight">\(n\)</span>-step returns to create a more sound estimate of <span class="math notranslate nohighlight">\(G_t\)</span>. For example,
+<span class="math notranslate nohighlight">\(\frac{1}{2} G^{(2)} + \frac{1}{2} G^{(4)}\)</span>. The idea that rises is whether we can efficiently combine information from
+all time-steps.</p>
+<p>This is actually what TD(<span class="math notranslate nohighlight">\(\lambda\)</span>) does. It defines the <span class="math notranslate nohighlight">\(\lambda\)</span>-return <span class="math notranslate nohighlight">\(G^\lambda_t\)</span> that combines all <span class="math notranslate nohighlight">\(n\)</span>-step
+returns. The method uses weighting <span class="math notranslate nohighlight">\((1 - \lambda)\lambda^{n - 1}\)</span>. The reason for this weighting is that it has nice
+convergence properties that allow us to calculate this return in the same time-complexity as TD(0).</p>
+<p>We obtain <span class="math notranslate nohighlight">\(G^\lambda_t = (1-\lambda) \sum^\infty_{n = 1} \lambda^{n-1} G_t^{(n)}\)</span>. <strong>Forward view TD(<span class="math notranslate nohighlight">\(\lambda\)</span>)</strong> will
+then be <span class="math notranslate nohighlight">\(V(S_t) = V(S_t) + \alpha (G^\lambda_t - V(S_t))\)</span>.</p>
+<div class="figure align-default" id="figure-td-lambda-weighting">
+<a class="reference internal image-reference" href="../../_images/lambda-weighting.png"><img alt="../../_images/lambda-weighting.png" src="../../_images/lambda-weighting.png" style="width: 14cm;" /></a>
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Influence of weighting on different returns <span class="math notranslate nohighlight">\(G^{(n)}\)</span></span><a class="headerlink" href="#figure-td-lambda-weighting" title="Permalink to this image">¶</a></p>
+</div>
+<p>As seen in <a class="reference internal" href="#figure-td-lambda-weighting"><span class="std std-numref">Fig. 4</span></a>, more recent states get a higher weighting in TD(<span class="math notranslate nohighlight">\(\lambda\)</span>). The weight
+decays as we look more into the future.</p>
+<p>There is a problem with this forward-view algorithm. Just like MC, the estimated return can only be computed once the
+episode terminates. Luckily, there is another view for TD(<span class="math notranslate nohighlight">\(\lambda\)</span>) called the <strong>Backward View</strong>. This algorithm allows
+for updating online, on every step from incomplete sequences.</p>
+<p>To understand Backward View TD, lets introduce a concept called <strong>Eligibility traces</strong>. Imagine you’re in a situation
+where you just got electrocuted. This happened right before you heard a bell right. Before that bell even rang, light
+flashed three times. What do you think caused the shock? The light flashes or the bell?</p>
+<p>The idea of this is that this is controlled by <strong>Frequency heuristics</strong> and <strong>Recency heuristics</strong>. We can combine both
+of these heuristics to form Eligibility Traces. Let <span class="math notranslate nohighlight">\(E_t(S)\)</span> be the eligibility trace of state <span class="math notranslate nohighlight">\(s\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>.
+Initially, <span class="math notranslate nohighlight">\(E_0(s) = 0\)</span>. We create the recursive relationship <span class="math notranslate nohighlight">\(E_t(s) = \gamma \lambda E_{t-1}(s) + 1(S_t = s)\)</span>.
+Observe that at time <span class="math notranslate nohighlight">\(t\)</span>, if we’re in state <span class="math notranslate nohighlight">\(s\)</span>, a value of 1 will be added to <span class="math notranslate nohighlight">\(E_t(s)\)</span>. However, for all other
+previously visited states, their trace only gets decayed. This corresponds to the intuition of figure
+<a class="reference internal" href="#figure-td-lambda-weighting"><span class="std std-numref">Fig. 4</span></a>.</p>
+<p>For Backward View TD(<span class="math notranslate nohighlight">\(\lambda\)</span>), the idea is the following</p>
+<ul class="simple">
+<li><p>Keep an eligibility trace for all states <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p>Update value V(s) for every state <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p>In proportion to TD-error <span class="math notranslate nohighlight">\(\delta_t\)</span> and <span class="math notranslate nohighlight">\(E_t(s)\)</span>, we say <span class="math notranslate nohighlight">\(V(s) = V(s) + \alpha \delta_t E_t(s)\)</span></p></li>
+</ul>
+<p>Intuitively, this means you are constantly decaying and updating the values of previously observed states. When
+<span class="math notranslate nohighlight">\(\lambda = 0\)</span>, we end up with TD(0). When <span class="math notranslate nohighlight">\(\lambda = 1\)</span>, the credit is deferred until the end of the episode. This means
+that <em>over the course of an episode</em>, the total update for TD(1) is the same as the total update for every-visit
+MC.</p>
+<div class="pseudocode" id="id2">
+<span id="algorithm-backward-view-td-lambda"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="5" style="display:hidden;">
+            \begin{algorithm}
+	\caption{Iteration of TD($\lambda$)}
+	\begin{algorithmic}
+		\REQUIRE policy $\pi$
+		\STATE $\forall s: V(s) \Leftarrow 0, E(s) = 0$
+		\FOR{$t \Leftarrow 0, ..., T$}
+		\STATE $A_t, R_{t+1}, S_{t+1} \sim \pi$
+		\STATE $\delta_t \Leftarrow R_{t+1} + \gamma V(S_{t+1}) - V(S_t)$
+		\STATE $E(S_t) \Leftarrow E(S_t) + 1$
+			\FOR{all unique previously occurred $s$}
+				\STATE $V(s) \Leftarrow V(s) + \alpha \delta_t E(s)$
+				\STATE $E(s) \Leftarrow \gamma \lambda E(s)$
+			\ENDFOR
+		\ENDFOR
+		\RETURN $V$
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div></div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -315,7 +531,7 @@ const thebe_selector_output = ".output, .cell_output"
     <a class='right-next' id="next-link" href="model-free-control.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Model Free Control</p>
+        <p class="prev-next-title">Model-Free Control</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
