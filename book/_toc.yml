@@ -14,6 +14,7 @@ parts:
       - file: content/intro-to-rl/planning-dynamic-programming
       - file: content/intro-to-rl/model-free-prediction
       - file: content/intro-to-rl/model-free-control
+      - file: content/intro-to-rl/integrating-learning-planning
       - file: content/intro-to-rl/exploration-vs-exploitation
   - caption: Value-Based Deep Reinforcement Learning
     chapters:
@@ -23,3 +24,6 @@ parts:
   - caption: Policy Gradient Algorithms
     chapters:
       - file: content/pg-algorithms/pg-methods
+  - caption: Multiagent Reinforcement Learning
+    chapters:
+      - file: content/marl/rl-classic-games
