@@ -1,0 +1,637 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reinforcement Learning in Classic Games &#8212; The Reinforcement Learning Playground</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/26eda3309b.js"></script>
+    <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/marl/rl-classic-games.html" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Policy Gradient Methods" href="../pg-algorithms/pg-methods.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">The Reinforcement Learning Playground</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../welcome.html">
+   The Reinforcement Learning Playground
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../credits.html">
+   Credits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Fundamentals of Reinforcement Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/the-rl-problem.html">
+   The Reinforcement Learning Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/markov-decision-processes.html">
+   Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/planning-dynamic-programming.html">
+   Planning by Dynamic Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/model-free-prediction.html">
+   Model-Free Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/model-free-control.html">
+   Model-Free Control
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/integrating-learning-planning.html">
+   Integrating Learning and Planning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro-to-rl/exploration-vs-exploitation.html">
+   Exploration and Exploitation
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Value-Based Deep Reinforcement Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/value-function-approximation.html">
+   Value Function Approximation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/dqn.html">
+   Deep Q-Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/ddqn.html">
+   Double Deep Q-Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Policy Gradient Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../pg-algorithms/pg-methods.html">
+   Policy Gradient Methods
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Multiagent Reinforcement Learning
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Reinforcement Learning in Classic Games
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a target="_blank" href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/marl/rl-classic-games.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#game-theory">
+   Game Theory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#minimax-search">
+   Minimax Search
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#self-play-reinforcement-learning">
+   Self-Play Reinforcement Learning
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#combining-rl-and-minimax-search">
+   Combining RL and Minimax Search
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simple-td">
+     Simple TD
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#td-root">
+     TD Root
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#td-leaf">
+     TD Leaf
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#treestrap">
+     TreeStrap
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simulation-based-search">
+     Simulation-Based Search
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reinforcement-learning-in-imperfect-information-games">
+   Reinforcement Learning in Imperfect-Information Games
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#smooth-uct">
+     Smooth UCT
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Reinforcement Learning in Classic Games</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#game-theory">
+   Game Theory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#minimax-search">
+   Minimax Search
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#self-play-reinforcement-learning">
+   Self-Play Reinforcement Learning
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#combining-rl-and-minimax-search">
+   Combining RL and Minimax Search
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simple-td">
+     Simple TD
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#td-root">
+     TD Root
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#td-leaf">
+     TD Leaf
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#treestrap">
+     TreeStrap
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simulation-based-search">
+     Simulation-Based Search
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reinforcement-learning-in-imperfect-information-games">
+   Reinforcement Learning in Imperfect-Information Games
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#smooth-uct">
+     Smooth UCT
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="reinforcement-learning-in-classic-games">
+<h1>Reinforcement Learning in Classic Games<a class="headerlink" href="#reinforcement-learning-in-classic-games" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
+</div>
+<p>Why are classic games such a meaningful area to apply Reinforcement Learning to? The main point is that these games
+usually have quite simple rules, but very deep concepts. They also provide for a meaningful IQ test, and encapsulate
+real world issues. This makes it a really interesting field for Reinforcement Learning.</p>
+<div class="section" id="game-theory">
+<h2>Game Theory<a class="headerlink" href="#game-theory" title="Permalink to this headline">¶</a></h2>
+<p>In order to get a sense of optimality in multiplayer games, the field of Game Theory is often used. The aim is to find
+the optimal policy <span class="math notranslate nohighlight">\(\pi^i\)</span> for the <span class="math notranslate nohighlight">\(i\)</span>-th player. If all other players fix their policies (<span class="math notranslate nohighlight">\(\pi^{-i}\)</span>), the
+<strong>best response</strong> <span class="math notranslate nohighlight">\(\pi_*^i(\pi^{-i})\)</span> is the optimal policy against those policies.</p>
+<p>There is a problem with this, because it basically learns the optimal policy for <em>one</em> fixed policy of the
+opponents. Instead, the goal is to find the optimal policy against all policies opponents can have. The most well-known
+solution to this is referred to as the <strong>Nash equilibrium</strong>. This is a joint policy for all players.</p>
+<div class="math notranslate nohighlight">
+\[
+	\pi^i = \pi_*^i(\pi^{-i})
+\]</div>
+<p>Here, every player’s policy is a best response. This means no player would choose to deviate from this equilibrium.</p>
+<ul>
+<li><p>Best Response is a solution of a single-agent RL problem.</p>
+<p>Other players become part of the environment, and the game is reduced to an MDP. The best response is then an
+optimal policy of this MDP.</p>
+</li>
+<li><p>Nash equilibrium is a fixed-point of self-play RL</p>
+<p>Experience is generated by playing games between agents <span class="math notranslate nohighlight">\(a_1 \sim \pi^1, a_2 \sim \pi^2, ...\)</span>. Each agent learns the
+best response to other players. One player’s policy determines another player’s environment. This means all players
+are adapting to each other.</p>
+</li>
+</ul>
+<p>To keep things relatively simple, this chapter restricts itself to <strong>two player</strong>, <strong>zero-sum</strong> games.
+Zero-sum games have equal and opposite rewards <span class="math notranslate nohighlight">\(R^1 + R^2 = 0\)</span>. Methods for finding Nash equilibria in these games are
+discussed.</p>
+</div>
+<div class="section" id="minimax-search">
+<h2>Minimax Search<a class="headerlink" href="#minimax-search" title="Permalink to this headline">¶</a></h2>
+<p>In these types of games, the value function defines the expected total reward given joint policies <span class="math notranslate nohighlight">\((\pi^1, \pi^2)\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+	v_\pi(s) = \mathbb{E}_\pi[G_t | S_t = s]
+\]</div>
+<p>A <em>minimax</em> value function maximizes player 1’s expected return while minimizing the one from player 2. The
+optimal value function becomes</p>
+<div class="math notranslate nohighlight">
+\[
+	v_*(s) = \max_{\pi^1} \min_{\pi^2} v_\pi(s)
+\]</div>
+<p>A <em>minimax</em> policy <span class="math notranslate nohighlight">\((\pi^1, \pi^2)\)</span> is a joint policy which achieves the minimax values. For two-player
+zero-sum games, there exists a unique minimax value function. In this case, a minimax policy is a Nash equilibrium.</p>
+<p>There is a problem though. The search tree grown exponentially at every level. This means it is impractical to search
+all the way to the end of the game. A simple solution to this problem uses a value function approximation
+<span class="math notranslate nohighlight">\(v(s, w) \approx v_\pi(s)\)</span> at the leaf nodes of the search tree. Then, it is possible to run minimax to some fixed depth
+with respect to the leaf values.</p>
+</div>
+<div class="section" id="self-play-reinforcement-learning">
+<h2>Self-Play Reinforcement Learning<a class="headerlink" href="#self-play-reinforcement-learning" title="Permalink to this headline">¶</a></h2>
+<p>Similar to this fixed function approximation in the last section, it is possible to apply value-based RL algorithms to
+games of self-play. Any algorithm like <span class="math notranslate nohighlight">\(MC, TD(0), TD(\lambda), ...\)</span> can be used. For deterministic games, it is
+sufficient to estimate <span class="math notranslate nohighlight">\(v_*(s)\)</span>. The idea uses the following short proof</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    q_*(s, a) &amp; = \sum_{s'} P^a_{ss'} v_*(s)\\
+    q_*(s, a) &amp; = v_*(s')\end{split}\]</div>
+<p>Actions are selected by min- or maximizing the value of the next state</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    A_t &amp; = \arg\max_a v_*(S_t') \text{ for the maximizing player}\\
+    A_t &amp; = \arg\min_a v_*(S_t') \text{ for the minimizing player}\end{split}\]</div>
+<p>This improves the joint policy for both players.</p>
+</div>
+<div class="section" id="combining-rl-and-minimax-search">
+<h2>Combining RL and Minimax Search<a class="headerlink" href="#combining-rl-and-minimax-search" title="Permalink to this headline">¶</a></h2>
+<p>The ideas of both these methods can be combined. This section focuses on some ideas to combine both.</p>
+<div class="section" id="simple-td">
+<h3>Simple TD<a class="headerlink" href="#simple-td" title="Permalink to this headline">¶</a></h3>
+<p>As previously seen, the idea of TD is to update the value function towards the successor value. The idea of
+<em>Simple TD</em> is to first learn the value function in TD learning. After learning, this value function can be used
+in minimax search (without any learning).</p>
+<div class="math notranslate nohighlight">
+\[
+	v_+(S_t, w) = minimax_{s \in leaves(S_t)} v(s, w)
+\]</div>
+<p>An important question arises when using this approach: can the value function be learning directly from minimax search
+values? This could increase performance more quickly, since it can be hard to find a terminal state without search.</p>
+</div>
+<div class="section" id="td-root">
+<h3>TD Root<a class="headerlink" href="#td-root" title="Permalink to this headline">¶</a></h3>
+<p>The idea of <em>TD Root</em> is to update the value towards the successor search value. Imagine the tree is at root node
+<span class="math notranslate nohighlight">\(S_t\)</span>. After taking an action, <span class="math notranslate nohighlight">\(S_{t+1}\)</span> is explored next. TD would update the value of <span class="math notranslate nohighlight">\(S_t\)</span> towards the value of
+<span class="math notranslate nohighlight">\(S_{t+1}\)</span>. The value of <span class="math notranslate nohighlight">\(S_{t+1}\)</span> equals the value of the minimax search backup, so <span class="math notranslate nohighlight">\(v(S_{t+1}, w) = v(l(S_{t+1}), w)\)</span>,
+where <span class="math notranslate nohighlight">\(l(s)\)</span> is the leaf node achieving minimax value from <span class="math notranslate nohighlight">\(s\)</span>.</p>
+<p>This was actually the first ever TD learning algorithm applied to a checkers program that learned by self-play. It was
+able to defeat an amateur human player. This algorithm was then used and extended to perform better.</p>
+</div>
+<div class="section" id="td-leaf">
+<h3>TD Leaf<a class="headerlink" href="#td-leaf" title="Permalink to this headline">¶</a></h3>
+<p>One idea is to think about the whole search. Instead of updating the value of <span class="math notranslate nohighlight">\(S_t\)</span>, the value of the leaf <span class="math notranslate nohighlight">\(l(S_t)\)</span>
+should be updated. This is the case, because that is the node that contributed to the minimax value <span class="math notranslate nohighlight">\(v(S_t)\)</span>. This
+results in the back-up <span class="math notranslate nohighlight">\(v(l(S_t), w) \leftarrow v(l(S_{t+1}), w)\)</span>, instead of <span class="math notranslate nohighlight">\(v(S_t, w) \leftarrow v(l(S_{t+1}), w)\)</span>
+as seen in TD Root.</p>
+<p><em>Knightcap</em> used TD leaf in chess. It started by only knowing standard piece values, and learned weights using
+TD leaf. The search used <span class="math notranslate nohighlight">\(\alpha\beta\)</span>-pruning to speed up the minimax search. It ended up achieving master-level play
+after a small number of games. However, it was not effective in self-play or without starting from good weights. In
+checkers however, a similar algorithm called Chinook was able to play at superhuman level.</p>
+</div>
+<div class="section" id="treestrap">
+<h3>TreeStrap<a class="headerlink" href="#treestrap" title="Permalink to this headline">¶</a></h3>
+<p>There is still something to optimize. The previously algorithms use the values obtained from the minimax search only
+once. <em>TreeStrap</em> updates search values towards deeper search values. Minimax search values are computed at
+<em>all</em> nodes in the search. The backup <span class="math notranslate nohighlight">\(\forall s \in nodes(S_t): v(s, w) \leftarrow v(l(s), w)\)</span> is performed.</p>
+<p><em>Meep</em>, a chess algorithm using TreeStrap, was able to beat 13/15 international masters starting from random
+initial weights. It is both effective in self-play and random initial weights.</p>
+</div>
+<div class="section" id="simulation-based-search">
+<h3>Simulation-Based Search<a class="headerlink" href="#simulation-based-search" title="Permalink to this headline">¶</a></h3>
+<p>As you have seen now, self-play reinforcement learning can replace search. Next to the idea of minimax, it is also
+possible to simulate games of self-play from root state <span class="math notranslate nohighlight">\(S_t\)</span>, and then apply RL to this simulated experience.</p>
+<p>Previously, a concept using Monte-Carlo Control called <em>MCTS</em> was discussed. The most effective variant of this
+search uses the UCT-algorithm to guide exploration/exploitation in every node. It actually turns out self-play UCT
+converges on minimax values in zero-sum, 2-player games.</p>
+</div>
+</div>
+<div class="section" id="reinforcement-learning-in-imperfect-information-games">
+<h2>Reinforcement Learning in Imperfect-Information Games<a class="headerlink" href="#reinforcement-learning-in-imperfect-information-games" title="Permalink to this headline">¶</a></h2>
+<p>In imperfect information games, players have different information states and therefore separate search trees. In this
+tree, there is one node for each information state. These nodes summarize what a player knows (e.g. the cards they have
+seen).</p>
+<p>There may be many real states that share the same information state, but there may also be aggregate states (e.g. those
+with a similar value).</p>
+<p>There are multiple ways to solve for these information-state game trees.</p>
+<ul>
+<li><p>Iterative forward-search methods</p>
+<p>An example of this is Counterfactual Regret Minimization</p>
+</li>
+<li><p>Self-play Reinforcement learning</p>
+<p>Here, a variant of MCTS, called Smooth UCT is discussed briefly. Applying the method to the game of Poker resulted</p>
+</li>
+<li><p>in 3 silver medals in two- and three-player Poker. It outperformed massive-scale forward-search agents.</p></li>
+</ul>
+<div class="section" id="smooth-uct">
+<h3>Smooth UCT<a class="headerlink" href="#smooth-uct" title="Permalink to this headline">¶</a></h3>
+<p>Using Monte-Carlo Tree Search in fully observable games has shown promising. However, improvements must be made to let
+it perform well in imperfect information games. In Poker for example, naive MCTS diverges, since its approach is just
+not well-fitted for these types of games.</p>
+<p>However, a variant of UCT, inspired by a game-theoretic concept called <strong>Fictitious Player</strong> was implemented. The
+idea is that the agent learns against and to respond to opponents’ <em>average</em> behavior. This gives a much robust
+approach.</p>
+<p>The average strategy can be extracted from nodes’ action counts, <span class="math notranslate nohighlight">\(\pi_{avg}(a | s) = \frac{N(s, a)}{N(s)}\)</span>. Then, at
+each node, pick actions according to</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+	A \sim \begin{cases}
+		UCT(S), &amp; \text{ with probability } \epsilon\\
+		\pi_{avg}(.|S), &amp; \text{ with probability } 1 - \epsilon
+	\end{cases}
+\end{split}\]</div>
+<p>Empirically, in variants of Poker, smooth UCT converged to the Nash equilibrium while naive MCTS diverged.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\marl"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../pg-algorithms/pg-methods.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Policy Gradient Methods</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Lars Quaedvlieg<br/>
+    
+        &copy; Copyright 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

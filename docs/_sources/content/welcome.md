@@ -66,7 +66,7 @@ over time):
 * - Multiagent Reinforcement Learning
   - 
 * - Inverse Reinforcement Learning
-  - 
+  - [One chapter, PDF only](https://github.com/lars-quaedvlieg/Reinforcement-Learning-Book) *(conversion in progress)*
 ```
 
 ## Citations

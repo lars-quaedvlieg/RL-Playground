@@ -5,14 +5,14 @@
 document.addEventListener("DOMContentLoaded", function() {
    
     pseudocode.renderElement(
-    document.getElementById("11"), {
-         captionCount: 10 ,
+    document.getElementById("12"), {
+         captionCount: 11 ,
         
     });
  
     pseudocode.renderElement(
-    document.getElementById("12"), {
-         captionCount: 11 ,
+    document.getElementById("13"), {
+         captionCount: 12 ,
         
     });
 

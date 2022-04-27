@@ -1,0 +1,599 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Integrating Learning and Planning &#8212; The Reinforcement Learning Playground</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/katex_autorenderer_integrating-learning-planning.js"></script>
+    <script src="https://kit.fontawesome.com/26eda3309b.js"></script>
+    <link rel="canonical" href="https://lars-quaedvlieg.github.io/RL-Playground/content/intro-to-rl/integrating-learning-planning.html" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Exploration and Exploitation" href="exploration-vs-exploitation.html" />
+    <link rel="prev" title="Model-Free Control" href="model-free-control.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">The Reinforcement Learning Playground</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../welcome.html">
+   The Reinforcement Learning Playground
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../credits.html">
+   Credits
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Fundamentals of Reinforcement Learning
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="the-rl-problem.html">
+   The Reinforcement Learning Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov-decision-processes.html">
+   Markov Decision Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="planning-dynamic-programming.html">
+   Planning by Dynamic Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="model-free-prediction.html">
+   Model-Free Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="model-free-control.html">
+   Model-Free Control
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Integrating Learning and Planning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exploration-vs-exploitation.html">
+   Exploration and Exploitation
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Value-Based Deep Reinforcement Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/value-function-approximation.html">
+   Value Function Approximation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/dqn.html">
+   Deep Q-Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deep-rl/ddqn.html">
+   Double Deep Q-Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Policy Gradient Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../pg-algorithms/pg-methods.html">
+   Policy Gradient Methods
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Multiagent Reinforcement Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../marl/rl-classic-games.html">
+   Reinforcement Learning in Classic Games
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a target="_blank" href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/intro-to-rl/integrating-learning-planning.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-based-rl">
+   Model-Based RL
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-lookup-model">
+     Table-Lookup Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#planning-with-a-model">
+     Planning with a Model
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#integrated-architectures">
+   Integrated Architectures
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation-based-search">
+   Simulation-Based Search
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#monte-carlo-tree-search">
+     Monte-Carlo Tree Search
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#temporal-difference-search">
+     Temporal-Difference Search
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Integrating Learning and Planning</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-based-rl">
+   Model-Based RL
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-lookup-model">
+     Table-Lookup Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#planning-with-a-model">
+     Planning with a Model
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#integrated-architectures">
+   Integrated Architectures
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation-based-search">
+   Simulation-Based Search
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#monte-carlo-tree-search">
+     Monte-Carlo Tree Search
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#temporal-difference-search">
+     Temporal-Difference Search
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="integrating-learning-and-planning">
+<h1>Integrating Learning and Planning<a class="headerlink" href="#integrating-learning-and-planning" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please note that this notebook is still <strong>work in progress</strong>, hence some sections could behave unexpectedly, or provide incorrect information.</p>
+</div>
+<p>The goal of this lecture is to provide as an introduction of <em>learning a model</em> of an MDP directly from
+experience, and use <em>planning</em> to construct a value function or policy. These two are then combined into a single
+architecture. The difference between Model-Free and Model-Based RL are the following:</p>
+<ul>
+<li><p>Model-Free</p>
+<p>No model, learn value function (and/or policy) from experience</p>
+</li>
+<li><p>Model-Based</p>
+<p>Learn model from experience, plan value function (and/or policy) from model</p>
+</li>
+</ul>
+<div class="section" id="model-based-rl">
+<h2>Model-Based RL<a class="headerlink" href="#model-based-rl" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="figure-model-based-rl-cycle">
+<a class="reference internal image-reference" href="../../_images/model-based-rl.png"><img alt="../../_images/model-based-rl.png" src="../../_images/model-based-rl.png" style="width: 14cm;" /></a>
+<p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">The model-based reinforcement learning cycle</span><a class="headerlink" href="#figure-model-based-rl-cycle" title="Permalink to this image">¶</a></p>
+</div>
+<p>The advantages of Model-Based RL are that models can be efficiently learned using <em>supervised learning</em> methods.
+It is also possible to then reason of model uncertainty. A disadvantage, however, is that first the model must be
+learned. Only then can the value function be constructed. This also means there are two sources of approximation error,
+and the accuracy of the value function is limited to the accuracy of the model.</p>
+<p>A <em>model</em> <span class="math notranslate nohighlight">\(M\)</span> is a representation of an MDP parameterized by <span class="math notranslate nohighlight">\(\eta\)</span>. In this case, it is assumed that the state
+and action spaces are known (for simplification). So then, a model <span class="math notranslate nohighlight">\(M = (P_\eta, R_\eta)\)</span> represents state transitions
+<span class="math notranslate nohighlight">\(P_\eta \approx P\)</span> and rewards <span class="math notranslate nohighlight">\(R_\eta = R\)</span>. These can be used to estimate rewards and state transitions:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    S_{t+1} &amp; \sim P_\eta(S_{t+1} | S_t, A_t)\\
+    R_{t+1} &amp; = R_\eta(S_{t+1} | R_t, A_t)\end{split}\]</div>
+<p>Typically, a conditional independence between state transitions and rewards are assumed
+(<span class="math notranslate nohighlight">\(P(S_{t+1}, R_{t+1} | S_t, A_t) = P(S_{t+1} | S_t, A_t)P(R_{t+1} | S_t, A_t)\)</span>).</p>
+<p>So, the goal is to estimate <span class="math notranslate nohighlight">\(M_\eta\)</span> from experience <span class="math notranslate nohighlight">\(\{S_1, A_1, R_2, ..., S_T\}\)</span>. This is a supervised learning
+problem. More specifically, it is usually best to split up the two tasks of learning <span class="math notranslate nohighlight">\(R_\eta\)</span> and <span class="math notranslate nohighlight">\(P_\eta\)</span>.
+<span class="math notranslate nohighlight">\(S_t, A_t \Rightarrow R_{t+1}\)</span> is a <em>regression problem</em>, while <span class="math notranslate nohighlight">\(S_t, A_t \Rightarrow S_{t+1}\)</span> is a
+<em>density estimation</em> problem.</p>
+<p>There are a lot of ways to create a model. This chapter focusses on the <em>Table-Lookup Model</em>.</p>
+<div class="section" id="table-lookup-model">
+<h3>Table-Lookup Model<a class="headerlink" href="#table-lookup-model" title="Permalink to this headline">¶</a></h3>
+<p>The idea here is to count the visits <span class="math notranslate nohighlight">\(N(s, a)\)</span> to each state-action pair. Then, similar to what TD learns, the idea is
+to construct the maximum-likelihood Markov model from this. It can be constructed in the following manner.</p>
+<div class="math notranslate nohighlight" id="equation-equation-sampling-from-model">
+<span class="eqno">(5)<a class="headerlink" href="#equation-equation-sampling-from-model" title="Permalink to this equation">¶</a></span>\[\begin{split}    &amp; \hat{P^a_{ss'}} = \frac{1}{N(s,a)} \sum_{k = 1}^K \sum_{t = 1}^{T_k} 1(s^k_t, a^k_t, s^k_{t+1} = s, a, s')\\
+    &amp; \hat{R^a_{s}} = \frac{1}{N(s,a)} \sum_{k = 1}^K \sum_{t = 1}^{T_k} 1(s^k_t, a^k_t = s, a)r^k_t\end{split}\]</div>
+<p>Alternative, it is possible to record an experience tuple <span class="math notranslate nohighlight">\((S_t, A_t, R_{t+1}, S_{t+1})\)</span> at each time-step <span class="math notranslate nohighlight">\(t\)</span>. In order
+to then sample the model, uniformly randomly pick a tuple matching <span class="math notranslate nohighlight">\((S_t, A_t, ., .)\)</span>.</p>
+</div>
+<div class="section" id="planning-with-a-model">
+<h3>Planning with a Model<a class="headerlink" href="#planning-with-a-model" title="Permalink to this headline">¶</a></h3>
+<p>Given a model <span class="math notranslate nohighlight">\(M_\eta = (P_\eta, R_\eta)\)</span>, the goal is to solve the MDP <span class="math notranslate nohighlight">\((S, A, P_\eta, R_\eta)\)</span> using a planning
+algorithm (e.g. Value iteration, Policy iteration, Tree search, …).</p>
+<p>Algorithms like Value iteration are quite expensive, since they go over the entire state(-action) space.
+<strong>Sample-Based</strong> planning uses the model to generate samples. This is often much more efficient. It also means more
+frequent states will be sampled more often. This can be a good property to have.</p>
+<p>The sampling happens in the same way as in equation <a class="reference internal" href="#equation-equation-sampling-from-model">(5)</a>. At each step, model-free RL can be
+applied to the samples (e.g. Monte-Carlo control, SARSA, Q-Learning, …).</p>
+<p>Given an imperfect model <span class="math notranslate nohighlight">\((P_\eta, R_\eta) \neq (P, R)\)</span>, the performance of model-based RL is limited to the optimal
+policy of approximate MDP <span class="math notranslate nohighlight">\((S, A, P_\eta, R_\eta)\)</span>. So, when the model is inaccurate, planning will compute a
+sub-optimal policy. It is always possible to switch to model-free RL. However, there are ways of reasoning about the
+<em>uncertainty</em> in the model. This can be done using for example Bayesian modelling.</p>
+</div>
+</div>
+<div class="section" id="integrated-architectures">
+<h2>Integrated Architectures<a class="headerlink" href="#integrated-architectures" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="figure-dyna-cycle">
+<a class="reference internal image-reference" href="../../_images/dyna.png"><img alt="../../_images/dyna.png" src="../../_images/dyna.png" style="width: 14cm;" /></a>
+<p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">Dyna architecture cycle</span><a class="headerlink" href="#figure-dyna-cycle" title="Permalink to this image">¶</a></p>
+</div>
+<p>It is possible to learn and plan the value function (and/or policy) from real and simulated experience. This
+architecture is referred to as <strong>Dyna</strong>.The algorithm below uses Dyna with Q-Learning.</p>
+<div class="pseudocode" id="id1">
+<span id="algorithms-dyna-q"></span><div class="pseudocode-caption">
+</div><div class="pseudocode-content">
+<pre id="10" style="display:hidden;">
+            \begin{algorithm}
+	\caption{Dyna-Q}
+	\begin{algorithmic}
+		\REQUIRE $Q$, $M$, $n$ (number of planning steps)
+		\STATE $S \Leftarrow$ current state
+		\STATE $A \Leftarrow \epsilon$-greedy($S, Q$)
+		\STATE Execute $A$; observe $R, S'$
+		\STATE $Q(S, A) \Leftarrow Q(S, A) + \alpha \left[R + \gamma \max_a Q(S', a) - Q(S, A)\right]$
+		\STATE $M \Leftarrow R,S'$
+		\FOR{$i = 1,...,n$}
+			\STATE $S, A \Leftarrow$ random previously taken state-action pair
+			\STATE $R, S' \Leftarrow M(S, A)$
+			\STATE $Q(S, A) \Leftarrow Q(S, A) + \alpha \left[R + \gamma \max_a Q(S', a) - Q(S, A)\right]$
+		\ENDFOR
+	\end{algorithmic}
+\end{algorithm}
+        </pre></div></div><p>Here, the Q-function is learned from both real experience and planned experience.</p>
+</div>
+<div class="section" id="simulation-based-search">
+<h2>Simulation-Based Search<a class="headerlink" href="#simulation-based-search" title="Permalink to this headline">¶</a></h2>
+<p><strong>Forward search</strong> algorithms select the best action by <em>lookahead</em>. They build a search tree with current
+state <span class="math notranslate nohighlight">\(s_t\)</span> at the root. The idea is to use a <em>model</em> of the MDP to perform lookahead. Then, only a subsection of
+the entire MDP must be solved.</p>
+<p><strong>Simulation-Based search</strong> simulates episodes of experience from the current state with the model. So, from
+current state <span class="math notranslate nohighlight">\(s_t\)</span>, <span class="math notranslate nohighlight">\(K\)</span> episodes are sampled:</p>
+<div class="math notranslate nohighlight">
+\[
+	\{s_t^k, A_t^k, R_{t+1}^k, ..., S_T^k\}_{k = 1}^K \sim M
+\]</div>
+<p>Then, model-free RL is applied to the simulated episodes. Monte-carlo control gives rise to <strong>Monte-Carlo search</strong>,
+while SARSA gives rise to <strong>TD search</strong>.</p>
+<p>Simple Monte-Carlo search uses the mean return to construct Q-values <span class="math notranslate nohighlight">\(Q(s_t, a) = \frac{1}{K} \sum_{k = 1}^K G_t\)</span> for
+each action <span class="math notranslate nohighlight">\(a \in A\)</span>. This estimates <span class="math notranslate nohighlight">\(q_\pi(s_t, a)\)</span>, where <span class="math notranslate nohighlight">\(\pi\)</span> is the simulation policy. The real action is then
+taken using <span class="math notranslate nohighlight">\(a_t = \arg\max_{a \in A} Q(s_t, a)\)</span>.</p>
+<div class="section" id="monte-carlo-tree-search">
+<h3>Monte-Carlo Tree Search<a class="headerlink" href="#monte-carlo-tree-search" title="Permalink to this headline">¶</a></h3>
+<p><strong>Monte-Carlo Tree Search</strong> (MCTS) works differently. It has two policies, a <em>Tree policy</em> and a
+<em>Default policy</em>. The tree policy picks the actions to maximize <span class="math notranslate nohighlight">\(Q(S, A)\)</span> and the default policy is fixed and
+takes random actions. So, the tree policy improves over time.</p>
+<p>At each simulation, it first uses the tree policy to find with state to simulate from. Then, the simulation (also
+referred to as rollout) happens using the default policy. The Q-values are then the mean return of episodes.</p>
+<div class="math notranslate nohighlight">
+\[
+	Q(s, a) = \frac{1}{N(s, a)} \sum^K_{k = 1} \sum^T_{u = t} 1(S_u, A_u = s, a)G_u
+\]</div>
+<p>After the planning has finished, the real action is again taken using policy <span class="math notranslate nohighlight">\(a_t = \arg\max_{a \in A} Q(s_t, a)\)</span>. MCTS
+is MC-control applied to simulated experience. It converges on the optimal search tree, <span class="math notranslate nohighlight">\(Q(S, A)\)</span> becomes <span class="math notranslate nohighlight">\(q_*(S, A)\)</span>.</p>
+<p>There are several advantages to using MCTS</p>
+<ul class="simple">
+<li><p>The best-first search is highly selective</p></li>
+<li><p>Evaluates states dynamically, unlike DP</p></li>
+<li><p>The use of sampling breaks the curse of dimensionality</p></li>
+<li><p>It works for black-box models, all it needs are samples</p></li>
+<li><p>Computationally efficient, anytime and parallelisable</p></li>
+</ul>
+</div>
+<div class="section" id="temporal-difference-search">
+<h3>Temporal-Difference Search<a class="headerlink" href="#temporal-difference-search" title="Permalink to this headline">¶</a></h3>
+<p>The idea is to use TD instead of MC, by bootstrapping. It applies SARSA to the sub-MDP. It can be helpful for the
+following reasons</p>
+<ul class="simple">
+<li><p>TD search reduces variance, but increases bias</p></li>
+<li><p>TD search is usually more efficient than MC search</p></li>
+<li><p>TD(<span class="math notranslate nohighlight">\(\lambda\)</span>) can be much more efficient than MC search</p></li>
+</ul>
+<p><strong>TD search</strong> simulates episodes from the current state <span class="math notranslate nohighlight">\(s_t\)</span>. It estimates the value function <span class="math notranslate nohighlight">\(Q(S, A)\)</span>. At each
+step of the simulation, <span class="math notranslate nohighlight">\(\Delta Q(S, A) = \alpha (R + \gamma Q(S', A') - Q(S, A))\)</span>. Actions are selection
+<span class="math notranslate nohighlight">\(\epsilon\)</span>-greedily with respect to the Q-values. A function approximator can also be used for Q.</p>
+<p>There is another idea called <strong>Dyna-2</strong>. The agent stores two sets of feature weights: <em>Long-term memory</em>
+and <em>Short-term (working) memory</em>.</p>
+<p>The long-term memory is updated from real experience with the environment. It is perceived as general knowledge that
+applies to any episode. On the other hand, the short-term memory is updated from simulated experience using TD search.
+This can figure out specific local knowledge about the current situation.</p>
+<p>The value function is then a sum of the long- and short-term memories.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\intro-to-rl"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="model-free-control.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Model-Free Control</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="exploration-vs-exploitation.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Exploration and Exploitation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Lars Quaedvlieg<br/>
+    
+        &copy; Copyright 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
